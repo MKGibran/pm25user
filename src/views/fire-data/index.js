@@ -2,6 +2,7 @@ import React from 'react'
 import { CButton, CCard, CCardBody, CCol, CContainer, CRow } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import { cilLocationPin } from '@coreui/icons'
+import PmValueIndicator from 'src/components/PmValueIndicator'
 
 const Home = (props) => {
   return (
@@ -37,7 +38,7 @@ const Home = (props) => {
               <CContainer>
                 <CCardBody>
                   <h4>Air Pollution Level</h4>
-                  <h1>8</h1>
+                  <PmValueIndicator value={7} severity="normal" />
                 </CCardBody>
               </CContainer>
             </CCard>
@@ -63,7 +64,7 @@ const Home = (props) => {
               <CContainer>
                 <CCardBody>
                   <h4>Number of Hotspot</h4>
-                  <h1>8</h1>
+                  <PmValueIndicator value={8} severity="normal" />
                 </CCardBody>
               </CContainer>
             </CCard>

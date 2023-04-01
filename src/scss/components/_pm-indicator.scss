@@ -1,0 +1,90 @@
+%indicator-1 {
+  width: 160px;
+  height: 160px !important;
+  z-index: 2;
+}
+
+%indicator-2 {
+  width: 180px;
+  height: 180px !important;
+  z-index: 1;
+}
+
+%indicator-3 {
+  width: 200px;
+  height: 200px !important;
+  z-index: 0;
+}
+
+.val-indicator {
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 48px;
+  color: $white;
+  margin: 0 auto;
+  &-normal {
+    &-1 {
+      background: #{$normal-indicator}FF;
+      @extend %indicator-1;
+    }
+    &-2 {
+      background: #{$normal-indicator}CC;
+      @extend %indicator-2;
+    }
+    &-3 {
+      background: #{$normal-indicator}66;
+      @extend %indicator-3;
+    }
+  }
+  &-abnormal {
+    background: $abnormal-indicator;
+    &-1 {
+      @extend %indicator-1;
+    }
+    &-2 {
+      @extend %indicator-2;
+    }
+    &-3 {
+      @extend %indicator-3;
+    }
+  }
+  &-severe {
+    background: $severe-indicator;
+    &-1 {
+      @extend %indicator-1;
+    }
+    &-2 {
+      @extend %indicator-2;
+    }
+    &-3 {
+      @extend %indicator-3;
+    }
+  }
+  &-dangerous {
+    background: $dangerous-indicator;
+    &-1 {
+      @extend %indicator-1;
+    }
+    &-2 {
+      @extend %indicator-2;
+    }
+    &-3 {
+      @extend %indicator-3;
+    }
+  }
+  &-very-dangerous {
+    background: $very-dangerous-indicator;
+    &-1 {
+      @extend %indicator-1;
+    }
+    &-2 {
+      @extend %indicator-2;
+    }
+    &-3 {
+      @extend %indicator-3;
+    }
+  }
+}
