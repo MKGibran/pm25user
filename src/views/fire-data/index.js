@@ -2,7 +2,7 @@ import React from 'react'
 import { CButton, CCard, CCardBody, CCol, CContainer, CRow } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import { cilLocationPin } from '@coreui/icons'
-import PmValueIndicator from 'src/components/PmValueIndicator'
+import PmValueIndicator from 'src/views/widgets/WPmValueIndicator'
 
 const Home = (props) => {
   return (
