@@ -20,6 +20,12 @@ const _nav = [
   },
   {
     component: CNavItem,
+    name: 'Registration',
+    to: '/registration',
+    icon: <CIcon icon={cilFire} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavItem,
     name: 'Fire data',
     to: '/fire-data',
     icon: <CIcon icon={cilFire} customClassName="nav-icon" />,
