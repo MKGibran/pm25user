@@ -1,6 +1,8 @@
 import React from 'react'
-import { CButton, CCard, CCardBody, CCol, CContainer, CRow } from '@coreui/react'
+import { CButton, CCard, CCardBody, CCol, CContainer, CRow, CCardHeader } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
+import Chart from './chart'
+import Table from './table'
 import { cilLocationPin } from '@coreui/icons'
 
 const Home = (props) => {
@@ -42,38 +44,66 @@ const Home = (props) => {
         </CRow>
       </CContainer>
 
-      <CContainer>
-        <CCard style={{ marginBottom: '2%' }} className={`border-light`}>
+      <CCard style={{ marginBottom: '2%' }} className={`border-light`}>
+        <CCardBody style={{ textAlign: 'center' }}>
+          <CRow>
+            <CCol>
+              <CRow>
+                <h4>The current air pollution level in your commune is</h4>
+                <h1>8</h1>
+              </CRow>
+            </CCol>
+            <CCol>
+              <CContainer>
+                <CRow>
+                  <CCard
+                    style={{
+                      marginBottom: '2%',
+                      backgroundColor: 'rgb(72, 156, 193)',
+                      color: '#FFF',
+                    }}
+                    className={`rounded-5 border-light`}
+                  >
+                    <CCardBody style={{ textAlign: 'left' }}>
+                      <h4>What does this mean ?</h4>
+                    </CCardBody>
+                  </CCard>
+                </CRow>
+                <CRow>
+                  <CCard
+                    style={{
+                      marginBottom: '2%',
+                      backgroundColor: 'rgb(72, 156, 193)',
+                      color: '#FFF',
+                    }}
+                    className={`rounded-5 border-light`}
+                  >
+                    <CCardBody style={{ textAlign: 'left' }}>
+                      <h4>Level 8 is equivalent to smoking X cigarettes </h4>
+                    </CCardBody>
+                  </CCard>
+                </CRow>
+              </CContainer>
+            </CCol>
+          </CRow>
+        </CCardBody>
+      </CCard>
+
+      <CCard style={{ marginBottom: '2%' }} className={`border-light`}>
+        <CCardHeader>
+          <h4>Daily Air Pollution (PM 2.5) for last 14 days</h4>
+        </CCardHeader>
+        <CContainer>
           <CCardBody style={{ textAlign: 'center' }}>
             <CRow>
-              <CCol>
-                <CRow>
-                  <h4>Air Pollution Level</h4>
-                  <h1>8</h1>
-                </CRow>
-              </CCol>
-              <CCol>
-                <CContainer>
-                  <CRow>
-                    <CCard style={{ marginBottom: '2%' }} className={`rounded-5 border-light`}>
-                      <CCardBody style={{ textAlign: 'center' }}>
-                        <h4>What does this mean ?</h4>
-                      </CCardBody>
-                    </CCard>
-                  </CRow>
-                  <CRow>
-                    <CCard style={{ marginBottom: '2%' }} className={`rounded-5 border-light`}>
-                      <CCardBody style={{ textAlign: 'center' }}>
-                        <h4>Level 8 is equivalent to smoking X cigarettes </h4>
-                      </CCardBody>
-                    </CCard>
-                  </CRow>
-                </CContainer>
-              </CCol>
+              <Chart />
+            </CRow>
+            <CRow>
+              <Table />
             </CRow>
           </CCardBody>
-        </CCard>
-      </CContainer>
+        </CContainer>
+      </CCard>
     </div>
   )
 }

@@ -23,7 +23,7 @@ const AppSidebar = () => {
   return (
     <CSidebar
       style={{
-        backgroundColor: '#2eb85c',
+        backgroundColor: 'rgb(130, 205, 71)',
         overflowY: 'hidden',
       }}
       position="fixed"
@@ -33,7 +33,13 @@ const AppSidebar = () => {
         dispatch({ type: 'set', sidebarShow: visible })
       }}
     >
-      <CSidebarBrand className="d-none d-md-flex" to="/">
+      <CSidebarBrand
+        className="d-none d-md-flex"
+        to="/"
+        style={{
+          backgroundColor: 'rgb(130, 205, 71)',
+        }}
+      >
         PM 25
         {/* <CIcon className="sidebar-brand-full" icon={logoNegative} height={35} />
         <CIcon className="sidebar-brand-narrow" icon={sygnet} height={35} /> */}

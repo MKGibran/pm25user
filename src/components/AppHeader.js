@@ -25,9 +25,8 @@ const AppHeader = () => {
   return (
     <CHeader
       position="sticky"
-      className="mb-4"
       style={{
-        backgroundColor: '#2eb85c',
+        backgroundColor: 'rgb(130, 205, 71)',
       }}
     >
       <CContainer fluid>

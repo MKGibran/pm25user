@@ -31,6 +31,7 @@ export const AppSidebarNav = ({ items }) => {
           })}
         key={index}
         {...rest}
+        style={{ color: '#fff' }}
       >
         {navLink(name, icon, badge)}
       </Component>

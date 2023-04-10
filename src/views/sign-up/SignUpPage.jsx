@@ -1,8 +1,19 @@
-import { CButton, CCard, CCardBody, CFormInput, CFormSelect } from '@coreui/react'
+import {
+  CButton,
+  CCard,
+  CCardBody,
+  CFormInput,
+  CFormSelect,
+  CContainer,
+  CCardHeader,
+  CRow,
+  CCol,
+} from '@coreui/react'
 import React, { useEffect, useState } from 'react'
 import WFormSelect from '../widgets/WFormSelect'
 import regionApi from '../../models/api/region'
 import { Controller, useForm } from 'react-hook-form'
+import { Link } from 'react-router-dom'
 
 export default function SignUpPage() {
   const { register, control, handleSubmit } = useForm()
@@ -31,9 +42,18 @@ export default function SignUpPage() {
 
   return (
     <>
+      <CCard style={{ marginBottom: '2%' }}>
+        <CContainer>
+          <CCardBody style={{ textAlign: 'center' }}>
+            <h4>The fire safety database is here to help you protect Indonesia</h4>
+          </CCardBody>
+        </CContainer>
+      </CCard>
       <CCard>
+        <CCardHeader>
+          <h4>Sign Up</h4>
+        </CCardHeader>
         <CCardBody className="p-4">
-          <h1 className="mb-5">Sign Up</h1>
           <form onSubmit={handleSubmit(onSubmit)}>
             <CFormInput name="name" {...register('name')} className="mb-2" placeholder="Name" />
             <CFormInput
@@ -109,13 +129,20 @@ export default function SignUpPage() {
                   data={villageData}
                   value={value}
                   onChange={onChange}
-                  className="mb-5"
+                  className="mb-3"
                 />
               )}
             />
-            <CButton type="submit" value="submit" style={{ float: 'right' }}>
-              Register
-            </CButton>
+            <CRow>
+              <CCol>
+                <Link to="/login">Already have an account ? Login here !</Link>
+              </CCol>
+              <CCol>
+                <CButton type="submit" value="submit" style={{ float: 'right', color: '#fff' }}>
+                  Register
+                </CButton>
+              </CCol>
+            </CRow>
           </form>
         </CCardBody>
       </CCard>

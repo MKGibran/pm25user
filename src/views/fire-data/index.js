@@ -1,13 +1,13 @@
 import React from 'react'
-import { CButton, CCard, CCardBody, CCol, CContainer, CRow } from '@coreui/react'
+import { CButton, CCard, CCardBody, CCol, CContainer, CRow, CButtonGroup } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import { cilLocationPin } from '@coreui/icons'
 import PmValueIndicator from 'src/views/widgets/WPmValueIndicator'
 
-const Home = (props) => {
+const FireData = (props) => {
   return (
     <div>
-      <CCard style={{ marginBottom: '2%' }} className={`border-light`}>
+      <CCard style={{ marginBottom: '2%' }}>
         <CContainer>
           <CCardBody style={{ textAlign: 'center' }}>
             <h4>Fire Data</h4>
@@ -32,42 +32,54 @@ const Home = (props) => {
       </CContainer>
 
       <CContainer>
-        <CRow xs={{ gutterX: 3 }}>
+        <CRow xs={{ gutterX: 5 }}>
           <CCol>
-            <CCard style={{ marginBottom: '2%', textAlign: 'center' }} className={`border-light`}>
-              <CContainer>
-                <CCardBody>
-                  <h4>Air Pollution Level</h4>
-                  <PmValueIndicator value={7} severity="normal" />
-                </CCardBody>
-              </CContainer>
-            </CCard>
+            <CRow>
+              <CCard style={{ marginBottom: '2%', textAlign: 'center' }}>
+                <CContainer>
+                  <CCardBody>
+                    <h4>The current air pollution level in your commune is</h4>
+                    <p>
+                      Nilai partikel PM 2.5 <br />
+                      (g/m2)
+                    </p>
+                    <PmValueIndicator value={7} severity="normal" />
+                    <CButtonGroup role="group" aria-label="Basic example" className="mt-4">
+                      <CButton color="success"></CButton>
+                      <CButton color="warning"></CButton>
+                      <CButton color="danger"></CButton>
+                    </CButtonGroup>
+                  </CCardBody>
+                </CContainer>
+              </CCard>
+            </CRow>
           </CCol>
           <CCol>
-            <CCard style={{ marginBottom: '2%', textAlign: 'center' }} className={`border-light`}>
-              <CContainer>
-                <CCardBody>
-                  <h4>Carbon Monoxide Level</h4>
-                  <h1>20</h1>
-                </CCardBody>
-              </CContainer>
-            </CCard>
-          </CCol>
-          <CCol>
-            <CCard
-              style={{
-                marginBottom: '2%',
-                textAlign: 'center',
-              }}
-              className={`border-light`}
-            >
-              <CContainer>
-                <CCardBody>
-                  <h4>Number of Hotspot</h4>
-                  <PmValueIndicator value={8} severity="normal" />
-                </CCardBody>
-              </CContainer>
-            </CCard>
+            <CRow>
+              <CCard
+                style={{
+                  marginBottom: '2%',
+                  textAlign: 'center',
+                }}
+              >
+                <CContainer>
+                  <CCardBody>
+                    <h4>The current number of hotspot in your commune is</h4>
+                    <PmValueIndicator value={8} severity="normal" />
+                  </CCardBody>
+                </CContainer>
+              </CCard>
+            </CRow>
+            <CRow>
+              <CCard style={{ marginBottom: '2%', textAlign: 'center' }}>
+                <CContainer>
+                  <CCardBody>
+                    <h4>The current carbon monoxide level in your commune is</h4>
+                    <h1>20</h1>
+                  </CCardBody>
+                </CContainer>
+              </CCard>
+            </CRow>
           </CCol>
         </CRow>
       </CContainer>
@@ -75,4 +87,4 @@ const Home = (props) => {
   )
 }
 
-export default Home
+export default FireData
