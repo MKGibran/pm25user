@@ -22,12 +22,11 @@ const DEV_TOKEN = '78|tJw4ftynAoDipYstB13uagdWKK1foCl7OuDwilhz'
 
 const HEADERS_API_BEARER = () => {
   const Cookies = require('js-cookie')
-  const sessionToken = store.getState().userData.token || ''
 
   return {
     headers: {
       ...HEADERS_API.headers,
-      Authorization: `Bearer ${sessionToken.length ? sessionToken : Cookies.get(TOKEN_NAME)}`,
+      Authorization: `Bearer ${Cookies.get(TOKEN_NAME)}`,
     },
   }
 }
