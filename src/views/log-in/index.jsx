@@ -1,5 +1,3 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
 import {
   CButton,
   CCard,
@@ -7,16 +5,27 @@ import {
   CCardGroup,
   CCol,
   CContainer,
-  CForm,
   CFormInput,
   CInputGroup,
   CInputGroupText,
   CRow,
 } from '@coreui/react'
+import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import CIcon from '@coreui/icons-react'
 import { cilLockLocked, cilUser } from '@coreui/icons'
+import { useForm } from 'react-hook-form'
+import loginApi from '../../models/api/login'
 
-const Login = () => {
+export default function LogInPage() {
+  const { register, handleSubmit } = useForm()
+  const [visible, setVisible] = useState(false)
+  const onSubmitForm = (data) => {
+    loginApi.loginUser(data).then((res) => {
+      console.log(res)
+    })
+  }
+
   return (
     <div className="d-flex flex-row align-items-center">
       <CContainer>
@@ -25,28 +34,36 @@ const Login = () => {
             <CCardGroup>
               <CCard className="p-4">
                 <CCardBody>
-                  <CForm>
+                  <form onSubmit={handleSubmit(onSubmitForm)}>
                     <h1>Login</h1>
                     <p className="text-medium-emphasis">Sign In to your account</p>
                     <CInputGroup className="mb-3">
                       <CInputGroupText>
                         <CIcon icon={cilUser} />
                       </CInputGroupText>
-                      <CFormInput placeholder="Username" autoComplete="username" />
+                      <CFormInput
+                        name="username"
+                        type="text"
+                        {...register('username')}
+                        placeholder="Username"
+                      />
                     </CInputGroup>
                     <CInputGroup className="mb-4">
                       <CInputGroupText>
                         <CIcon icon={cilLockLocked} />
                       </CInputGroupText>
                       <CFormInput
+                        name="password"
                         type="password"
+                        {...register('password')}
                         placeholder="Password"
-                        autoComplete="current-password"
                       />
                     </CInputGroup>
                     <CRow>
                       <CCol xs={6}>
                         <CButton
+                          type="submit"
+                          value="submit"
                           color="success"
                           className="px-4"
                           style={{
@@ -64,7 +81,7 @@ const Login = () => {
                         </CButton>
                       </CCol>
                     </CRow>
-                  </CForm>
+                  </form>
                 </CCardBody>
               </CCard>
               <CCard
@@ -107,5 +124,3 @@ const Login = () => {
     </div>
   )
 }
-
-export default Login

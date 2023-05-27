@@ -1,10 +1,17 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { CButton, CCard, CCardBody, CCol, CContainer, CRow, CButtonGroup } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import { cilLocationPin } from '@coreui/icons'
 import PmValueIndicator from 'src/views/widgets/WPmValueIndicator'
+import FireDataApi from '../../models/api/fire-data'
 
-const FireData = (props) => {
+export default function SignUpPage() {
+  useEffect(() => {
+    FireDataApi.getDataPM().then((res) => {
+      console.log(res)
+    })
+  })
+
   return (
     <div>
       <CCard style={{ marginBottom: '2%' }}>
@@ -86,5 +93,3 @@ const FireData = (props) => {
     </div>
   )
 }
-
-export default FireData

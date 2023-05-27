@@ -18,19 +18,19 @@ export const HEADERS_API = {
   },
 }
 
-// const DEV_TOKEN = "6|oY1jYidfGHrjqyb2QaZ9iGAq8ZZZkD6zCUrTy7iG";
+const DEV_TOKEN = '78|tJw4ftynAoDipYstB13uagdWKK1foCl7OuDwilhz'
 
-// const HEADERS_API_BEARER = () => {
-//   const Cookies = require('js-cookie')
-//   const sessionToken = store.getState().userData.token || ''
+const HEADERS_API_BEARER = () => {
+  const Cookies = require('js-cookie')
+  const sessionToken = store.getState().userData.token || ''
 
-//   return {
-//     headers: {
-//       ...HEADERS_API.headers,
-//       Authorization: `Bearer ${sessionToken.length ? sessionToken : Cookies.get(TOKEN_NAME)}`,
-//     },
-//   }
-// }
+  return {
+    headers: {
+      ...HEADERS_API.headers,
+      Authorization: `Bearer ${sessionToken.length ? sessionToken : Cookies.get(TOKEN_NAME)}`,
+    },
+  }
+}
 
 // Create axios instance with base url and credentials support
 export const axiosInstance = axios.create({
@@ -65,11 +65,11 @@ function paramsSerializer(params) {
   // "Hide" the `answer` param
   return Object.entries(Object.assign({}, params))
     .map(([key, value]) => {
-      if (value != undefined) return `${key}=${value}`
+      if (value !== undefined) return `${key}=${value}`
     })
     .join('&')
 }
 
 export default axiosInstance
 // export { HEADERS_API_BEARER, paramsSerializer }
-export { paramsSerializer }
+export { DEV_TOKEN, HEADERS_API_BEARER, paramsSerializer }
