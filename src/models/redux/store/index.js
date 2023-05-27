@@ -1,9 +1,11 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
-import regionalSlice from './regionalSlice'
 import { devToolsEnhancer } from '@redux-devtools/extension'
+import regionalSlice from './regionalSlice'
+import userSlice from './userSlice'
 
 const combinedReducer = combineReducers({
   regional: regionalSlice.reducer,
+  user: userSlice.reducer,
 })
 
 export const store = configureStore({

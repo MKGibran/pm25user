@@ -16,13 +16,17 @@ import CIcon from '@coreui/icons-react'
 import { cilLockLocked, cilUser } from '@coreui/icons'
 import { useForm } from 'react-hook-form'
 import loginApi from '../../models/api/login'
+import { useDispatch } from 'react-redux'
+import { userActions } from 'src/models/redux/actions/userActions'
 
 export default function LogInPage() {
   const { register, handleSubmit } = useForm()
   const [visible, setVisible] = useState(false)
+  const dispatch = useDispatch()
   const onSubmitForm = (data) => {
     loginApi.loginUser(data).then((res) => {
       console.log(res)
+      dispatch(userActions.setUserData({ current_user: res.current_user }))
     })
   }
 
