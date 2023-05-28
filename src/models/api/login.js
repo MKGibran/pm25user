@@ -16,12 +16,12 @@ export default {
       .then((response) => {
         console.log(response.data)
         Cookies.set(TOKEN_NAME, response.data.token, { expires: 1 })
-        alert(response.data.message)
 
         return {
+          status: 'success',
           current_user: response.data.data,
-          data: {
-            state: true,
+          state: {
+            open: true,
             severity: 'info',
             message: response.data.message,
           },
@@ -29,11 +29,10 @@ export default {
       })
       .catch((error) => {
         console.log(error.response)
-        alert(error.response)
         return {
-          token: '',
+          status: 'fail',
           data: {
-            state: true,
+            open: true,
             severity: 'error',
             message: error.response.data.message,
           },
@@ -41,6 +40,7 @@ export default {
       })
     return res
   },
+
   async logoutUser() {
     const res = await axiosInstance
       .post(BASE_URL_API + '/logout', {}, HEADERS_API_BEARER())

@@ -18,6 +18,7 @@ import { useForm } from 'react-hook-form'
 import loginApi from '../../models/api/login'
 import { useDispatch } from 'react-redux'
 import { userActions } from 'src/models/redux/actions/userActions'
+import { globalUiActions } from 'src/models/redux/actions/globalUiActions'
 
 export default function LogInPage() {
   const { register, handleSubmit } = useForm()
@@ -27,6 +28,7 @@ export default function LogInPage() {
     loginApi.loginUser(data).then((res) => {
       console.log(res)
       dispatch(userActions.setUserData({ current_user: res.current_user }))
+      dispatch(globalUiActions.setToastMessage(res.state))
     })
   }
 
