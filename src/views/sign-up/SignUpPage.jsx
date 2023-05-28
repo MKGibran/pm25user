@@ -20,6 +20,9 @@ import regionApi from '../../models/api/region'
 import signUpApi from '../../models/api/sign-up'
 import { Controller, useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
+import SignUpOTPPopup from './SignUpOTPPopup'
+import { useDispatch } from 'react-redux'
+import { globalUiActions } from 'src/models/redux/actions/globalUiActions'
 
 export default function SignUpPage() {
   const { register, control, handleSubmit } = useForm()
@@ -28,7 +31,10 @@ export default function SignUpPage() {
     province: null,
     district: null,
   })
-  const [visible, setVisible] = useState(false)
+  const [visible, setVisible] = useState(true)
+  const [userId, setUserId] = useState(75)
+
+  const dispatch = useDispatch()
 
   const [provinceData, setProvinceData] = useState([{}])
   const [citiesData, setCitiesData] = useState([{}])
@@ -45,14 +51,22 @@ export default function SignUpPage() {
 
   const onSubmit = (data) => {
     signUpApi.signUp(data).then((res) => {
-      if (data.otp) {
+      console.log(res)
+      if (res.status === 'success') {
         setVisible(!visible)
+        setUserId(res.data.id)
       }
     })
   }
 
   return (
     <>
+      {visible === true ? (
+        <SignUpOTPPopup visible={visible} setVisible={setVisible} data={userId} />
+      ) : (
+        <></>
+      )}
+
       <CCard style={{ marginBottom: '2%' }}>
         <CContainer>
           <CCardBody style={{ textAlign: 'center' }}>
@@ -247,29 +261,6 @@ export default function SignUpPage() {
           </form>
         </CCardBody>
       </CCard>
-      <CModal visible={visible} onClose={() => setVisible(false)}>
-        <CModalHeader>
-          <CModalTitle>Registrasi berhasil</CModalTitle>
-        </CModalHeader>
-        <form>
-          <CModalBody>
-            Silahkan masukan OTP yang dikirimkan ke email untuk memverifikasi akun anda
-            <CRow>
-              <CCol>
-                <CFormInput name="OTP" {...register('otp')} className="mb-2" placeholder="OTP" />
-              </CCol>
-            </CRow>
-          </CModalBody>
-          <CModalFooter>
-            <CButton color="secondary" onClick={() => setVisible(false)}>
-              Close
-            </CButton>
-            <CButton type="submit" value="submit" color="primary">
-              Save changes
-            </CButton>
-          </CModalFooter>
-        </form>
-      </CModal>
     </>
   )
 }
