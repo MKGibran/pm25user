@@ -6,7 +6,7 @@ import axios, { paramsSerializer, BASE_URL_API, HEADERS_API_BEARER } from './con
 export default {
   async getDataPM(query) {
     const response = await axios
-      .get(BASE_URL_API + '/admin/hotspot?' + paramsSerializer(query), HEADERS_API_BEARER())
+      .get(BASE_URL_API + '/admin/smoke?' + paramsSerializer(query), HEADERS_API_BEARER())
       .then((res) => {
         return {
           data: res.data.data.data,

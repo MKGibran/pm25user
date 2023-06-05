@@ -19,16 +19,27 @@ import loginApi from '../../models/api/login'
 import { useDispatch } from 'react-redux'
 import { userActions } from 'src/models/redux/actions/userActions'
 import { globalUiActions } from 'src/models/redux/actions/globalUiActions'
+import { Navigate } from 'react-router-dom'
 
 export default function LogInPage() {
   const { register, handleSubmit } = useForm()
   const [visible, setVisible] = useState(false)
+  const [authenticated, setauthenticated] = useState(null)
   const dispatch = useDispatch()
+  useEffect(() => {
+    if (authenticated) {
+      return <Navigate replace to="/home" />
+    } else {
+      return <Navigate replace to="/login" />
+    }
+  }, [])
+
   const onSubmitForm = (data) => {
     loginApi.loginUser(data).then((res) => {
       console.log(res)
       dispatch(userActions.setUserData({ current_user: res.current_user }))
       dispatch(globalUiActions.setToastMessage(res.state))
+      setauthenticated(authenticated)
     })
   }
 

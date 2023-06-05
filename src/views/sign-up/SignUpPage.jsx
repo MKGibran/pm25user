@@ -42,6 +42,7 @@ export default function SignUpPage() {
   const [villageData, setVillageData] = useState([{}])
 
   useEffect(() => {
+    setVisible(!visible)
     regionApi.getProvinces().then((res) => setProvinceData(res))
   }, [])
 
@@ -51,7 +52,6 @@ export default function SignUpPage() {
 
   const onSubmit = (data) => {
     signUpApi.signUp(data).then((res) => {
-      console.log(res)
       if (res.status === 'success') {
         setVisible(!visible)
         setUserId(res.data.id)

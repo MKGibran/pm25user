@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import {
   CButton,
-  CBadge,
   CCard,
   CCardBody,
   CCol,
@@ -15,20 +14,18 @@ import {
   CTableBody,
   CTableDataCell,
 } from '@coreui/react'
-import { cilZoomIn } from '@coreui/icons'
 import CIcon from '@coreui/icons-react'
 import Chart from './chart'
-import Filter from './filter'
-import { cilLocationPin } from '@coreui/icons'
-import AirPollutionApi from '../../models/api/air-pollution'
+import { cilLocationPin, cilZoomIn } from '@coreui/icons'
+import HotspotApi from '../../models/api/fire-data'
 import dayjs from 'dayjs'
 
-const Home = (props) => {
+const Hotspot = (props) => {
   const [data, setData] = useState([])
   const [date, setDate] = useState([])
   const [value, setValue] = useState([])
   useEffect(() => {
-    AirPollutionApi.getDataPM()
+    HotspotApi.getDataPM()
       .then((response) => {
         setData(response.data)
         const dates = []
@@ -48,7 +45,7 @@ const Home = (props) => {
       <CCard style={{ marginBottom: '2%' }} className={`border-light`}>
         <CContainer>
           <CCardBody style={{ textAlign: 'center' }}>
-            <h4>Air Pollution (PM 2.5)</h4>
+            <h4>Hotspot (PM 2.5)</h4>
           </CCardBody>
         </CContainer>
       </CCard>
@@ -128,7 +125,7 @@ const Home = (props) => {
 
       <CCard style={{ marginBottom: '2%' }} className={`border-light`}>
         <CCardHeader>
-          <h4>Daily Air Pollution (PM 2.5) for last 14 days</h4>
+          <h4>Daily Hotspot (PM 2.5) for last 14 days</h4>
         </CCardHeader>
         <CContainer>
           <CCardBody style={{ textAlign: 'center' }}>
@@ -137,7 +134,6 @@ const Home = (props) => {
             </CRow>
             <CRow>
               <CContainer>
-                <Filter />
                 <CTable responsive>
                   <CTableHead>
                     <CTableRow>
@@ -147,30 +143,12 @@ const Home = (props) => {
                       <CTableHeaderCell scope="col">Kab/Kota</CTableHeaderCell>
                       <CTableHeaderCell scope="col">Kecamatan</CTableHeaderCell>
                       <CTableHeaderCell scope="col">Keluarahan/Desa</CTableHeaderCell>
-                      <CTableHeaderCell scope="col">Nilai</CTableHeaderCell>
-                      <CTableHeaderCell scope="col">Status</CTableHeaderCell>
                       <CTableHeaderCell scope="col">Hotspot</CTableHeaderCell>
                       <CTableHeaderCell scope="col">Aksi</CTableHeaderCell>
                     </CTableRow>
                   </CTableHead>
                   <CTableBody style={{ textAlign: 'left' }}>
                     {data.map((item) => {
-                      if (item.value < 25) {
-                        item.status = 'good'
-                        item.statusColor = 'primary'
-                      } else if (item.value >= 25 && item.value <= 50) {
-                        item.status = 'fair'
-                        item.statusColor = 'warning'
-                      } else if (item.value >= 50 && item.value <= 100) {
-                        item.status = 'poor'
-                        item.statusColor = 'primary'
-                      } else if (item.value >= 100 && item.value <= 300) {
-                        item.status = 'very poor'
-                        item.statusColor = 'primary'
-                      } else {
-                        item.status = 'extremely poor'
-                        item.statusColor = 'danger'
-                      }
                       return (
                         <CTableRow key={item.id}>
                           <CTableDataCell>
@@ -181,14 +159,6 @@ const Home = (props) => {
                           <CTableDataCell>{item.city.name}</CTableDataCell>
                           <CTableDataCell>{item.district.name}</CTableDataCell>
                           <CTableDataCell>{item.village.name}</CTableDataCell>
-                          <CTableDataCell style={{ textAlign: 'center' }}>
-                            {item.value}
-                          </CTableDataCell>
-                          <CTableDataCell style={{ textAlign: 'center' }}>
-                            <CBadge color={item.statusColor} shape="rounded-pill">
-                              {item.status}
-                            </CBadge>
-                          </CTableDataCell>
                           <CTableDataCell style={{ textAlign: 'center' }}>
                             {item.value}
                           </CTableDataCell>
@@ -211,4 +181,4 @@ const Home = (props) => {
   )
 }
 
-export default Home
+export default Hotspot

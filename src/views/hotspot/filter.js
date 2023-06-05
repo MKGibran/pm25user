@@ -20,34 +20,34 @@ const Filter = (props) => {
           <CRow>
             <CCol>
               <CRow className="mb-3">
-                <CFormLabel htmlFor="Provinsi" className="col-sm-4 col-form-label text-start">
+                <CFormLabel htmlFor="Provinsi" className="col-sm-2 col-form-label text-start">
                   Provinsi
                 </CFormLabel>
-                <CCol sm={6}>
+                <CCol sm={8}>
                   <CFormInput type="text" id="Provinsi" />
                 </CCol>
               </CRow>
               <CRow className="mb-3">
-                <CFormLabel htmlFor="Kabupaten/Kota" className="col-sm-4 col-form-label text-start">
+                <CFormLabel htmlFor="Kabupaten/Kota" className="col-sm-2 col-form-label text-start">
                   Kabupaten/Kota
                 </CFormLabel>
-                <CCol sm={6}>
+                <CCol sm={8}>
                   <CFormInput type="text" id="Kabupaten/Kota" />
                 </CCol>
               </CRow>
               <CRow className="mb-3">
-                <CFormLabel htmlFor="Kecamatan" className="col-sm-4 col-form-label text-start">
+                <CFormLabel htmlFor="Kecamatan" className="col-sm-2 col-form-label text-start">
                   Kecamatan
                 </CFormLabel>
-                <CCol sm={6}>
+                <CCol sm={8}>
                   <CFormInput type="text" id="Kecamatan" />
                 </CCol>
               </CRow>
               <CRow className="mb-3">
-                <CFormLabel htmlFor="Kelurahan/Desa" className="col-sm-4 col-form-label text-start">
+                <CFormLabel htmlFor="Kelurahan/Desa" className="col-sm-2 col-form-label text-start">
                   Kelurahan/Desa
                 </CFormLabel>
-                <CCol sm={6}>
+                <CCol sm={8}>
                   <CFormInput type="text" id="Kelurahan/Desa" />
                 </CCol>
               </CRow>
