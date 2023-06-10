@@ -24,18 +24,17 @@ import CIcon from '@coreui/icons-react'
 import Chart from './chart'
 import Level from './level'
 import dayjs from 'dayjs'
-import ParticulateMatterApi from '../../models/api/particulate-matter'
+import SmokeApi from '../../models/api/smoke'
 import regionApi from '../../models/api/region'
 
-const AirPollution = (props) => {
+const Home = (props) => {
   const user = props.user
   const region = props.user.region
   const [data, setData] = useState([])
   const [date, setDate] = useState([])
   const [value, setValue] = useState([])
-
   const getData = () => {
-    ParticulateMatterApi.getDataPM()
+    SmokeApi.getDataSmoke()
       .then((response) => {
         return response
       })
@@ -61,7 +60,7 @@ const AirPollution = (props) => {
       <CCard style={{ marginBottom: '2%' }} className={`border-light`}>
         <CContainer>
           <CCardBody style={{ textAlign: 'center' }}>
-            <h4>Air Pollution (PM 2.5)</h4>
+            <h4>Smoke (PM 2.5)</h4>
           </CCardBody>
         </CContainer>
       </CCard>
@@ -98,7 +97,7 @@ const AirPollution = (props) => {
 
       <CCard style={{ marginBottom: '2%' }} className={`border-light`}>
         <CCardHeader>
-          <h4>Daily Air Pollution (PM 2.5) for last 14 days</h4>
+          <h4>Daily Smoke (PM 2.5) for last 14 days</h4>
         </CCardHeader>
         <CContainer>
           <CCardBody style={{ textAlign: 'center' }}>
@@ -277,4 +276,4 @@ const AirPollution = (props) => {
   )
 }
 
-export default AirPollution
+export default Home

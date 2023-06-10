@@ -1,8 +1,8 @@
+/* eslint-disable import/no-anonymous-default-export */
 import axios, { BASE_URL_API, HEADERS_API, TOKEN_NAME } from './config'
 
 export default {
   async signUp(data) {
-    console.log(data)
     const response = await axios
       .post(BASE_URL_API + '/register', data)
       .then((res) => {
@@ -17,6 +17,7 @@ export default {
         }
       })
       .catch((err) => {
+        alert(err.response.data.message)
         return {
           status: 'error',
           state: {
@@ -29,7 +30,6 @@ export default {
     return response
   },
   async checkOtp(data) {
-    console.log(data)
     const response = await axios
       .post(BASE_URL_API + '/register/verify', data)
       .then((res) => {
@@ -57,7 +57,6 @@ export default {
     return response
   },
   async resentOtp(data) {
-    console.log(data)
     const response = await axios
       .post(BASE_URL_API + '/register/otp', data)
       .then((res) => {

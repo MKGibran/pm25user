@@ -22,22 +22,20 @@ import { globalUiActions } from 'src/models/redux/actions/globalUiActions'
 
 export default function LogInPage() {
   const { register, handleSubmit } = useForm()
-  const [authenticated, setauthenticated] = useState(null)
+  // const [authenticated, setauthenticated] = useState(null)
   const dispatch = useDispatch()
-
   const onSubmitForm = (data) => {
     loginApi.loginUser(data).then((res) => {
-      console.log(res)
       dispatch(userActions.setUserData({ current_user: res.current_user }))
       dispatch(globalUiActions.setToastMessage(res.state))
     })
   }
 
   return (
-    <div className="d-flex flex-row align-items-center">
+    <div className="bg-light min-vh-100 d-flex flex-row align-items-center">
       <CContainer>
         <CRow className="justify-content-center">
-          <CCol>
+          <CCol md={8}>
             <CCardGroup>
               <CCard className="p-4">
                 <CCardBody>

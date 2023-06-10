@@ -5,7 +5,7 @@ import { CContainer, CSpinner, CToaster } from '@coreui/react'
 // routes config
 import routes from '../routes'
 
-const AppContent = () => {
+const AppContent = (props) => {
   return (
     <>
       <CContainer className="mt-4" lg>
@@ -19,7 +19,7 @@ const AppContent = () => {
                     path={route.path}
                     exact={route.exact}
                     name={route.name}
-                    element={<route.element />}
+                    element={<route.element user={props} />}
                   />
                 )
               )

@@ -1,5 +1,16 @@
 import React from 'react'
-import { CCard, CCardBody, CContainer, CCardHeader } from '@coreui/react'
+import {
+  CCard,
+  CCardBody,
+  CContainer,
+  CTable,
+  CCardHeader,
+  CTableHead,
+  CTableRow,
+  CTableHeaderCell,
+  CTableBody,
+  CTableDataCell,
+} from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 
 const FireData = (props) => {
@@ -19,7 +30,24 @@ const FireData = (props) => {
         </CCardHeader>
         <CContainer>
           <CCardBody>
-            <p>0878-0000-0000</p>
+            <CTable responsive>
+              <CTableHead>
+                <CTableRow>
+                  <CTableHeaderCell scope="col">Provinsi</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Kab/Kota</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Kecamatan</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Kontak</CTableHeaderCell>
+                </CTableRow>
+              </CTableHead>
+              <CTableBody style={{ textAlign: 'left' }}>
+                <CTableRow>
+                  <CTableDataCell>Jawa Barat</CTableDataCell>
+                  <CTableDataCell>Bogor</CTableDataCell>
+                  <CTableDataCell>Tegallega</CTableDataCell>
+                  <CTableDataCell>0878000000</CTableDataCell>
+                </CTableRow>
+              </CTableBody>
+            </CTable>
           </CCardBody>
         </CContainer>
       </CCard>

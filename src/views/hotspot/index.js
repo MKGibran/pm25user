@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { useEffect, useState } from 'react'
 import {
   CButton,
@@ -16,21 +17,28 @@ import {
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import Chart from './chart'
-import { cilLocationPin, cilZoomIn } from '@coreui/icons'
-import HotspotApi from '../../models/api/fire-data'
+import Level from './level'
 import dayjs from 'dayjs'
+import { cilLocationPin, cilZoomIn } from '@coreui/icons'
+import HotspotApi from '../../models/api/hotspot'
+import regionApi from '../../models/api/region'
 
 const Hotspot = (props) => {
+  const user = props.user
+  const region = props.user.region
   const [data, setData] = useState([])
   const [date, setDate] = useState([])
   const [value, setValue] = useState([])
-  useEffect(() => {
-    HotspotApi.getDataPM()
+  const getData = () => {
+    HotspotApi.getDataHotspot()
       .then((response) => {
-        setData(response.data)
+        return response
+      })
+      .then((data) => {
+        setData(data.data)
         const dates = []
         const values = []
-        response.data.forEach((data, index) => {
+        data.data.forEach((data, index) => {
           dates.push(dayjs(data.datetime).format('MM-DD-YYYY'))
           values.push(data.value)
         })
@@ -38,6 +46,9 @@ const Hotspot = (props) => {
         setValue(values)
       })
       .catch((error) => console.error(error))
+  }
+  useEffect(() => {
+    getData()
   }, [])
 
   return (
@@ -65,10 +76,10 @@ const Hotspot = (props) => {
       <CContainer style={{ marginBottom: '1%' }}>
         <CRow>
           <CCol>
-            <h5>
-              <CIcon icon={cilLocationPin} size="xl" style={{ marginRight: '1%' }} />
-              Kecamatan, Kelurahan, Provinsi
-            </h5>
+            <p>
+              <CIcon icon={cilLocationPin} size="sm" style={{ marginRight: '1%' }} />
+              {region.village.name}, {region.district.name}, {region.province.name}
+            </p>
           </CCol>
           <CCol>
             <CButton color="success" style={{ color: '#fff', float: 'right' }}>
@@ -78,50 +89,7 @@ const Hotspot = (props) => {
         </CRow>
       </CContainer>
 
-      <CCard style={{ marginBottom: '2%' }} className={`border-light`}>
-        <CCardBody style={{ textAlign: 'center' }}>
-          <CRow>
-            <CCol>
-              <CRow>
-                <h4>The current air pollution level in your commune is</h4>
-                <h1>8</h1>
-              </CRow>
-            </CCol>
-            <CCol>
-              <CContainer>
-                <CRow>
-                  <CCard
-                    style={{
-                      marginBottom: '2%',
-                      backgroundColor: 'rgb(72, 156, 193)',
-                      color: '#FFF',
-                    }}
-                    className={`rounded-5 border-light`}
-                  >
-                    <CCardBody style={{ textAlign: 'left' }}>
-                      <h4>What does this mean ?</h4>
-                    </CCardBody>
-                  </CCard>
-                </CRow>
-                <CRow>
-                  <CCard
-                    style={{
-                      marginBottom: '2%',
-                      backgroundColor: 'rgb(72, 156, 193)',
-                      color: '#FFF',
-                    }}
-                    className={`rounded-5 border-light`}
-                  >
-                    <CCardBody style={{ textAlign: 'left' }}>
-                      <h4>Level 8 is equivalent to smoking X cigarettes </h4>
-                    </CCardBody>
-                  </CCard>
-                </CRow>
-              </CContainer>
-            </CCol>
-          </CRow>
-        </CCardBody>
-      </CCard>
+      <Level user={user} />
 
       <CCard style={{ marginBottom: '2%' }} className={`border-light`}>
         <CCardHeader>
@@ -129,7 +97,7 @@ const Hotspot = (props) => {
         </CCardHeader>
         <CContainer>
           <CCardBody style={{ textAlign: 'center' }}>
-            <CRow>
+            <CRow className={`mb-5`}>
               <Chart dates={date} values={value} />
             </CRow>
             <CRow>

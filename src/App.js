@@ -1,6 +1,7 @@
 import React, { Component, Suspense } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import './scss/style.scss'
+import { useSelector } from 'react-redux'
 
 const loading = (
   <div className="pt-3 text-center">
@@ -12,8 +13,8 @@ const loading = (
 const DefaultLayout = React.lazy(() => import('./layout/DefaultLayout'))
 
 // Pages
-const Login = React.lazy(() => import('./views/pages/login/Login'))
-const Register = React.lazy(() => import('./views/pages/register/Register'))
+const Login = React.lazy(() => import('./views/log-in/index'))
+const Register = React.lazy(() => import('./views/sign-up/SignUpPage'))
 const Page404 = React.lazy(() => import('./views/pages/page404/Page404'))
 const Page500 = React.lazy(() => import('./views/pages/page500/Page500'))
 

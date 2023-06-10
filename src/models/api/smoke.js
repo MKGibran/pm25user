@@ -4,7 +4,7 @@ import axios, { paramsSerializer, BASE_URL_API, HEADERS_API_BEARER } from './con
 // import { format } from 'date-fns'
 
 export default {
-  async getDataPM(query) {
+  async getDataSmoke(query) {
     const response = await axios
       .get(BASE_URL_API + '/admin/smoke?' + paramsSerializer(query), HEADERS_API_BEARER())
       .then((res) => {

@@ -1,11 +1,11 @@
-import React from 'react'
+/* eslint-disable react/prop-types */
+import React, { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import {
   CContainer,
   CHeader,
   CHeaderBrand,
-  // CHeaderDivider,
   CHeaderNav,
   CHeaderToggler,
   CNavLink,
@@ -18,10 +18,9 @@ import { cilMenu } from '@coreui/icons'
 import { AppHeaderDropdown } from './header/index'
 import { logo } from 'src/assets/brand/logo'
 
-const AppHeader = () => {
+const AppHeader = (props) => {
   const dispatch = useDispatch()
   const sidebarShow = useSelector((state) => state.sidebarShow)
-
   return (
     <CHeader
       position="sticky"
@@ -41,13 +40,13 @@ const AppHeader = () => {
         </CHeaderBrand>
         <CHeaderNav className="d-none d-md-flex me-auto">
           <CNavItem>
-            <CNavLink to="/dashboard" component={NavLink} style={{ color: '#fff' }}>
-              Dashboard
-            </CNavLink>
+            {/* <CNavLink to="/dashboard" component={NavLink} style={{ color: '#fff' }}>
+              {props.user.full_name}
+            </CNavLink> */}
           </CNavItem>
         </CHeaderNav>
         <CHeaderNav className="ms-3">
-          <AppHeaderDropdown />
+          <AppHeaderDropdown user={props.user} />
         </CHeaderNav>
       </CContainer>
       {/* <CHeaderDivider />

@@ -1,16 +1,31 @@
-import React, { useEffect, useRef } from 'react'
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect, useRef, useState } from 'react'
 import { AppContent, AppSidebar, AppFooter, AppHeader } from '../components/index'
 
 import { useSelector } from 'react-redux'
 import AppSimpleToast from '../components/toast/AppSimpleToast'
 import { CToaster } from '@coreui/react'
+import regionApi from '../models/api/region'
 
 const DefaultLayout = () => {
+  const [region, setRegion] = useState([])
   const toaster = useRef()
   const toastState = useSelector((state) => state.globalUi?.toast)
+  const user = useSelector((state) => state.user.current_user)
+  const getVillageData = () => {
+    regionApi
+      .getVillage(user.village_code)
+      .then((response) => {
+        return response
+      })
+      .then((data) => {
+        setRegion(data)
+      })
+  }
   useEffect(() => {
+    getVillageData()
     console.log(toastState)
-  }, [toastState])
+  }, [toastState, user])
 
   return (
     <div>
@@ -23,11 +38,11 @@ const DefaultLayout = () => {
       ) : (
         <></>
       )}
-      <AppSidebar />
+      <AppSidebar user={user} />
       <div className="wrapper d-flex flex-column min-vh-100 bg-light">
-        <AppHeader />
+        <AppHeader user={user} />
         <div className="body flex-grow-1 px-3" style={{ backgroundColor: 'rgb(253, 250, 246)' }}>
-          <AppContent />
+          <AppContent user={user} region={region} />
         </div>
         <AppFooter />
       </div>

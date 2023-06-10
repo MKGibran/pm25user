@@ -1,21 +1,16 @@
+/* eslint-disable import/no-anonymous-default-export */
 import axios, { paramsSerializer, BASE_URL_API, HEADERS_API_BEARER } from './config'
 // import { DashboardRes } from '../models'
 // import dateHelper, { DATE_FORMAT } from '../../utils/helper/dateHelper'
 // import { format } from 'date-fns'
 
 export default {
-  async getDataHotspot(query) {
+  async getDataInformation(village_code) {
     const response = await axios
-      .get(BASE_URL_API + '/admin/hotspot?' + paramsSerializer(query), HEADERS_API_BEARER())
+      .get(BASE_URL_API + '/information/' + village_code)
       .then((res) => {
         return {
-          data: res.data.data.data,
-          meta: {
-            from: res.data.data.from,
-            last_page: res.data.data.last_page,
-            to: res.data.data.to,
-            total: res.data.data.total,
-          },
+          data: res.data.data,
         }
       })
       .catch((error) => console.error(error.response.data.message))
