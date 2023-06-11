@@ -1,4 +1,3 @@
-/* eslint-disable import/no-anonymous-default-export */
 import axiosInstance, { HEADERS_API_BEARER } from './config'
 // import { UserData, UsersRes } from '../models/users'
 import { BASE_URL_API, HEADERS_API, TOKEN_NAME } from './config'

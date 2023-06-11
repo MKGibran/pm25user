@@ -1,4 +1,3 @@
-/* eslint-disable import/no-anonymous-default-export */
 import axios, { BASE_URL_API, HEADERS_API, TOKEN_NAME } from './config'
 
 export default {
