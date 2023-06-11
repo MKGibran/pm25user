@@ -26,8 +26,12 @@ import Level from './level'
 import dayjs from 'dayjs'
 import ParticulateMatterApi from '../../models/api/particulate-matter'
 import regionApi from '../../models/api/region'
+import { Controller, useForm } from 'react-hook-form'
+import WFormSelect from '../widgets/WFormSelect'
+
 
 const AirPollution = (props) => {
+  const { register, control, handleSubmit } = useForm()
   const user = props.user
   const region = props.user.region
   const [data, setData] = useState([])
@@ -60,8 +64,12 @@ const AirPollution = (props) => {
       })
       .catch((error) => console.error(error))
   }
+
+  const [provinceData, setProvinceData] = useState([{}])
+
   useEffect(() => {
     getData()
+    regionApi.getProvinces().then((res) => setProvinceData(res))
   }, [])
 
   return (
@@ -133,7 +141,25 @@ const AirPollution = (props) => {
                             Provinsi
                           </CFormLabel>
                           <CCol sm={6}>
-                            <CFormInput type="text" id="Provinsi" />
+                            <Controller
+                            control={control}
+                            name="province"
+                            render={({field : {onChange, value, ref}})=>(
+                              <WFormSelect
+                              label="Province"
+                              inputRef={ref}
+                              data={provinceData}
+                              value={value}
+                              onChange={(e) => {
+                                onChange(e)
+                                regionApi
+                                  .getCities(e.target.value)
+                                  .then((res) => setCities(res))
+                              }}
+                            className="mb-2"
+                            />
+                            )}
+                          />
                           </CCol>
                         </CRow>
                         <CRow className="mb-3">
@@ -215,14 +241,14 @@ const AirPollution = (props) => {
                       <CTableHeaderCell scope="col">Provinsi</CTableHeaderCell>
                       <CTableHeaderCell scope="col">Kab/Kota</CTableHeaderCell>
                       <CTableHeaderCell scope="col">Kecamatan</CTableHeaderCell>
-                      <CTableHeaderCell scope="col">Keluarahan/Desa</CTableHeaderCell>
+                      <CTableHeaderCell scope="col">Kelurahan/Desa</CTableHeaderCell>
                       <CTableHeaderCell scope="col">Nilai</CTableHeaderCell>
                       <CTableHeaderCell scope="col">Status</CTableHeaderCell>
                       <CTableHeaderCell scope="col">Hotspot</CTableHeaderCell>
                       <CTableHeaderCell scope="col">Aksi</CTableHeaderCell>
                     </CTableRow>
                   </CTableHead>
-                  <CTableBody style={{ textAlign: 'left' }}>
+                  {/* <CTableBody style={{ textAlign: 'left' }}>
                     {data.map((item) => {
                       if (item.value < 25) {
                         item.status = 'good'
@@ -269,7 +295,7 @@ const AirPollution = (props) => {
                         </CTableRow>
                       )
                     })}
-                  </CTableBody>
+                  </CTableBody> */}
                 </CTable>
               </CContainer>
             </CRow>
