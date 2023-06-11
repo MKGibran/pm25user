@@ -32,7 +32,7 @@ export default function SignUpPage() {
     district: null,
   })
   const [visible, setVisible] = useState(true)
-  const [userId, setUserId] = useState(75)
+  const [userId, setUserId] = useState(0)
 
   const dispatch = useDispatch()
 
