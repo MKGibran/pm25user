@@ -26,7 +26,7 @@ const HEADERS_API_BEARER = () => {
   return {
     headers: {
       ...HEADERS_API.headers,
-      Authorization: `Bearer ${Cookies.get(TOKEN_NAME)}`,
+      Authorization: Cookies.get(TOKEN_NAME) ? `Bearer ${Cookies.get(TOKEN_NAME)}` : undefined,
     },
   }
 }

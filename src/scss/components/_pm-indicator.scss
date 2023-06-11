@@ -42,12 +42,15 @@
   &-abnormal {
     background: $abnormal-indicator;
     &-1 {
+      background: #{$abnormal-indicator}FF;
       @extend %indicator-1;
     }
     &-2 {
+      background: #{$abnormal-indicator}CC;
       @extend %indicator-2;
     }
     &-3 {
+      background: #{$abnormal-indicator}66;
       @extend %indicator-3;
     }
   }
@@ -55,36 +58,45 @@
     background: $severe-indicator;
     &-1 {
       @extend %indicator-1;
+      background: #{$severe-indicator}FF;
     }
     &-2 {
       @extend %indicator-2;
+      background: #{$severe-indicator}CC;
     }
     &-3 {
       @extend %indicator-3;
+      background: #{$severe-indicator}66;
     }
   }
   &-dangerous {
     background: $dangerous-indicator;
     &-1 {
       @extend %indicator-1;
+      background: #{$dangerous-indicator}FF;
     }
     &-2 {
       @extend %indicator-2;
+      background: #{$dangerous-indicator}CC;
     }
     &-3 {
       @extend %indicator-3;
+      background: #{$dangerous-indicator}66;
     }
   }
   &-very-dangerous {
     background: $very-dangerous-indicator;
     &-1 {
       @extend %indicator-1;
+      background: #{$very-dangerous-indicator}FF;
     }
     &-2 {
       @extend %indicator-2;
+      background: #{$very-dangerous-indicator}CC;
     }
     &-3 {
       @extend %indicator-3;
+      background: #{$very-dangerous-indicator}66;
     }
   }
 }

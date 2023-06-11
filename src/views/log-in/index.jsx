@@ -17,7 +17,7 @@ import { cilLockLocked, cilUser } from '@coreui/icons'
 import { useForm } from 'react-hook-form'
 import loginApi from '../../models/api/login'
 import { useDispatch } from 'react-redux'
-import { userActions } from 'src/models/redux/actions/userActions'
+import { userActions, userLogout } from 'src/models/redux/actions/userActions'
 import { globalUiActions } from 'src/models/redux/actions/globalUiActions'
 
 export default function LogInPage() {
@@ -83,6 +83,18 @@ export default function LogInPage() {
                           }}
                         >
                           Login
+                        </CButton>
+                      </CCol>
+                      <CCol xs={6} className="text-right">
+                        <CButton color="link" className="px-0">
+                          Forgot password?
+                        </CButton>
+                        <CButton
+                          color="link"
+                          className="px-0"
+                          onClick={() => dispatch(userLogout())}
+                        >
+                          Log out
                         </CButton>
                       </CCol>
                     </CRow>

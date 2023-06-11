@@ -1,4 +1,3 @@
-/* eslint-disable import/no-anonymous-default-export */
 import axios, { paramsSerializer, BASE_URL_API, HEADERS_API_BEARER } from './config'
 // import { DashboardRes } from '../models'
 // import dateHelper, { DATE_FORMAT } from '../../utils/helper/dateHelper'

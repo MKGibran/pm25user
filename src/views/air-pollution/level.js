@@ -1,5 +1,3 @@
-/* eslint-disable prettier/prettier */
-/* eslint-disable react/prop-types */
 import React, { useEffect, useState } from 'react'
 import { CCard, CCardBody, CCol, CContainer, CRow } from '@coreui/react'
 import InformationApi from '../../models/api/information'
