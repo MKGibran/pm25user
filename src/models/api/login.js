@@ -32,9 +32,9 @@ export default {
         console.log(error.response)
         return {
           status: 'fail',
-          data: {
+          state: {
             open: true,
-            severity: 'error',
+            severity: 'danger',
             message: error.response.data.message,
           },
         }
@@ -43,23 +43,20 @@ export default {
   },
 
   async logoutUser() {
+    console.log(HEADERS_API_BEARER())
     const res = await axiosInstance
       .post(BASE_URL_API + '/logout', {}, HEADERS_API_BEARER())
       .then((response) => {
-        if ((sessionStorage.getItem(TOKEN_NAME) || '').length) sessionStorage.clear()
-        if (Cookies.get(TOKEN_NAME)) Cookies.remove(TOKEN_NAME)
         return {
-          state: true,
-          severity: 'info',
-          message: response.data.message.toString(),
+          status: 'success',
+          data: { open: true, severity: 'info', message: response.data.message },
         }
       })
       .catch((error) => {
         console.error(error.response.data.message)
         return {
-          state: true,
-          severity: 'error',
-          message: error.response.data.message.toString(),
+          status: 'fail',
+          data: { open: true, severity: 'danger', message: error.response.data.message },
         }
       })
     return res

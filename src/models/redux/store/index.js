@@ -10,8 +10,15 @@ const combinedReducer = combineReducers({
   globalUi: globalUiSlice.reducer,
 })
 
+const reducerProxy = (state, action) => {
+  if (action.type === 'user/LOGOUT') {
+    return combinedReducer({ globalUi: state.globalUi }, action)
+  }
+  return combinedReducer(state, action)
+}
+
 export const store = configureStore({
-  reducer: combinedReducer,
+  reducer: reducerProxy,
   // TODO: change dev tools when up to staging
   devTools: true,
   enhancers: [devToolsEnhancer()],
