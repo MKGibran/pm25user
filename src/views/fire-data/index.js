@@ -36,6 +36,7 @@ export default function FireData(props) {
   const [valueSmoke, setValueSmoke] = useState([])
   const [valueVillage, setValueVillage] = useState([])
   const [valueDistrict, setValueDistrict] = useState([])
+  const [pmSeverity, setPmSeverity] = useState([])
   const [valueProvince, setValueProvince] = useState([])
   const [provinceData, setProvinceData] = useState([{}])
   const [citiesData, setCitiesData] = useState([{}])
@@ -54,6 +55,22 @@ export default function FireData(props) {
         setValueVillage(region.village)
         setValueDistrict(region.district)
         setValueProvince(region.province)
+        if (data.particulate_matter.value > 300) {
+          data.pmSeverity = { value: 'very-dangerous' }
+          setPmSeverity(data.pmSeverity)
+        } else if (data.particulate_matter.value > 200) {
+          data.pmSeverity = { value: 'dangerous' }
+          setPmSeverity(data.pmSeverity)
+        } else if (data.particulate_matter.value > 100) {
+          data.pmSeverity = { value: 'severe' }
+          setPmSeverity(data.pmSeverity)
+        } else if (data.particulate_matter.value > 50) {
+          data.pmSeverity = { value: 'abnormal' }
+          setPmSeverity(data.pmSeverity)
+        } else if (data.particulate_matter.value > 0) {
+          data.pmSeverity = { value: 'normal' }
+          setPmSeverity(data.pmSeverity)
+        }
       })
   }
 
@@ -78,13 +95,31 @@ export default function FireData(props) {
           data.particulate_matter = { value: '-' }
           data.hotspot = { value: '-' }
           data.smoke = { value: '-' }
+          data.pmSeverity = { value: 'normal' }
           setValuePM(data.particulate_matter)
           setValueHotspot(data.hotspot)
           setValueSmoke(data.smoke)
+          setPmSeverity(data.pmSeverity)
         } else {
           setValuePM(data.particulate_matter)
           setValueHotspot(data.hotspot)
           setValueSmoke(data.smoke)
+          if (data.particulate_matter.value > 300) {
+            data.pmSeverity = { value: 'very-dangerous' }
+            setPmSeverity(data.pmSeverity)
+          } else if (data.particulate_matter.value > 200) {
+            data.pmSeverity = { value: 'dangerous' }
+            setPmSeverity(data.pmSeverity)
+          } else if (data.particulate_matter.value > 100) {
+            data.pmSeverity = { value: 'severe' }
+            setPmSeverity(data.pmSeverity)
+          } else if (data.particulate_matter.value > 50) {
+            data.pmSeverity = { value: 'abnormal' }
+            setPmSeverity(data.pmSeverity)
+          } else if (data.particulate_matter.value > 0) {
+            data.pmSeverity = { value: 'normal' }
+            setPmSeverity(data.pmSeverity)
+          }
         }
       })
     regionApi
@@ -224,7 +259,11 @@ export default function FireData(props) {
                       Nilai partikel PM 2.5 <br />
                       (g/m2)
                     </p>
-                    <PmValueIndicator value={valuePM.value} severity="normal" className={`my-5`} />
+                    <PmValueIndicator
+                      value={valuePM.value}
+                      severity={pmSeverity.value}
+                      className={`my-5`}
+                    />
                     <CButtonGroup role="group" aria-label="Basic example" className="mt-4">
                       <CButton color="success"></CButton>
                       <CButton color="warning"></CButton>
@@ -248,7 +287,7 @@ export default function FireData(props) {
                     <h5>The current number of hotspot in your commune is</h5>
                     <PmValueIndicator
                       value={valueHotspot.value}
-                      severity={'abnormal'}
+                      severity={'normal'}
                       className={`my-5`}
                     />
                   </CCardBody>
@@ -262,7 +301,7 @@ export default function FireData(props) {
                     <h5>The current carbon monoxide level in your commune is</h5>
                     <PmValueIndicator
                       value={valueSmoke.value}
-                      severity="normal"
+                      severity={'normal'}
                       className={`my-5`}
                     />
                   </CCardBody>

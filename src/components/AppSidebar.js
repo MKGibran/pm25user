@@ -20,7 +20,6 @@ const AppSidebar = (props) => {
   const dispatch = useDispatch()
   const unfoldable = useSelector((state) => state.sidebarUnfoldable)
   const sidebarShow = useSelector((state) => state.sidebarShow)
-  console.log(sidebarShow)
 
   return (
     <CSidebar
@@ -36,18 +35,18 @@ const AppSidebar = (props) => {
       }}
     >
       <CSidebarBrand
-        className="d-none d-md-flex"
+        className="d-none d-md-flex my-3"
         to="/"
         style={{
           backgroundColor: 'rgb(130, 205, 71)',
         }}
       >
-        <CAvatar src={logo} size="md" className="mx-3" />
-        PM 25
+        <CAvatar src={logo} size="xl" className="mx-3" />
+        <h5>Fire Safety Database</h5>
         {/* <CIcon className="sidebar-brand-full" icon={logoNegative} height={35} />
         <CIcon className="sidebar-brand-narrow" icon={sygnet} height={35} /> */}
       </CSidebarBrand>
-      <CSidebarNav>
+      <CSidebarNav className="mt-5">
         <SimpleBar>
           <AppSidebarNav items={navigation} />
         </SimpleBar>
