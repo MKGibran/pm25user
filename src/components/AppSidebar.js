@@ -39,16 +39,15 @@ const AppSidebar = (props) => {
         to="/"
         style={{
           backgroundColor: 'rgb(130, 205, 71)',
+          color: '#fff',
         }}
       >
         <CAvatar src={logo} size="xl" className="mx-3" />
         <h5>Fire Safety Database</h5>
-        {/* <CIcon className="sidebar-brand-full" icon={logoNegative} height={35} />
-        <CIcon className="sidebar-brand-narrow" icon={sygnet} height={35} /> */}
       </CSidebarBrand>
       <CSidebarNav className="mt-5">
         <SimpleBar>
-          <AppSidebarNav items={navigation} />
+          <AppSidebarNav items={navigation} style={{ visibility: 'hidden' }} />
         </SimpleBar>
       </CSidebarNav>
       <CSidebarToggler
