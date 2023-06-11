@@ -21,10 +21,7 @@ const switchTypeDashboard = (type) => {
 
 const getDataPM = async (query) => {
   const response = await axios
-    .get(
-      BASE_URL_API + '/admin/particulate-matter?' + paramsSerializer(query),
-      HEADERS_API_BEARER(),
-    )
+    .get(BASE_URL_API + '/particulate-matter?' + paramsSerializer(query), HEADERS_API_BEARER())
     .then((res) => {
       return {
         data: res.data.data.data,

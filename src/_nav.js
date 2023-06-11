@@ -65,28 +65,28 @@ const _nav = [
     to: '/smoke',
     icon: <CIcon icon={cilCloudy} customClassName="nav-icon" style={{ color: '#fff' }} />,
   },
-  {
-    component: CNavItem,
-    name: 'Report a fire',
-    to: '/report-fire',
-    icon: <CIcon icon={cilPaperPlane} customClassName="nav-icon" style={{ color: '#fff' }} />,
-  },
+  // {
+  //   component: CNavItem,
+  //   name: 'Report a fire',
+  //   to: '/report-fire',
+  //   icon: <CIcon icon={cilPaperPlane} customClassName="nav-icon" style={{ color: '#fff' }} />,
+  // },
   {
     component: CNavItem,
     name: 'Useful contacts',
     to: '/useful-contacts',
     icon: <CIcon icon={cilAddressBook} customClassName="nav-icon" style={{ color: '#fff' }} />,
   },
-  {
-    component: CNavItem,
-    name: 'Dashboard',
-    to: '/dashboard',
-    icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" style={{ color: '#fff' }} />,
-    badge: {
-      color: 'info',
-      text: 'NEW',
-    },
-  },
+  // {
+  //   component: CNavItem,
+  //   name: 'Dashboard',
+  //   to: '/dashboard',
+  //   icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" style={{ color: '#fff' }} />,
+  //   badge: {
+  //     color: 'info',
+  //     text: 'NEW',
+  //   },
+  // },
 ]
 
 export default _nav

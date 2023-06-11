@@ -20,6 +20,7 @@ const AppSidebar = (props) => {
   const dispatch = useDispatch()
   const unfoldable = useSelector((state) => state.sidebarUnfoldable)
   const sidebarShow = useSelector((state) => state.sidebarShow)
+  console.log(sidebarShow)
 
   return (
     <CSidebar
@@ -53,6 +54,9 @@ const AppSidebar = (props) => {
       </CSidebarNav>
       <CSidebarToggler
         className="d-none d-lg-flex"
+        style={{
+          backgroundColor: 'rgb(130, 205, 71)',
+        }}
         onClick={() => dispatch({ type: 'set', sidebarUnfoldable: !unfoldable })}
       />
     </CSidebar>

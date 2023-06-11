@@ -15,7 +15,6 @@ export default {
         HEADERS_API,
       )
       .then((response) => {
-        console.log(response.data)
         Cookies.set(TOKEN_NAME, response.data.token, { expires: 1 })
 
         return {

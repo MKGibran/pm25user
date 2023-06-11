@@ -34,7 +34,15 @@ const Home = (props) => {
   const [date, setDate] = useState([])
   const [value, setValue] = useState([])
   const getData = () => {
-    SmokeApi.getDataSmoke()
+    const endDate = dayjs(new Date()).format('YYYY-MM-DDThh:mm:ss')
+    const startDate = dayjs('2022-09-26').subtract(14, 'day').format('YYYY-MM-DDThh:mm:ss')
+    SmokeApi.getDataSmoke({
+      startDate: startDate,
+      endDate: endDate,
+      villageCode: region.village.code,
+      sortBy: 'id',
+      sortOrder: 'desc',
+    })
       .then((response) => {
         return response
       })
@@ -60,7 +68,7 @@ const Home = (props) => {
       <CCard style={{ marginBottom: '2%' }} className={`border-light`}>
         <CContainer>
           <CCardBody style={{ textAlign: 'center' }}>
-            <h4>Smoke (PM 2.5)</h4>
+            <h4>Smokea Smoke</h4>
           </CCardBody>
         </CContainer>
       </CCard>
@@ -85,11 +93,6 @@ const Home = (props) => {
               {region.village.name}, {region.district.name}, {region.province.name}
             </p>
           </CCol>
-          <CCol>
-            <CButton color="success" style={{ color: '#fff', float: 'right' }}>
-              Change location
-            </CButton>
-          </CCol>
         </CRow>
       </CContainer>
 
@@ -97,7 +100,7 @@ const Home = (props) => {
 
       <CCard style={{ marginBottom: '2%' }} className={`border-light`}>
         <CCardHeader>
-          <h4>Daily Smoke (PM 2.5) for last 14 days</h4>
+          <h4>Daily Smoke for the last 14 days</h4>
         </CCardHeader>
         <CContainer>
           <CCardBody style={{ textAlign: 'center' }}>
@@ -108,16 +111,16 @@ const Home = (props) => {
               <CContainer>
                 <CRow>
                   <CCol style={{ textAlign: 'left' }}>
-                    <h5>List Data PM 2.5</h5>
+                    <h5>List Data Smoke</h5>
                   </CCol>
-                  <CCol>
+                  {/* <CCol>
                     <CButton color="light" style={{ float: 'right' }}>
                       Date Range
                     </CButton>
-                  </CCol>
+                  </CCol> */}
                 </CRow>
 
-                <CRow>
+                {/* <CRow>
                   <CForm className="my-4">
                     <CRow>
                       <CCol>
@@ -202,7 +205,7 @@ const Home = (props) => {
                       </CCol>
                     </CRow>
                   </CForm>
-                </CRow>
+                </CRow> */}
                 <CTable responsive>
                   <CTableHead>
                     <CTableRow>

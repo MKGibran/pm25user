@@ -75,8 +75,9 @@ export default function SignUpPage() {
             <h4>The fire safety database is here to help you protect Indonesia</h4>
           </CCardBody>
         </CContainer>
-      </CCard> */}
       <div className="bg-light min-vh-100 d-flex flex-row align-items-center">
+      </CCard> */}
+      <div className="d-flex flex-row align-items-center">
         <CContainer>
           <CRow className="justify-content-center">
             <CCol md={9} lg={7} xl={6}>

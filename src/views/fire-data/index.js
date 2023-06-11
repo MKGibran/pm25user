@@ -24,7 +24,7 @@ import regionApi from '../../models/api/region'
 
 export default function FireData(props) {
   const user = props.user.user.village_code
-  const region = { data: props.user.region }
+  const region = props.user.region
   const { register, control, handleSubmit } = useForm()
   const [regionSelected, setRegionSelected] = useState({
     province: null,
@@ -34,19 +34,14 @@ export default function FireData(props) {
   const [valuePM, setValuePM] = useState([])
   const [valueHotspot, setValueHotspot] = useState([])
   const [valueSmoke, setValueSmoke] = useState([])
+  const [valueVillage, setValueVillage] = useState([])
+  const [valueDistrict, setValueDistrict] = useState([])
+  const [valueProvince, setValueProvince] = useState([])
   const [provinceData, setProvinceData] = useState([{}])
   const [citiesData, setCitiesData] = useState([{}])
   const [districtData, setDistrictData] = useState([{}])
   const [villageData, setVillageData] = useState([{}])
-  const [userVillage, setUserVillage] = useState([])
 
-  const userRegion = (village) => {
-    regionApi.getVillage(village).then((response) => {
-      console.log(1)
-      setUserVillage(response)
-      console.log(userVillage)
-    })
-  }
   const fetchInformationData = (data) => {
     InformationApi.getDataInformation(data)
       .then((response) => {
@@ -56,12 +51,10 @@ export default function FireData(props) {
         setValuePM(data.particulate_matter)
         setValueHotspot(data.hotspot)
         setValueSmoke(data.smoke)
+        setValueVillage(region.village)
+        setValueDistrict(region.district)
+        setValueProvince(region.province)
       })
-    regionApi.getVillage(data).then((response) => {
-      console.log(1)
-      setUserVillage(response)
-      console.log(userVillage)
-    })
   }
 
   useEffect(() => {
@@ -72,7 +65,6 @@ export default function FireData(props) {
   }, [regionSelected])
   useEffect(() => {
     fetchInformationData(user)
-    // userRegion(user)
   }, [])
 
   const onSubmit = (data) => {
@@ -102,8 +94,10 @@ export default function FireData(props) {
       })
       .then((data) => {
         const region = data
-        setUserVillage(region)
-        console.log(userVillage)
+        console.log(region)
+        setValueVillage(region.village)
+        setValueDistrict(region.district)
+        setValueProvince(region.province)
       })
   }
   return (
@@ -121,7 +115,7 @@ export default function FireData(props) {
           <CCol>
             <p>
               <CIcon icon={cilLocationPin} size="sm" style={{ marginRight: '1%' }} />
-              {/* {regions.village.name}, {regions.district.name}, {regions.province.name} */}
+              {valueVillage.name}, {valueDistrict.name}, {valueProvince.name}
             </p>
           </CCol>
           <CCol>
@@ -254,7 +248,7 @@ export default function FireData(props) {
                     <h5>The current number of hotspot in your commune is</h5>
                     <PmValueIndicator
                       value={valueHotspot.value}
-                      severity="normal"
+                      severity={'abnormal'}
                       className={`my-5`}
                     />
                   </CCardBody>

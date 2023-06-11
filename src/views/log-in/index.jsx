@@ -26,13 +26,13 @@ export default function LogInPage() {
   const dispatch = useDispatch()
   const onSubmitForm = (data) => {
     loginApi.loginUser(data).then((res) => {
-      dispatch(userActions.setUserData({ current_user: res.current_user }))
+      dispatch(userActions.setUserData({ current_user: res.current_user, token: res.token }))
       dispatch(globalUiActions.setToastMessage(res.state))
     })
   }
 
   return (
-    <div className="bg-light min-vh-100 d-flex flex-row align-items-center">
+    <div className="d-flex flex-row align-items-center">
       <CContainer>
         <CRow className="justify-content-center">
           <CCol md={8}>
@@ -65,12 +65,17 @@ export default function LogInPage() {
                       />
                     </CInputGroup>
                     <CRow>
+                      <CCol xs={6} className="text-right">
+                        <CButton color="link" className="px-0">
+                          Forgot password?
+                        </CButton>
+                      </CCol>
                       <CCol xs={6}>
                         <CButton
                           type="submit"
                           value="submit"
                           color="success"
-                          className="px-4"
+                          className="px-4 float-end"
                           style={{
                             backgroundColor: 'rgb(130, 205, 71)',
                             color: '#fff',
@@ -78,11 +83,6 @@ export default function LogInPage() {
                           }}
                         >
                           Login
-                        </CButton>
-                      </CCol>
-                      <CCol xs={6} className="text-right">
-                        <CButton color="link" className="px-0">
-                          Forgot password?
                         </CButton>
                       </CCol>
                     </CRow>
@@ -99,12 +99,9 @@ export default function LogInPage() {
                 }}
               >
                 <CCardBody className="text-center">
-                  <div>
+                  <div className="my-5">
                     <h2>Sign up</h2>
-                    <p>
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                      tempor incididunt ut labore et dolore magna aliqua.
-                    </p>
+                    <p className="mt-3">Don&apos;t have an account?</p>
                     <Link to="/sign-up">
                       <CButton
                         style={{
@@ -112,7 +109,6 @@ export default function LogInPage() {
                           color: '#000',
                           border: 'none',
                         }}
-                        className="mt-3"
                         active
                         tabIndex={-1}
                       >

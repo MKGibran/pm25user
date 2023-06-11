@@ -20,7 +20,7 @@ const AppHeaderDropdown = (props) => {
     <CDropdown variant="nav-item" className="text-light">
       <CDropdownToggle placement="bottom-end" className="py-0" caret={true}>
         {/* <CAvatar src={avatar8} size="md" /> */}
-        {props.user.full_name}
+        <span style={{ color: '#fff' }}>{props.user.full_name}</span>
       </CDropdownToggle>
       <CDropdownMenu className="pt-2" placement="bottom-end">
         <CDropdownItem href="#">

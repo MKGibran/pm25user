@@ -9,10 +9,10 @@ const AirPollution = React.lazy(() => import('./views/air-pollution/index'))
 const Hotspot = React.lazy(() => import('./views/hotspot/index'))
 const Smoke = React.lazy(() => import('./views/smoke/index'))
 const UsefulContacts = React.lazy(() => import('./views/useful-contacts/index'))
-const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'))
+// const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'))
 
 const routes = [
-  { path: '/', exact: true, name: 'Home' },
+  { path: '/', exact: true, name: 'Home', element: Home },
   { path: '/home', name: 'Home', element: Home },
   { path: '/sign-up', name: 'SignUp', element: SignUpPage },
   { path: '/log-in', name: 'LogInPage', element: LogInPage },
@@ -22,7 +22,7 @@ const routes = [
   { path: '/hotspot', name: 'Hotspot', element: Hotspot },
   { path: '/smoke', name: 'Smoke', element: Smoke },
   { path: '/useful-contacts', name: 'UsefulContacts', element: UsefulContacts },
-  { path: '/dashboard', name: 'Dashboard', element: Dashboard },
+  // { path: '/dashboard', name: 'Dashboard', element: Dashboard },
 ]
 
 export default routes

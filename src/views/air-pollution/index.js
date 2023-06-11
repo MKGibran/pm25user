@@ -35,7 +35,15 @@ const AirPollution = (props) => {
   const [value, setValue] = useState([])
 
   const getData = () => {
-    ParticulateMatterApi.getDataPM()
+    const endDate = dayjs(new Date()).format('YYYY-MM-DDThh:mm:ss')
+    const startDate = dayjs('2022-09-26').subtract(14, 'day').format('YYYY-MM-DDThh:mm:ss')
+    ParticulateMatterApi.getDataPM({
+      startDate: startDate,
+      endDate: endDate,
+      villageCode: region.village.code,
+      sortBy: 'id',
+      sortOrder: 'desc',
+    })
       .then((response) => {
         return response
       })
@@ -85,11 +93,6 @@ const AirPollution = (props) => {
               <CIcon icon={cilLocationPin} size="sm" style={{ marginRight: '1%' }} />
               {region.village.name}, {region.district.name}, {region.province.name}
             </p>
-          </CCol>
-          <CCol>
-            <CButton color="success" style={{ color: '#fff', float: 'right' }}>
-              Change location
-            </CButton>
           </CCol>
         </CRow>
       </CContainer>

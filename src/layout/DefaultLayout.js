@@ -44,7 +44,7 @@ const DefaultLayout = () => {
         <div className="body flex-grow-1 px-3" style={{ backgroundColor: 'rgb(253, 250, 246)' }}>
           <AppContent user={user} region={region} />
         </div>
-        <AppFooter />
+        {/* <AppFooter /> */}
       </div>
     </div>
   )

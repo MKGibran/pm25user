@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { useEffect } from 'react'
 import {
   CModal,
@@ -77,7 +78,7 @@ export default function SignUpOTPPopup({ visible, setVisible, data }) {
           <CButton color="secondary" onClick={() => setVisible(false)}>
             Close
           </CButton>
-          <CButton type="submit" value="submit" color="primary">
+          <CButton type="submit" value="submit" color="primary" style={{ color: 'fff' }}>
             Save changes
           </CButton>
         </CModalFooter>
