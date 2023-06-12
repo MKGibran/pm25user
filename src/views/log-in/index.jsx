@@ -19,6 +19,7 @@ import loginApi from '../../models/api/login'
 import { useDispatch } from 'react-redux'
 import { userActions, userLogout } from 'src/models/redux/actions/userActions'
 import { globalUiActions } from 'src/models/redux/actions/globalUiActions'
+import ForgotPassword from './ForgotPasswordDialog'
 
 export default function LogInPage() {
   const { register, handleSubmit } = useForm()
@@ -26,10 +27,18 @@ export default function LogInPage() {
   const dispatch = useDispatch()
   const onSubmitForm = (data) => {
     loginApi.loginUser(data).then((res) => {
-      dispatch(userActions.setUserData({ current_user: res.current_user, token: res.token }))
+      if (res.status === 'success') {
+        dispatch(userActions.setUserData({ current_user: res.current_user, token: res.token }))
+      }
       dispatch(globalUiActions.setToastMessage(res.state))
     })
   }
+
+  const [showModal, setShowModal] = useState(false)
+
+  useEffect(() => {
+    console.log('show modal value:', showModal)
+  }, [showModal])
 
   return (
     <div className="d-flex flex-row align-items-center">
@@ -39,6 +48,8 @@ export default function LogInPage() {
             <CCardGroup>
               <CCard className="p-4">
                 <CCardBody>
+                  <ForgotPassword visible={showModal} setVisible={setShowModal} />
+
                   <form onSubmit={handleSubmit(onSubmitForm)}>
                     <h1>Login</h1>
                     <p className="text-medium-emphasis">Sign In to your account</p>
@@ -65,11 +76,7 @@ export default function LogInPage() {
                       />
                     </CInputGroup>
                     <CRow>
-                      <CCol xs={6} className="text-right">
-                        <CButton color="link" className="px-0">
-                          Forgot password?
-                        </CButton>
-                      </CCol>
+                      <CCol xs={6} className="text-right"></CCol>
                       <CCol xs={6}>
                         <CButton
                           type="submit"
@@ -86,7 +93,13 @@ export default function LogInPage() {
                         </CButton>
                       </CCol>
                       <CCol xs={6} className="text-right">
-                        <CButton color="link" className="px-0">
+                        <CButton
+                          color="link"
+                          className="px-0"
+                          onClick={() => {
+                            setShowModal(true)
+                          }}
+                        >
                           Forgot password?
                         </CButton>
                         <CButton
