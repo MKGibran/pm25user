@@ -18,7 +18,6 @@ export const userLogout = createAsyncThunk('auth/logout', async function (_paylo
         if (Cookies.get(TOKEN_NAME)) Cookies.remove(TOKEN_NAME)
         thunkAPI.dispatch({ type: 'user/LOGOUT' })
       }
-      console.log(res.data)
       thunkAPI.dispatch(globalUiActions.setToastMessage(res.data))
     })
     .catch((err) => thunkAPI.dispatch(globalUiActions.setToastMessage(err.data)))

@@ -17,23 +17,23 @@ import { CNavItem } from '@coreui/react'
 const _nav = [
   {
     component: CNavItem,
-    name: 'Home',
-    to: '/home',
-    icon: <CIcon icon={cilHome} customClassName="nav-icon" style={{ color: '#fff' }} />,
-  },
-  {
-    component: CNavItem,
     name: 'Log-In',
     to: '/log-in',
     icon: (
       <CIcon icon={cilArrowThickToRight} customClassName="nav-icon" style={{ color: '#fff' }} />
     ),
   },
+  // {
+  //   component: CNavItem,
+  //   name: 'Sign-Up',
+  //   to: '/sign-up',
+  //   icon: <CIcon icon={cilPencil} customClassName="nav-icon" style={{ color: '#fff' }} />,
+  // },
   {
     component: CNavItem,
-    name: 'Sign-Up',
-    to: '/sign-up',
-    icon: <CIcon icon={cilPencil} customClassName="nav-icon" style={{ color: '#fff' }} />,
+    name: 'Home',
+    to: '/home',
+    icon: <CIcon icon={cilHome} customClassName="nav-icon" style={{ color: '#fff' }} />,
   },
   {
     component: CNavItem,

@@ -33,6 +33,7 @@ const Home = (props) => {
   const [data, setData] = useState([])
   const [date, setDate] = useState([])
   const [value, setValue] = useState([])
+
   const getData = () => {
     const endDate = dayjs(new Date()).format('YYYY-MM-DDThh:mm:ss')
     const startDate = dayjs('2022-09-26').subtract(14, 'day').format('YYYY-MM-DDThh:mm:ss')
@@ -68,7 +69,7 @@ const Home = (props) => {
       <CCard style={{ marginBottom: '2%' }} className={`border-light`}>
         <CContainer>
           <CCardBody style={{ textAlign: 'center' }}>
-            <h4>Smokea Smoke</h4>
+            <h4>Smoke</h4>
           </CCardBody>
         </CContainer>
       </CCard>

@@ -1,3 +1,5 @@
+/* eslint-disable prettier/prettier */
+/* eslint-disable no-undef */
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react'
 import { Controller, useForm } from 'react-hook-form'
@@ -24,7 +26,7 @@ import regionApi from '../../models/api/region'
 
 export default function FireData(props) {
   const user = props.user.user.village_code
-  const region = props.user.region
+  // const region = props.user.region
   const { register, control, handleSubmit } = useForm()
   const [regionSelected, setRegionSelected] = useState({
     province: null,
@@ -38,23 +40,30 @@ export default function FireData(props) {
   const [valueDistrict, setValueDistrict] = useState([])
   const [pmSeverity, setPmSeverity] = useState([])
   const [valueProvince, setValueProvince] = useState([])
+  const [region, setRegion] = useState([])
   const [provinceData, setProvinceData] = useState([{}])
   const [citiesData, setCitiesData] = useState([{}])
   const [districtData, setDistrictData] = useState([{}])
   const [villageData, setVillageData] = useState([{}])
-
-  const fetchInformationData = (data) => {
-    InformationApi.getDataInformation(data)
+  const fetchInformationData = (user, region) => {
+    InformationApi.getDataInformation(user)
       .then((response) => {
         return response.data
       })
       .then((data) => {
+        regionApi
+          .getVillage(user)
+          .then((response) => {
+            return response
+          })
+          .then((data) => {
+            setValueVillage(data.village)
+            setValueDistrict(data.district)
+            setValueProvince(data.province)
+          })
         setValuePM(data.particulate_matter)
         setValueHotspot(data.hotspot)
         setValueSmoke(data.smoke)
-        setValueVillage(region.village)
-        setValueDistrict(region.district)
-        setValueProvince(region.province)
         if (data.particulate_matter.value > 300) {
           data.pmSeverity = { value: 'very-dangerous' }
           setPmSeverity(data.pmSeverity)
@@ -73,16 +82,16 @@ export default function FireData(props) {
         }
       })
   }
-
+  useEffect(() => {
+    fetchInformationData(user, region)
+    console.log(region)
+  }, [])
   useEffect(() => {
     regionApi.getProvinces().then((res) => setProvinceData(res))
   }, [])
   useEffect(() => {
     console.log(regionSelected)
   }, [regionSelected])
-  useEffect(() => {
-    fetchInformationData(user)
-  }, [])
 
   const onSubmit = (data) => {
     setVisible(false)
@@ -129,7 +138,6 @@ export default function FireData(props) {
       })
       .then((data) => {
         const region = data
-        console.log(region)
         setValueVillage(region.village)
         setValueDistrict(region.district)
         setValueProvince(region.province)
@@ -268,6 +276,7 @@ export default function FireData(props) {
                       <CButton color="success"></CButton>
                       <CButton color="warning"></CButton>
                       <CButton color="danger"></CButton>
+                      <CButton color="dark"></CButton>
                     </CButtonGroup>
                   </CCardBody>
                 </CContainer>

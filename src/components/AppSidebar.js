@@ -1,4 +1,5 @@
-import React from 'react'
+/* eslint-disable react/prop-types */
+import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
 import { CSidebar, CSidebarBrand, CSidebarNav, CSidebarToggler, CAvatar } from '@coreui/react'
@@ -20,7 +21,13 @@ const AppSidebar = (props) => {
   const dispatch = useDispatch()
   const unfoldable = useSelector((state) => state.sidebarUnfoldable)
   const sidebarShow = useSelector((state) => state.sidebarShow)
-
+  useEffect(() => {
+    if (!props.user.full_name) {
+      navigation.splice(3)
+    } else {
+      navigation.splice(0, 1)
+    }
+  }, [navigation])
   return (
     <CSidebar
       style={{
@@ -47,7 +54,7 @@ const AppSidebar = (props) => {
       </CSidebarBrand>
       <CSidebarNav className="mt-5">
         <SimpleBar>
-          <AppSidebarNav items={navigation} style={{ visibility: 'hidden' }} />
+          <AppSidebarNav items={navigation} />
         </SimpleBar>
       </CSidebarNav>
       <CSidebarToggler

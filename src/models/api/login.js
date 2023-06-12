@@ -4,9 +4,12 @@ import { BASE_URL_API, HEADERS_API, TOKEN_NAME } from './config'
 import Cookies from 'js-cookie'
 // import { SnackbarProps } from '../models/uiState'
 import { userActions } from 'src/models/redux/actions/userActions'
+import { useLocation, useNavigate } from 'react-router-dom'
 
+// eslint-disable-next-line import/no-anonymous-default-export
 export default {
   async loginUser(data) {
+    // const navigate = useNavigate()
     const res = await axiosInstance
       .post(
         BASE_URL_API + '/login',
@@ -15,7 +18,6 @@ export default {
       )
       .then((response) => {
         Cookies.set(TOKEN_NAME, response.data.token, { expires: 1 })
-
         return {
           status: 'success',
           current_user: response.data.data,
@@ -45,6 +47,7 @@ export default {
     const res = await axiosInstance
       .post(BASE_URL_API + '/logout', {}, HEADERS_API_BEARER())
       .then((response) => {
+        window.location.href = '/log-in'
         return {
           status: 'success',
           data: { open: true, severity: 'info', message: response.data.message },

@@ -65,7 +65,7 @@ const Hotspot = (props) => {
       <CCard style={{ marginBottom: '2%' }} className={`border-light`}>
         <CContainer>
           <CCardBody style={{ textAlign: 'center' }}>
-            <h4>Hotspot (PM 2.5)</h4>
+            <h4>Hotspot</h4>
           </CCardBody>
         </CContainer>
       </CCard>

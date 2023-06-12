@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useRef, useState } from 'react'
 import { AppContent, AppSidebar, AppFooter, AppHeader } from '../components/index'
 
@@ -5,6 +6,7 @@ import { useSelector } from 'react-redux'
 import AppSimpleToast from '../components/toast/AppSimpleToast'
 import { CToaster } from '@coreui/react'
 import regionApi from '../models/api/region'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 const DefaultLayout = () => {
   const [region, setRegion] = useState([])
@@ -24,7 +26,7 @@ const DefaultLayout = () => {
   useEffect(() => {
     getVillageData()
     console.log(toastState)
-  }, [toastState, user])
+  }, [toastState])
 
   return (
     <div>

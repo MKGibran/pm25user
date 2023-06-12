@@ -28,6 +28,7 @@ export default function LogInPage() {
     loginApi.loginUser(data).then((res) => {
       dispatch(userActions.setUserData({ current_user: res.current_user, token: res.token }))
       dispatch(globalUiActions.setToastMessage(res.state))
+      window.location.href = '/home'
     })
   }
 

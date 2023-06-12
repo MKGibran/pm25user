@@ -29,7 +29,6 @@ import regionApi from '../../models/api/region'
 import { Controller, useForm } from 'react-hook-form'
 import WFormSelect from '../widgets/WFormSelect'
 
-
 const AirPollution = (props) => {
   const { register, control, handleSubmit } = useForm()
   const user = props.user
@@ -38,7 +37,7 @@ const AirPollution = (props) => {
   const [date, setDate] = useState([])
   const [value, setValue] = useState([])
 
-  const getData = () => {
+  const getData = (user) => {
     const endDate = dayjs(new Date()).format('YYYY-MM-DDThh:mm:ss')
     const startDate = dayjs('2022-09-26').subtract(14, 'day').format('YYYY-MM-DDThh:mm:ss')
     ParticulateMatterApi.getDataPM({
@@ -68,7 +67,7 @@ const AirPollution = (props) => {
   const [provinceData, setProvinceData] = useState([{}])
 
   useEffect(() => {
-    getData()
+    getData(user)
     regionApi.getProvinces().then((res) => setProvinceData(res))
   }, [])
 
@@ -142,24 +141,24 @@ const AirPollution = (props) => {
                           </CFormLabel>
                           <CCol sm={6}>
                             <Controller
-                            control={control}
-                            name="province"
-                            render={({field : {onChange, value, ref}})=>(
-                              <WFormSelect
-                              label="Province"
-                              inputRef={ref}
-                              data={provinceData}
-                              value={value}
-                              onChange={(e) => {
-                                onChange(e)
-                                regionApi
-                                  .getCities(e.target.value)
-                                  .then((res) => setCities(res))
-                              }}
-                            className="mb-2"
+                              control={control}
+                              name="province"
+                              render={({ field: { onChange, value, ref } }) => (
+                                <WFormSelect
+                                  label="Province"
+                                  inputRef={ref}
+                                  data={provinceData}
+                                  value={value}
+                                  onChange={(e) => {
+                                    onChange(e)
+                                    regionApi
+                                      .getCities(e.target.value)
+                                      .then((res) => setCities(res))
+                                  }}
+                                  className="mb-2"
+                                />
+                              )}
                             />
-                            )}
-                          />
                           </CCol>
                         </CRow>
                         <CRow className="mb-3">

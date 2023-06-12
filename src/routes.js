@@ -12,10 +12,10 @@ const UsefulContacts = React.lazy(() => import('./views/useful-contacts/index'))
 // const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'))
 
 const routes = [
-  { path: '/', exact: true, name: 'Home', element: Home },
-  { path: '/home', name: 'Home', element: Home },
   { path: '/sign-up', name: 'SignUp', element: SignUpPage },
   { path: '/log-in', name: 'LogInPage', element: LogInPage },
+  { path: '/', exact: true, name: 'Home', element: Home },
+  { path: '/home', name: 'Home', element: Home },
   { path: '/about', name: 'About', element: About },
   { path: '/fire-data', name: 'FireData', element: FireData },
   { path: '/air-pollution', name: 'AirPollution', element: AirPollution },
