@@ -37,39 +37,48 @@ const AirPollution = (props) => {
   const [date, setDate] = useState([])
   const [value, setValue] = useState([])
 
-  const getData = (user) => {
+  const getData = (formData) => {
     const endDate = dayjs(new Date()).format('YYYY-MM-DDThh:mm:ss')
     const startDate = dayjs('2022-09-26').subtract(14, 'day').format('YYYY-MM-DDThh:mm:ss')
+    const villageCode = formData.village_code || region.village.code
     ParticulateMatterApi.getDataPM({
       startDate: startDate,
       endDate: endDate,
-      villageCode: region.village.code,
+      villageCode: villageCode,
       sortBy: 'id',
       sortOrder: 'desc',
     })
-      .then((response) => {
-        return response
-      })
+      .then((response) => response.data)
       .then((data) => {
-        setData(data.data)
+        setData(data)
         const dates = []
         const values = []
-        data.data.forEach((data, index) => {
+        data.forEach((data, index) => {
           dates.push(dayjs(data.datetime).format('MM-DD-YYYY'))
           values.push(data.value)
         })
         setDate(dates)
         setValue(values)
+        setFetching(false)
       })
       .catch((error) => console.error(error))
   }
 
   const [provinceData, setProvinceData] = useState([{}])
+  const [citiesData, setCitiesData] = useState([{}])
+  const [districtData, setDistrictData] = useState([{}])
+  const [villageData, setVillageData] = useState([{}])
 
   useEffect(() => {
-    getData(user)
+    getData({})
     regionApi.getProvinces().then((res) => setProvinceData(res))
   }, [])
+  const onSubmit = (formData) => {
+    setFetching(true)
+    getData(formData)
+  }
+
+  const [fetching, setFetching] = useState(false)
 
   return (
     <div>
@@ -129,7 +138,7 @@ const AirPollution = (props) => {
                 </CRow>
 
                 <CRow>
-                  <CForm className="my-4">
+                  <CForm className="my-4" onSubmit={handleSubmit(onSubmit)}>
                     <CRow>
                       <CCol>
                         <CRow className="mb-3">
@@ -153,7 +162,7 @@ const AirPollution = (props) => {
                                     onChange(e)
                                     regionApi
                                       .getCities(e.target.value)
-                                      .then((res) => setCities(res))
+                                      .then((res) => setCitiesData(res))
                                   }}
                                   className="mb-2"
                                 />
@@ -169,7 +178,25 @@ const AirPollution = (props) => {
                             Kabupaten/Kota
                           </CFormLabel>
                           <CCol sm={6}>
-                            <CFormInput type="text" id="Kabupaten/Kota" />
+                            <Controller
+                              control={control}
+                              name="cities"
+                              render={({ field: { onChange, value, ref } }) => (
+                                <WFormSelect
+                                  label="Cities"
+                                  inputRef={ref}
+                                  data={citiesData}
+                                  value={value}
+                                  onChange={(e) => {
+                                    onChange(e)
+                                    regionApi
+                                      .getDistricts(e.target.value)
+                                      .then((res) => setDistrictData(res))
+                                  }}
+                                  className="mb-2"
+                                />
+                              )}
+                            />
                           </CCol>
                         </CRow>
                         <CRow className="mb-3">
@@ -180,7 +207,25 @@ const AirPollution = (props) => {
                             Kecamatan
                           </CFormLabel>
                           <CCol sm={6}>
-                            <CFormInput type="text" id="Kecamatan" />
+                            <Controller
+                              control={control}
+                              name="district"
+                              render={({ field: { onChange, value, ref } }) => (
+                                <WFormSelect
+                                  label="District"
+                                  inputRef={ref}
+                                  data={districtData}
+                                  value={value}
+                                  onChange={(e) => {
+                                    onChange(e)
+                                    regionApi
+                                      .getVillages(e.target.value)
+                                      .then((res) => setVillageData(res))
+                                  }}
+                                  className="mb-2"
+                                />
+                              )}
+                            />
                           </CCol>
                         </CRow>
                         <CRow className="mb-3">
@@ -191,7 +236,20 @@ const AirPollution = (props) => {
                             Kelurahan/Desa
                           </CFormLabel>
                           <CCol sm={6}>
-                            <CFormInput type="text" id="Kelurahan/Desa" />
+                            <Controller
+                              control={control}
+                              name="village_code"
+                              render={({ field: { onChange, value, ref } }) => (
+                                <WFormSelect
+                                  label="Village"
+                                  inputRef={ref}
+                                  data={villageData}
+                                  value={value}
+                                  onChange={onChange}
+                                  className="mb-2"
+                                />
+                              )}
+                            />
                           </CCol>
                         </CRow>
                       </CCol>
@@ -221,9 +279,14 @@ const AirPollution = (props) => {
                             <CFormInput type="time" id="Waktu" />
                           </CCol>
                         </CRow>
+
                         <CRow className="mb-3">
                           <CCol sm={10}>
-                            <CButton color="success" style={{ color: '#fff', float: 'right' }}>
+                            <CButton
+                              color="success"
+                              style={{ color: '#fff', float: 'right' }}
+                              type="submit"
+                            >
                               Cari
                             </CButton>
                           </CCol>
@@ -247,54 +310,69 @@ const AirPollution = (props) => {
                       <CTableHeaderCell scope="col">Aksi</CTableHeaderCell>
                     </CTableRow>
                   </CTableHead>
-                  {/* <CTableBody style={{ textAlign: 'left' }}>
-                    {data.map((item) => {
-                      if (item.value < 25) {
-                        item.status = 'good'
-                        item.statusColor = 'primary'
-                      } else if (item.value >= 25 && item.value <= 50) {
-                        item.status = 'fair'
-                        item.statusColor = 'success'
-                      } else if (item.value >= 50 && item.value <= 100) {
-                        item.status = 'poor'
-                        item.statusColor = 'warning'
-                      } else if (item.value >= 100 && item.value <= 300) {
-                        item.status = 'very poor'
-                        item.statusColor = 'danger'
-                      } else {
-                        item.status = 'extremely poor'
-                        item.statusColor = 'dark'
-                      }
-                      return (
-                        <CTableRow key={item.id}>
-                          <CTableDataCell>
-                            {dayjs(item.datetime).format('MM-DD-YYYY')}
-                          </CTableDataCell>
-                          <CTableDataCell>{dayjs(item.datetime).format('HH:mm')}</CTableDataCell>
-                          <CTableDataCell>{item.province.name}</CTableDataCell>
-                          <CTableDataCell>{item.city.name}</CTableDataCell>
-                          <CTableDataCell>{item.district.name}</CTableDataCell>
-                          <CTableDataCell>{item.village.name}</CTableDataCell>
-                          <CTableDataCell style={{ textAlign: 'center' }}>
-                            {item.value}
-                          </CTableDataCell>
-                          <CTableDataCell style={{ textAlign: 'center' }}>
-                            <CBadge color={item.statusColor} shape="rounded-pill">
-                              {item.status}
-                            </CBadge>
-                          </CTableDataCell>
-                          <CTableDataCell style={{ textAlign: 'center' }}>
-                            {item.value}
-                          </CTableDataCell>
-                          <CTableDataCell style={{ textAlign: 'center' }}>
-                            <CButton color="dark" variant="ghost" size="sm" className={'mx-1'}>
-                              <CIcon icon={cilZoomIn} />
-                            </CButton>
-                          </CTableDataCell>
-                        </CTableRow>
-                      )
-                    })}
-                  </CTableBody> */}
+                  {
+                    <CTableBody style={{ textAlign: 'left' }}>
+                      {data.map((item) => {
+                        if (item.value < 25) {
+                          item.status = 'good'
+                          item.statusColor = 'primary'
+                        } else if (item.value >= 25 && item.value <= 50) {
+                          item.status = 'fair'
+                          item.statusColor = 'success'
+                        } else if (item.value >= 50 && item.value <= 100) {
+                          item.status = 'poor'
+                          item.statusColor = 'warning'
+                        } else if (item.value >= 100 && item.value <= 300) {
+                          item.status = 'very poor'
+                          item.statusColor = 'danger'
+                        } else {
+                          item.status = 'extremely poor'
+                          item.statusColor = 'dark'
+                        }
+
+                        if (fetching != false) {
+                          return (
+                            <div className="d-flex justify-content-center align-items-center vw-100">
+                              <div className="spinner-border text-success" role="status">
+                                <span className="visually-hidden">Loading...</span>
+                              </div>
+                            </div>
+                          )
+                        } else {
+                          return (
+                            <CTableRow key={item.id}>
+                              <CTableDataCell>
+                                {dayjs(item.datetime).format('MM-DD-YYYY')}
+                              </CTableDataCell>
+                              <CTableDataCell>
+                                {dayjs(item.datetime).format('HH:mm')}
+                              </CTableDataCell>
+                              <CTableDataCell>{item.province.name}</CTableDataCell>
+                              <CTableDataCell>{item.city.name}</CTableDataCell>
+                              <CTableDataCell>{item.district.name}</CTableDataCell>
+                              <CTableDataCell>{item.village.name}</CTableDataCell>
+                              <CTableDataCell style={{ textAlign: 'center' }}>
+                                {item.value}
+                              </CTableDataCell>
+                              <CTableDataCell style={{ textAlign: 'center' }}>
+                                <CBadge color={item.statusColor} shape="rounded-pill">
+                                  {item.status}
+                                </CBadge>
+                              </CTableDataCell>
+                              <CTableDataCell style={{ textAlign: 'center' }}>
+                                {item.value}
+                              </CTableDataCell>
+                              <CTableDataCell style={{ textAlign: 'center' }}>
+                                <CButton color="dark" variant="ghost" size="sm" className={'mx-1'}>
+                                  <CIcon icon={cilZoomIn} />
+                                </CButton>
+                              </CTableDataCell>
+                            </CTableRow>
+                          )
+                        }
+                      })}
+                    </CTableBody>
+                  }
                 </CTable>
               </CContainer>
             </CRow>
