@@ -37,47 +37,52 @@ const AirPollution = (props) => {
   const [data, setData] = useState([])
   const [date, setDate] = useState([])
   const [value, setValue] = useState([])
+  
+
+  const getData = (formData) => {
+    const endDate = dayjs(new Date()).format('YYYY-MM-DDThh:mm:ss')
+    const startDate = dayjs('2022-09-26').subtract(14, 'day').format('YYYY-MM-DDThh:mm:ss')
+    const villageCode = formData.village_code || region.village.code
+    ParticulateMatterApi.getDataPM({
+      startDate: startDate,
+      endDate: endDate,
+      villageCode: villageCode,
+      sortBy: 'id',
+      sortOrder: 'desc',
+    })
+      .then((response) => response.data)
+      .then((data) => {
+        setData(data)
+        const dates = []
+        const values = []
+        data.forEach((data, index) => {
+          dates.push(dayjs(data.datetime).format('MM-DD-YYYY'))
+          values.push(data.value)
+        })
+        setDate(dates)
+        setValue(values)
+        setFetching(false)
+      })
+      .catch((error) => console.error(error))
+  }
+
   const [provinceData, setProvinceData] = useState([{}])
   const [citiesData, setCitiesData] = useState([{}])
   const [districtData, setDistrictData] = useState([{}])
   const [villageData, setVillageData] = useState([{}])
 
-  const getData = (formData) => {
-    const endDate = dayjs(new Date()).format('YYYY-MM-DDThh:mm:ss')
-    const startDate = dayjs('2022-09-26').subtract(14, 'day').format('YYYY-MM-DDThh:mm:ss')
-    ParticulateMatterApi.getDataPM({
-      startDate: startDate,
-      endDate: endDate,
-      villageCode: region.village.code,
-      sortBy: 'id',
-      sortOrder: 'desc',
-    })
-    .then((response) => response.data)
-    .then((data) => {
-      setData(data)
-      const dates = []
-      const values = []
-      data.forEach((data, index) => {
-        dates.push(dayjs(data.datetime).format('MM-DD-YYYY'))
-        values.push(data.value)
-      })
-      setDate(dates)
-      setValue(values)
-    })
-    .catch((error) => console.error(error))
-  }
-
-
-
   useEffect(() => {
-    getData()
+    getData({})
     regionApi.getProvinces().then((res) => setProvinceData(res))
   }, [])
 
   const onSubmit = (formData) => {
+    setFetching(true)
     getData(formData)
   }
 
+  const [fetching, setFetching] = useState(false)
+  
   return (
     <div>
       <CCard style={{ marginBottom: '2%' }} className={`border-light`}>
@@ -322,7 +327,18 @@ const AirPollution = (props) => {
                         item.status = 'extremely poor'
                         item.statusColor = 'dark'
                       }
-                      return (
+                      
+                      if (fetching != false)
+                      {
+                        return (
+                        <div className="d-flex justify-content-center align-items-center vw-100">
+                           <div className="spinner-border text-success" role="status">
+                            <span className="visually-hidden">Loading...</span>
+                          </div>
+                        </div>  )                     
+                      }
+                      else {
+                        return (
                         <CTableRow key={item.id}>
                           <CTableDataCell>
                             {dayjs(item.datetime).format('MM-DD-YYYY')}
@@ -349,7 +365,7 @@ const AirPollution = (props) => {
                             </CButton>
                           </CTableDataCell>
                         </CTableRow>
-                      )
+                        ) }
                     })}
                   </CTableBody>}
                 </CTable>
