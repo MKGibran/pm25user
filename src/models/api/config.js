@@ -2,8 +2,8 @@ import axios from 'axios'
 import store from '../redux/store'
 
 // const BASE_URL = "https://backend-pm-25.herokuapp.com";
-const BASE_URL = 'http://localhost:8010/proxy/'
-// const BASE_URL = 'http://117.53.46.104:8179'
+// const BASE_URL = 'http://localhost:8010/proxy/'
+const BASE_URL = 'http://117.53.46.104:8179'
 export const GET_CSRF_COOKIE = '/sanctum/csrf-cookie'
 export const BASE_URL_API = '/api/v1'
 export const TOKEN_NAME = '_ZEc5clpXNXpjdw'
