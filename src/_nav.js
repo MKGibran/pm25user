@@ -23,12 +23,12 @@ const _nav = [
       <CIcon icon={cilArrowThickToRight} customClassName="nav-icon" style={{ color: '#fff' }} />
     ),
   },
-  // {
-  //   component: CNavItem,
-  //   name: 'Sign-Up',
-  //   to: '/sign-up',
-  //   icon: <CIcon icon={cilPencil} customClassName="nav-icon" style={{ color: '#fff' }} />,
-  // },
+  {
+    component: CNavItem,
+    name: 'Sign-Up',
+    to: '/sign-up',
+    icon: <CIcon icon={cilPencil} customClassName="nav-icon" style={{ color: '#fff' }} />,
+  },
   {
     component: CNavItem,
     name: 'Home',
