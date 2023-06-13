@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-key */
 /* eslint-disable react/prop-types */
 import React, { useEffect, useState } from 'react'
 import {
@@ -18,6 +19,8 @@ import {
   CForm,
   CFormInput,
   CFormLabel,
+  CInputGroup,
+  CInputGroupText,
 } from '@coreui/react'
 import { cilZoomIn, cilLocationPin } from '@coreui/icons'
 import CIcon from '@coreui/icons-react'
@@ -38,8 +41,13 @@ const AirPollution = (props) => {
   const [value, setValue] = useState([])
 
   const getData = (formData) => {
-    const endDate = dayjs(new Date()).format('YYYY-MM-DDThh:mm:ss')
-    const startDate = dayjs('2022-09-26').subtract(14, 'day').format('YYYY-MM-DDThh:mm:ss')
+    console.log(formData)
+    const endDate =
+      dayjs(new Date()).format('YYYY-MM-DDThh:mm:ss') ||
+      dayjs(formData.endDate).format('YYYY-MM-DDThh:mm:ss')
+    const startDate =
+      dayjs('2022-09-26').subtract(14, 'day').format('YYYY-MM-DDThh:mm:ss') ||
+      dayjs(formData.startDate).format('YYYY-MM-DDThh:mm:ss')
     const villageCode = formData.village_code || region.village.code
     ParticulateMatterApi.getDataPM({
       startDate: startDate,
@@ -256,27 +264,36 @@ const AirPollution = (props) => {
                       <CCol>
                         <CRow className="mb-3">
                           <CFormLabel
-                            htmlFor="Tanggal"
-                            className="col-sm-2 col-form-label text-start"
+                            htmlFor="Waktu Awal"
+                            className="col-sm-4 col-form-label text-start"
                           >
-                            Tanggal
+                            Waktu Awal
                           </CFormLabel>
-                          <CCol sm={8}>
-                            <CFormInput type="date" id="Tanggal" />
+                          <CCol sm={6}>
+                            <CFormInput
+                              aria-label="Date"
+                              type="datetime-local"
+                              id="Tanggal"
+                              name="startDate"
+                              {...register('startDate')}
+                            />
                           </CCol>
                         </CRow>
                         <CRow className="mb-3">
                           <CFormLabel
-                            htmlFor="Waktu"
-                            className="col-sm-2 col-form-label text-start"
+                            htmlFor="Waktu Akhir"
+                            className="col-sm-4 col-form-label text-start"
                           >
-                            Waktu
+                            Waktu Akhir
                           </CFormLabel>
-                          <CCol sm={4}>
-                            <CFormInput type="time" id="Waktu" />
-                          </CCol>
-                          <CCol sm={4}>
-                            <CFormInput type="time" id="Waktu" />
+                          <CCol sm={6}>
+                            <CFormInput
+                              aria-label="Date"
+                              type="datetime-local"
+                              id="Tanggal"
+                              name="endDate"
+                              {...register('endDate')}
+                            />
                           </CCol>
                         </CRow>
 
@@ -287,7 +304,7 @@ const AirPollution = (props) => {
                               style={{ color: '#fff', float: 'right' }}
                               type="submit"
                             >
-                              Cari
+                              <span className="mx-3">Cari</span>
                             </CButton>
                           </CCol>
                         </CRow>

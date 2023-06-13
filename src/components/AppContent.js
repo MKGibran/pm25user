@@ -7,13 +7,6 @@ import { CContainer, CSpinner, CToaster } from '@coreui/react'
 import routes from '../routes'
 
 const AppContent = (props) => {
-  useEffect(() => {
-    if (!props.user.full_name) {
-      routes.splice(5)
-    } else {
-      routes.splice(0, 2)
-    }
-  }, [routes])
   return (
     <>
       <CContainer className="mt-4" lg>

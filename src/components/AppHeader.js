@@ -21,7 +21,6 @@ import { logo } from 'src/assets/brand/logo'
 const AppHeader = (props) => {
   const dispatch = useDispatch()
   const sidebarShow = useSelector((state) => state.sidebarShow)
-  // const sidebarshow = false
   console.log(useSelector((state) => state.sidebarShow))
   return (
     <CHeader

@@ -47,7 +47,6 @@ export default {
     const res = await axiosInstance
       .post(BASE_URL_API + '/logout', {}, HEADERS_API_BEARER())
       .then((response) => {
-        window.location.href = '/log-in'
         return {
           status: 'success',
           data: { open: true, severity: 'info', message: response.data.message },

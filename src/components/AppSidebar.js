@@ -21,13 +21,6 @@ const AppSidebar = (props) => {
   const dispatch = useDispatch()
   const unfoldable = useSelector((state) => state.sidebarUnfoldable)
   const sidebarShow = useSelector((state) => state.sidebarShow)
-  useEffect(() => {
-    if (!props.user.full_name) {
-      navigation.splice(3)
-    } else {
-      navigation.splice(0, 1)
-    }
-  }, [navigation])
   return (
     <CSidebar
       style={{
