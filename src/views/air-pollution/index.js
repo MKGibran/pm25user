@@ -31,28 +31,29 @@ import ParticulateMatterApi from '../../models/api/particulate-matter'
 import regionApi from '../../models/api/region'
 import { Controller, useForm } from 'react-hook-form'
 import WFormSelect from '../widgets/WFormSelect'
+import isObjectEmpty from 'src/utils/helper/checkObjIsEmpty'
+import ToTitleCase from 'src/utils/helper/toTitleCase'
 
 const AirPollution = (props) => {
   const { register, control, handleSubmit } = useForm()
-  const user = props.user
-  const region = props.user.region
+  const user = props?.user || {}
+  const region = props?.user?.region || {}
   const [data, setData] = useState([])
   const [date, setDate] = useState([])
   const [value, setValue] = useState([])
 
   const getData = (formData) => {
-    console.log(formData)
     const endDate =
       dayjs(new Date()).format('YYYY-MM-DDThh:mm:ss') ||
       dayjs(formData.endDate).format('YYYY-MM-DDThh:mm:ss')
     const startDate =
       dayjs('2022-09-26').subtract(14, 'day').format('YYYY-MM-DDThh:mm:ss') ||
       dayjs(formData.startDate).format('YYYY-MM-DDThh:mm:ss')
-    const villageCode = formData.village_code || region.village.code
+    const villageCode = formData?.village_code || region?.village?.code
     ParticulateMatterApi.getDataPM({
       startDate: startDate,
       endDate: endDate,
-      villageCode: villageCode,
+      villageCode: villageCode ?? undefined,
       sortBy: 'id',
       sortOrder: 'desc',
     })
@@ -61,9 +62,9 @@ const AirPollution = (props) => {
         setData(data)
         const dates = []
         const values = []
-        data.forEach((data, index) => {
-          dates.push(dayjs(data.datetime).format('MM-DD-YYYY'))
-          values.push(data.value)
+        data?.forEach((data, index) => {
+          dates.push(dayjs(data?.datetime).format('MM-DD-YYYY'))
+          values.push(data?.value)
         })
         setDate(dates)
         setValue(values)
@@ -113,15 +114,19 @@ const AirPollution = (props) => {
       <CContainer style={{ marginBottom: '1%' }}>
         <CRow>
           <CCol>
-            <p>
-              <CIcon icon={cilLocationPin} size="sm" style={{ marginRight: '1%' }} />
-              {region.village.name}, {region.district.name}, {region.province.name}
-            </p>
+            {!isObjectEmpty(region) ? (
+              <p>
+                <CIcon icon={cilLocationPin} size="sm" style={{ marginRight: '1%' }} />
+                {region?.village?.name}, {region?.district?.name}, {region?.province?.name}
+              </p>
+            ) : (
+              <p>Please login and/or select region</p>
+            )}
           </CCol>
         </CRow>
       </CContainer>
 
-      <Level user={user} />
+      {isObjectEmpty(user.user) ? <></> : <Level user={user} />}
 
       <CCard style={{ marginBottom: '2%' }} className={`border-light`}>
         <CCardHeader>
@@ -329,65 +334,74 @@ const AirPollution = (props) => {
                   </CTableHead>
                   {
                     <CTableBody style={{ textAlign: 'left' }}>
-                      {data.map((item) => {
-                        if (item.value < 25) {
-                          item.status = 'good'
-                          item.statusColor = 'primary'
-                        } else if (item.value >= 25 && item.value <= 50) {
-                          item.status = 'fair'
-                          item.statusColor = 'success'
-                        } else if (item.value >= 50 && item.value <= 100) {
-                          item.status = 'poor'
-                          item.statusColor = 'warning'
-                        } else if (item.value >= 100 && item.value <= 300) {
-                          item.status = 'very poor'
-                          item.statusColor = 'danger'
-                        } else {
-                          item.status = 'extremely poor'
-                          item.statusColor = 'dark'
-                        }
+                      {data.length ? (
+                        data.map((item) => {
+                          if (item?.value < 25) {
+                            item.status = 'good'
+                            item.statusColor = 'primary'
+                          } else if (item?.value >= 25 && item?.value <= 50) {
+                            item.status = 'fair'
+                            item.statusColor = 'success'
+                          } else if (item?.value >= 50 && item?.value <= 100) {
+                            item.status = 'poor'
+                            item.statusColor = 'warning'
+                          } else if (item?.value >= 100 && item?.value <= 300) {
+                            item.status = 'very poor'
+                            item.statusColor = 'danger'
+                          } else {
+                            item.status = 'extremely poor'
+                            item.statusColor = 'dark'
+                          }
 
-                        if (fetching != false) {
-                          return (
-                            <div className="d-flex justify-content-center align-items-center vw-100">
-                              <div className="spinner-border text-success" role="status">
-                                <span className="visually-hidden">Loading...</span>
+                          if (fetching != false) {
+                            return (
+                              <div className="d-flex justify-content-center align-items-center vw-100">
+                                <div className="spinner-border text-success" role="status">
+                                  <span className="visually-hidden">Loading...</span>
+                                </div>
                               </div>
-                            </div>
-                          )
-                        } else {
-                          return (
-                            <CTableRow key={item.id}>
-                              <CTableDataCell>
-                                {dayjs(item.datetime).format('MM-DD-YYYY')}
-                              </CTableDataCell>
-                              <CTableDataCell>
-                                {dayjs(item.datetime).format('HH:mm')}
-                              </CTableDataCell>
-                              <CTableDataCell>{item.province.name}</CTableDataCell>
-                              <CTableDataCell>{item.city.name}</CTableDataCell>
-                              <CTableDataCell>{item.district.name}</CTableDataCell>
-                              <CTableDataCell>{item.village.name}</CTableDataCell>
-                              <CTableDataCell style={{ textAlign: 'center' }}>
-                                {item.value}
-                              </CTableDataCell>
-                              <CTableDataCell style={{ textAlign: 'center' }}>
-                                <CBadge color={item.statusColor} shape="rounded-pill">
-                                  {item.status}
-                                </CBadge>
-                              </CTableDataCell>
-                              <CTableDataCell style={{ textAlign: 'center' }}>
-                                {item.value}
-                              </CTableDataCell>
-                              <CTableDataCell style={{ textAlign: 'center' }}>
-                                <CButton color="dark" variant="ghost" size="sm" className={'mx-1'}>
-                                  <CIcon icon={cilZoomIn} />
-                                </CButton>
-                              </CTableDataCell>
-                            </CTableRow>
-                          )
-                        }
-                      })}
+                            )
+                          } else {
+                            return (
+                              <CTableRow key={item.id}>
+                                <CTableDataCell>
+                                  {dayjs(item.datetime).format('MM-DD-YYYY')}
+                                </CTableDataCell>
+                                <CTableDataCell>
+                                  {dayjs(item.datetime).format('HH:mm')}
+                                </CTableDataCell>
+                                <CTableDataCell>{ToTitleCase(item.province.name)}</CTableDataCell>
+                                <CTableDataCell>{ToTitleCase(item.city.name)}</CTableDataCell>
+                                <CTableDataCell>{ToTitleCase(item.district.name)}</CTableDataCell>
+                                <CTableDataCell>{ToTitleCase(item.village.name)}</CTableDataCell>
+                                <CTableDataCell style={{ textAlign: 'center' }}>
+                                  {item?.value}
+                                </CTableDataCell>
+                                <CTableDataCell style={{ textAlign: 'center' }}>
+                                  <CBadge color={item.statusColor} shape="rounded-pill">
+                                    {item.status}
+                                  </CBadge>
+                                </CTableDataCell>
+                                <CTableDataCell style={{ textAlign: 'center' }}>
+                                  {item?.value}
+                                </CTableDataCell>
+                                <CTableDataCell style={{ textAlign: 'center' }}>
+                                  <CButton
+                                    color="dark"
+                                    variant="ghost"
+                                    size="sm"
+                                    className={'mx-1'}
+                                  >
+                                    <CIcon icon={cilZoomIn} />
+                                  </CButton>
+                                </CTableDataCell>
+                              </CTableRow>
+                            )
+                          }
+                        })
+                      ) : (
+                        <>No data found!</>
+                      )}
                     </CTableBody>
                   }
                 </CTable>

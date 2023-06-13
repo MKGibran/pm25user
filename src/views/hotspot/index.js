@@ -23,20 +23,23 @@ import dayjs from 'dayjs'
 import { cilLocationPin, cilZoomIn } from '@coreui/icons'
 import HotspotApi from '../../models/api/hotspot'
 import regionApi from '../../models/api/region'
+import isObjectEmpty from 'src/utils/helper/checkObjIsEmpty'
+import ToTitleCase from 'src/utils/helper/toTitleCase'
 
 const Hotspot = (props) => {
-  const user = props.user
-  const region = props.user.region
+  const user = props.user || {}
+  const region = props.user.region || {}
   const [data, setData] = useState([])
   const [date, setDate] = useState([])
   const [value, setValue] = useState([])
+
   const getData = () => {
     const endDate = dayjs(new Date()).format('YYYY-MM-DDThh:mm:ss')
     const startDate = dayjs('2022-09-26').subtract(14, 'day').format('YYYY-MM-DDThh:mm:ss')
     HotspotApi.getDataHotspot({
       startDate: startDate,
       endDate: endDate,
-      villageCode: region.village.code,
+      villageCode: region ? undefined : region?.village.code,
       sortBy: 'id',
       sortOrder: 'desc',
     })
@@ -56,7 +59,9 @@ const Hotspot = (props) => {
       })
       .catch((error) => console.error(error))
   }
+
   useEffect(() => {
+    console.log(user, region)
     getData()
   }, [])
 
@@ -85,15 +90,19 @@ const Hotspot = (props) => {
       <CContainer style={{ marginBottom: '1%' }}>
         <CRow>
           <CCol>
-            <p>
-              <CIcon icon={cilLocationPin} size="sm" style={{ marginRight: '1%' }} />
-              {region.village.name}, {region.district.name}, {region.province.name}
-            </p>
+            {isObjectEmpty(region) || !region.length ? (
+              <p>Please login and/or select region</p>
+            ) : (
+              <p>
+                <CIcon icon={cilLocationPin} size="sm" style={{ marginRight: '1%' }} />
+                {region?.village.name}, {region?.district.name}, {region?.province.name}
+              </p>
+            )}
           </CCol>
         </CRow>
       </CContainer>
 
-      <Level user={user} />
+      {isObjectEmpty(user) ? <></> : <Level user={user} />}
 
       <CCard style={{ marginBottom: '2%' }} className={`border-light`}>
         <CCardHeader>
@@ -217,28 +226,32 @@ const Hotspot = (props) => {
                     </CTableRow>
                   </CTableHead>
                   <CTableBody style={{ textAlign: 'left' }}>
-                    {data.map((item) => {
-                      return (
-                        <CTableRow key={item.id}>
-                          <CTableDataCell>
-                            {dayjs(item.datetime).format('MM-DD-YYYY')}
-                          </CTableDataCell>
-                          <CTableDataCell>{dayjs(item.datetime).format('HH:mm')}</CTableDataCell>
-                          <CTableDataCell>{item.province.name}</CTableDataCell>
-                          <CTableDataCell>{item.city.name}</CTableDataCell>
-                          <CTableDataCell>{item.district.name}</CTableDataCell>
-                          <CTableDataCell>{item.village.name}</CTableDataCell>
-                          <CTableDataCell style={{ textAlign: 'center' }}>
-                            {item.value}
-                          </CTableDataCell>
-                          <CTableDataCell style={{ textAlign: 'center' }}>
-                            <CButton color="dark" variant="ghost" size="sm" className={'mx-1'}>
-                              <CIcon icon={cilZoomIn} />
-                            </CButton>
-                          </CTableDataCell>
-                        </CTableRow>
-                      )
-                    })}
+                    {data.length ? (
+                      data?.map((item) => {
+                        return (
+                          <CTableRow key={item.id}>
+                            <CTableDataCell>
+                              {dayjs(item.datetime).format('MM-DD-YYYY')}
+                            </CTableDataCell>
+                            <CTableDataCell>{dayjs(item.datetime).format('HH:mm')}</CTableDataCell>
+                            <CTableDataCell>{ToTitleCase(item.province.name)}</CTableDataCell>
+                            <CTableDataCell>{ToTitleCase(item.city.name)}</CTableDataCell>
+                            <CTableDataCell>{ToTitleCase(item.district.name)}</CTableDataCell>
+                            <CTableDataCell>{ToTitleCase(item.village.name)}</CTableDataCell>
+                            <CTableDataCell style={{ textAlign: 'center' }}>
+                              {item.value}
+                            </CTableDataCell>
+                            <CTableDataCell style={{ textAlign: 'center' }}>
+                              <CButton color="dark" variant="ghost" size="sm" className={'mx-1'}>
+                                <CIcon icon={cilZoomIn} />
+                              </CButton>
+                            </CTableDataCell>
+                          </CTableRow>
+                        )
+                      })
+                    ) : (
+                      <>No data found!</>
+                    )}
                   </CTableBody>
                 </CTable>
               </CContainer>
@@ -248,6 +261,7 @@ const Hotspot = (props) => {
       </CCard>
     </div>
   )
+  return
 }
 
 export default Hotspot

@@ -1,6 +1,3 @@
-/* eslint-disable prettier/prettier */
-/* eslint-disable no-undef */
-/* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import {
@@ -23,9 +20,12 @@ import WFormSelect from '../widgets/WFormSelect'
 import InformationApi from '../../models/api/information'
 import PmValueIndicator from 'src/views/widgets/WPmValueIndicator'
 import regionApi from '../../models/api/region'
+import { useSelector } from 'react-redux'
+import isObjectEmpty from 'src/utils/helper/checkObjIsEmpty'
 
 export default function FireData(props) {
-  const user = props.user.user.village_code
+  // const user = props.user.user.village_code
+  const user = useSelector((state) => state.user.current_user.village_code)
   // const region = props.user.region
   const { register, control, handleSubmit } = useForm()
   const [regionSelected, setRegionSelected] = useState({
@@ -45,6 +45,7 @@ export default function FireData(props) {
   const [citiesData, setCitiesData] = useState([{}])
   const [districtData, setDistrictData] = useState([{}])
   const [villageData, setVillageData] = useState([{}])
+
   const fetchInformationData = (user, region) => {
     InformationApi.getDataInformation(user)
       .then((response) => {
@@ -82,13 +83,12 @@ export default function FireData(props) {
         }
       })
   }
+
   useEffect(() => {
-    fetchInformationData(user, region)
-    console.log(region)
-  }, [])
-  useEffect(() => {
+    if (Boolean(user)) fetchInformationData(user, region)
     regionApi.getProvinces().then((res) => setProvinceData(res))
   }, [])
+
   useEffect(() => {
     console.log(regionSelected)
   }, [regionSelected])
@@ -152,174 +152,183 @@ export default function FireData(props) {
           </CCardBody>
         </CContainer>
       </CCard>
+      {Boolean(user) ? (
+        <>
+          <CContainer style={{ marginBottom: '1%' }}>
+            <CRow>
+              <CCol>
+                <p>
+                  <CIcon icon={cilLocationPin} size="sm" style={{ marginRight: '1%' }} />
+                  {valueVillage.name}, {valueDistrict.name}, {valueProvince.name}
+                </p>
+              </CCol>
+              <CCol>
+                <CButton
+                  color="success"
+                  style={{ color: '#fff', float: 'right' }}
+                  onClick={() => setVisible(!visible)}
+                >
+                  Change location
+                </CButton>
+                <CModal visible={visible} onClose={() => setVisible(false)}>
+                  <CModalHeader onClose={() => setVisible(false)}>
+                    <CModalTitle>Change location</CModalTitle>
+                  </CModalHeader>
+                  <form onSubmit={handleSubmit(onSubmit)}>
+                    <CModalBody>
+                      <Controller
+                        control={control}
+                        name="province"
+                        render={({ field: { onChange, value, ref } }) => (
+                          <WFormSelect
+                            label="Province"
+                            inputRef={ref}
+                            data={provinceData}
+                            value={value}
+                            onChange={(e) => {
+                              onChange(e)
+                              regionApi.getCities(e.target.value).then((res) => setCitiesData(res))
+                            }}
+                            className="mb-2"
+                          />
+                        )}
+                      />
+                      <Controller
+                        control={control}
+                        name="cities"
+                        render={({ field: { onChange, value, ref } }) => (
+                          <WFormSelect
+                            label="Cities"
+                            inputRef={ref}
+                            data={citiesData}
+                            value={value}
+                            onChange={(e) => {
+                              onChange(e)
+                              regionApi
+                                .getDistricts(e.target.value)
+                                .then((res) => setDistrictData(res))
+                            }}
+                            className="mb-2"
+                          />
+                        )}
+                      />
+                      <Controller
+                        control={control}
+                        name="district"
+                        render={({ field: { onChange, value, ref } }) => (
+                          <WFormSelect
+                            label="District"
+                            inputRef={ref}
+                            data={districtData}
+                            value={value}
+                            onChange={(e) => {
+                              onChange(e)
+                              regionApi
+                                .getVillages(e.target.value)
+                                .then((res) => setVillageData(res))
+                            }}
+                            className="mb-2"
+                          />
+                        )}
+                      />
+                      <Controller
+                        control={control}
+                        name="village_code"
+                        render={({ field: { onChange, value, ref } }) => (
+                          <WFormSelect
+                            label="Village"
+                            inputRef={ref}
+                            data={villageData}
+                            value={value}
+                            onChange={onChange}
+                            className="mb-2"
+                          />
+                        )}
+                      />
+                    </CModalBody>
+                    <CModalFooter>
+                      <CButton color="secondary" onClick={() => setVisible(false)}>
+                        Close
+                      </CButton>
+                      <CButton color="primary" className="text-light" type="submit">
+                        Submit
+                      </CButton>
+                    </CModalFooter>
+                  </form>
+                </CModal>
+              </CCol>
+            </CRow>
+          </CContainer>
 
-      <CContainer style={{ marginBottom: '1%' }}>
-        <CRow>
-          <CCol>
-            <p>
-              <CIcon icon={cilLocationPin} size="sm" style={{ marginRight: '1%' }} />
-              {valueVillage.name}, {valueDistrict.name}, {valueProvince.name}
-            </p>
-          </CCol>
-          <CCol>
-            <CButton
-              color="success"
-              style={{ color: '#fff', float: 'right' }}
-              onClick={() => setVisible(!visible)}
-            >
-              Change location
-            </CButton>
-            <CModal visible={visible} onClose={() => setVisible(false)}>
-              <CModalHeader onClose={() => setVisible(false)}>
-                <CModalTitle>Change location</CModalTitle>
-              </CModalHeader>
-              <form onSubmit={handleSubmit(onSubmit)}>
-                <CModalBody>
-                  <Controller
-                    control={control}
-                    name="province"
-                    render={({ field: { onChange, value, ref } }) => (
-                      <WFormSelect
-                        label="Province"
-                        inputRef={ref}
-                        data={provinceData}
-                        value={value}
-                        onChange={(e) => {
-                          onChange(e)
-                          regionApi.getCities(e.target.value).then((res) => setCitiesData(res))
-                        }}
-                        className="mb-2"
-                      />
-                    )}
-                  />
-                  <Controller
-                    control={control}
-                    name="cities"
-                    render={({ field: { onChange, value, ref } }) => (
-                      <WFormSelect
-                        label="Cities"
-                        inputRef={ref}
-                        data={citiesData}
-                        value={value}
-                        onChange={(e) => {
-                          onChange(e)
-                          regionApi.getDistricts(e.target.value).then((res) => setDistrictData(res))
-                        }}
-                        className="mb-2"
-                      />
-                    )}
-                  />
-                  <Controller
-                    control={control}
-                    name="district"
-                    render={({ field: { onChange, value, ref } }) => (
-                      <WFormSelect
-                        label="District"
-                        inputRef={ref}
-                        data={districtData}
-                        value={value}
-                        onChange={(e) => {
-                          onChange(e)
-                          regionApi.getVillages(e.target.value).then((res) => setVillageData(res))
-                        }}
-                        className="mb-2"
-                      />
-                    )}
-                  />
-                  <Controller
-                    control={control}
-                    name="village_code"
-                    render={({ field: { onChange, value, ref } }) => (
-                      <WFormSelect
-                        label="Village"
-                        inputRef={ref}
-                        data={villageData}
-                        value={value}
-                        onChange={onChange}
-                        className="mb-2"
-                      />
-                    )}
-                  />
-                </CModalBody>
-                <CModalFooter>
-                  <CButton color="secondary" onClick={() => setVisible(false)}>
-                    Close
-                  </CButton>
-                  <CButton color="primary" className="text-light" type="submit">
-                    Submit
-                  </CButton>
-                </CModalFooter>
-              </form>
-            </CModal>
-          </CCol>
-        </CRow>
-      </CContainer>
-
-      <CContainer>
-        <CRow xs={{ gutterX: 5 }}>
-          <CCol>
-            <CRow>
-              <CCard style={{ marginBottom: '2%', textAlign: 'center' }}>
-                <CContainer>
-                  <CCardBody>
-                    <h5>The current air pollution level in your commune is</h5>
-                    <p>
-                      Nilai partikel PM 2.5 <br />
-                      (g/m2)
-                    </p>
-                    <PmValueIndicator
-                      value={valuePM.value}
-                      severity={pmSeverity.value}
-                      className={`my-5`}
-                    />
-                    <CButtonGroup role="group" aria-label="Basic example" className="mt-4">
-                      <CButton color="success"></CButton>
-                      <CButton color="warning"></CButton>
-                      <CButton color="danger"></CButton>
-                      <CButton color="dark"></CButton>
-                    </CButtonGroup>
-                  </CCardBody>
-                </CContainer>
-              </CCard>
+          <CContainer>
+            <CRow xs={{ gutterX: 5 }}>
+              <CCol>
+                <CRow>
+                  <CCard style={{ marginBottom: '2%', textAlign: 'center' }}>
+                    <CContainer>
+                      <CCardBody>
+                        <h5>The current air pollution level in your commune is</h5>
+                        <p>
+                          Nilai partikel PM 2.5 <br />
+                          (g/m2)
+                        </p>
+                        <PmValueIndicator
+                          value={valuePM.value}
+                          severity={pmSeverity.value}
+                          className={`my-5`}
+                        />
+                        <CButtonGroup role="group" aria-label="Basic example" className="mt-4">
+                          <CButton color="success"></CButton>
+                          <CButton color="warning"></CButton>
+                          <CButton color="danger"></CButton>
+                          <CButton color="dark"></CButton>
+                        </CButtonGroup>
+                      </CCardBody>
+                    </CContainer>
+                  </CCard>
+                </CRow>
+              </CCol>
+              <CCol>
+                <CRow>
+                  <CCard
+                    style={{
+                      marginBottom: '2%',
+                      textAlign: 'center',
+                    }}
+                  >
+                    <CContainer>
+                      <CCardBody>
+                        <h5>The current number of hotspot in your commune is</h5>
+                        <PmValueIndicator
+                          value={valueHotspot.value}
+                          severity={'normal'}
+                          className={`my-5`}
+                        />
+                      </CCardBody>
+                    </CContainer>
+                  </CCard>
+                </CRow>
+                <CRow>
+                  <CCard style={{ marginBottom: '2%', textAlign: 'center' }}>
+                    <CContainer>
+                      <CCardBody>
+                        <h5>The current carbon monoxide level in your commune is</h5>
+                        <PmValueIndicator
+                          value={valueSmoke.value}
+                          severity={'normal'}
+                          className={`my-5`}
+                        />
+                      </CCardBody>
+                    </CContainer>
+                  </CCard>
+                </CRow>
+              </CCol>
             </CRow>
-          </CCol>
-          <CCol>
-            <CRow>
-              <CCard
-                style={{
-                  marginBottom: '2%',
-                  textAlign: 'center',
-                }}
-              >
-                <CContainer>
-                  <CCardBody>
-                    <h5>The current number of hotspot in your commune is</h5>
-                    <PmValueIndicator
-                      value={valueHotspot.value}
-                      severity={'normal'}
-                      className={`my-5`}
-                    />
-                  </CCardBody>
-                </CContainer>
-              </CCard>
-            </CRow>
-            <CRow>
-              <CCard style={{ marginBottom: '2%', textAlign: 'center' }}>
-                <CContainer>
-                  <CCardBody>
-                    <h5>The current carbon monoxide level in your commune is</h5>
-                    <PmValueIndicator
-                      value={valueSmoke.value}
-                      severity={'normal'}
-                      className={`my-5`}
-                    />
-                  </CCardBody>
-                </CContainer>
-              </CCard>
-            </CRow>
-          </CCol>
-        </CRow>
-      </CContainer>
+          </CContainer>
+        </>
+      ) : (
+        <CContainer>Couldn't detect currect location. Please login first!</CContainer>
+      )}
     </div>
   )
 }
