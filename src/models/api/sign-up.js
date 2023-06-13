@@ -6,7 +6,7 @@ export default {
       .post(BASE_URL_API + '/register', data)
       .then((res) => {
         return {
-          status: 'success',
+          status: res.status === 200 ? 'success' : 'failed',
           state: {
             open: true,
             severity: 'info',
@@ -33,7 +33,7 @@ export default {
       .post(BASE_URL_API + '/register/verify', data)
       .then((res) => {
         return {
-          status: 'success',
+          status: res.status === 200 ? 'success' : 'failed',
           state: {
             open: true,
             severity: 'info',
@@ -61,7 +61,7 @@ export default {
       .then((res) => {
         console.log(res)
         return {
-          status: 'success',
+          status: res.status === 200 ? 'success' : 'failed',
           state: {
             open: true,
             severity: 'info',

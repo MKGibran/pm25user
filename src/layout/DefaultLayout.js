@@ -11,8 +11,8 @@ import { useLocation, useNavigate } from 'react-router-dom'
 const DefaultLayout = () => {
   const [region, setRegion] = useState([])
   const toaster = useRef()
-  const toastState = useSelector((state) => state.globalUi?.toast)
-  const user = useSelector((state) => state.user.current_user)
+  const toastState = useSelector((state) => state?.globalUi?.toast)
+  const user = useSelector((state) => state?.user?.current_user)
   const getVillageData = () => {
     regionApi
       .getVillage(user.village_code)
