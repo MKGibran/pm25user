@@ -3,26 +3,26 @@ import axios, { BASE_URL_API, HEADERS_API, TOKEN_NAME } from './config'
 export default {
   async signUp(data) {
     const response = await axios
-      .post(BASE_URL_API + '/register', data)
+      .post(BASE_URL_API + '/register', data, HEADERS_API)
       .then((res) => {
+        console.log(res)
         return {
-          status: res.status === 200 ? 'success' : 'failed',
+          status: res.status === 201 ? 'success' : 'failed',
           state: {
             open: true,
             severity: 'info',
             message: res.data.message,
           },
-          data: res.data,
+          data: res.data.data.id,
         }
       })
       .catch((err) => {
-        alert(err.response.data.message)
         return {
           status: 'error',
           state: {
             open: true,
             severity: 'danger',
-            message: err.reponse.data.message,
+            message: err.response?.data.message,
           },
         }
       })

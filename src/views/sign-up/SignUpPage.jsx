@@ -31,7 +31,7 @@ export default function SignUpPage() {
     province: null,
     district: null,
   })
-  const [visible, setVisible] = useState(true)
+  const [visible, setVisible] = useState(false)
   const [userId, setUserId] = useState(0)
 
   const dispatch = useDispatch()
@@ -42,7 +42,6 @@ export default function SignUpPage() {
   const [villageData, setVillageData] = useState([{}])
 
   useEffect(() => {
-    setVisible(!visible)
     regionApi.getProvinces().then((res) => setProvinceData(res))
   }, [])
 
@@ -51,19 +50,25 @@ export default function SignUpPage() {
   }, [regionSelected])
 
   const onSubmit = (data) => {
-    signUpApi.signUp(data).then((res) => {
-      if (res.status === 'success') {
-        setVisible(!visible)
-        setUserId(res.data.id)
-      } else {
-        console.log(res)
-      }
-    })
+    signUpApi
+      .signUp(data)
+      .then((res) => {
+        if (res.status === 'success') {
+          console.log(res)
+          setVisible(true)
+          setUserId(res.data)
+        }
+        dispatch(globalUiActions.setToastMessage(res.state))
+      })
+      .catch((err) => {
+        console.log(err)
+        dispatch(globalUiActions.setToastMessage(err.state))
+      })
   }
 
   return (
     <>
-      {visible === true ? (
+      {visible && userId > 0 ? (
         <SignUpOTPPopup visible={visible} setVisible={setVisible} data={userId} />
       ) : (
         <></>
