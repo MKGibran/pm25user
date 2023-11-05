@@ -33,18 +33,23 @@ const FireData = (props) => {
             <CTable responsive>
               <CTableHead>
                 <CTableRow>
-                  <CTableHeaderCell scope="col">Provinsi</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Kab/Kota</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Kecamatan</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Kontak</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Name</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Phone</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Whatsapp</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Email</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Address</CTableHeaderCell>
                 </CTableRow>
               </CTableHead>
               <CTableBody style={{ textAlign: 'left' }}>
                 <CTableRow>
-                  <CTableDataCell>Jawa Barat</CTableDataCell>
-                  <CTableDataCell>Bogor</CTableDataCell>
-                  <CTableDataCell>Tegallega</CTableDataCell>
-                  <CTableDataCell>0878000000</CTableDataCell>
+                  <CTableDataCell>Robi Deslia Waldi, S.Hut., M.Si</CTableDataCell>
+                  <CTableDataCell>(0251) 8421929</CTableDataCell>
+                  <CTableDataCell>+6281290002231</CTableDataCell>
+                  <CTableDataCell>ubi.fahutanipb@gmail.com / rfmrcsea.ipb@gmail.com</CTableDataCell>
+                  <CTableDataCell>
+                    Jl. Ulin Lingkar Kampus IPB Dramaga, Gedung Biologi Kehutanan BK 214 Faculty of
+                    Forestry, Bogor 16680, West Java, Indonesia
+                  </CTableDataCell>
                 </CTableRow>
               </CTableBody>
             </CTable>

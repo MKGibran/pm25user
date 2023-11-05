@@ -18,6 +18,7 @@ import {
   CForm,
   CFormInput,
   CFormLabel,
+  CImage,
 } from '@coreui/react'
 import { cilZoomIn, cilLocationPin } from '@coreui/icons'
 import CIcon from '@coreui/icons-react'
@@ -28,6 +29,9 @@ import SmokeApi from '../../models/api/smoke'
 import regionApi from '../../models/api/region'
 import isObjectEmpty from 'src/utils/helper/checkObjIsEmpty'
 import ToTitleCase from 'src/utils/helper/toTitleCase'
+import ipb from '../../assets/images/Logo IPB.png'
+import ubi from '../../assets/images/Logo Udara Bersih Indonesia.jpeg'
+import sea from '../../assets/images/Logo-RFMRC-SEA-Terbaru.png'
 
 const Home = (props) => {
   const user = props.user || {}
@@ -80,9 +84,15 @@ const Home = (props) => {
         <CContainer>
           <CCardBody style={{ textAlign: 'center' }}>
             <CRow>
-              <CCol>Logo</CCol>
-              <CCol>Logo</CCol>
-              <CCol>Logo</CCol>
+              <CCol>
+                <CImage fluid src={ipb} width={100} />
+              </CCol>
+              <CCol>
+                <CImage fluid src={ubi} width={100} />
+              </CCol>
+              <CCol>
+                <CImage fluid src={sea} width={100} />
+              </CCol>
             </CRow>
           </CCardBody>
         </CContainer>

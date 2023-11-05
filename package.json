@@ -52,7 +52,8 @@
     "redux": "4.2.1",
     "redux-deep-persist": "^1.0.7",
     "redux-persist": "^6.0.0",
-    "simplebar-react": "^2.4.3"
+    "simplebar-react": "^2.4.3",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.16.5",

@@ -14,6 +14,7 @@ import {
   CTableHeaderCell,
   CTableBody,
   CTableDataCell,
+  CImage,
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import Chart from './chart'
@@ -25,6 +26,9 @@ import HotspotApi from '../../models/api/hotspot'
 import regionApi from '../../models/api/region'
 import isObjectEmpty from 'src/utils/helper/checkObjIsEmpty'
 import ToTitleCase from 'src/utils/helper/toTitleCase'
+import ipb from '../../assets/images/Logo IPB.png'
+import ubi from '../../assets/images/Logo Udara Bersih Indonesia.jpeg'
+import sea from '../../assets/images/Logo-RFMRC-SEA-Terbaru.png'
 
 const Hotspot = (props) => {
   const user = props.user || {}
@@ -79,9 +83,15 @@ const Hotspot = (props) => {
         <CContainer>
           <CCardBody style={{ textAlign: 'center' }}>
             <CRow>
-              <CCol>Logo</CCol>
-              <CCol>Logo</CCol>
-              <CCol>Logo</CCol>
+              <CCol>
+                <CImage fluid src={ipb} width={100} />
+              </CCol>
+              <CCol>
+                <CImage fluid src={ubi} width={100} />
+              </CCol>
+              <CCol>
+                <CImage fluid src={sea} width={100} />
+              </CCol>
             </CRow>
           </CCardBody>
         </CContainer>

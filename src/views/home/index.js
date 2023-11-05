@@ -1,5 +1,8 @@
 import React from 'react'
-import { CCard, CCardBody, CCol, CContainer, CRow } from '@coreui/react'
+import { CCard, CCardBody, CCol, CContainer, CRow, CImage } from '@coreui/react'
+import ipb from '../../assets/images/Logo IPB.png'
+import ubi from '../../assets/images/Logo Udara Bersih Indonesia.jpeg'
+import sea from '../../assets/images/Logo-RFMRC-SEA-Terbaru.png'
 
 const Home = (props) => {
   return (
@@ -16,9 +19,15 @@ const Home = (props) => {
         <CContainer>
           <CCardBody style={{ textAlign: 'center' }}>
             <CRow>
-              <CCol>Logo</CCol>
-              <CCol>Logo</CCol>
-              <CCol>Logo</CCol>
+              <CCol>
+                <CImage fluid src={ipb} width={100} />
+              </CCol>
+              <CCol>
+                <CImage fluid src={ubi} width={100} />
+              </CCol>
+              <CCol>
+                <CImage fluid src={sea} width={100} />
+              </CCol>
             </CRow>
             <CRow>
               <p style={{ marginTop: '2%', textAlign: 'justify' }}>

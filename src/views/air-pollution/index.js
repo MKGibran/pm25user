@@ -19,6 +19,7 @@ import {
   CForm,
   CFormInput,
   CFormLabel,
+  CImage,
   CInputGroup,
   CInputGroupText,
 } from '@coreui/react'
@@ -33,6 +34,9 @@ import { Controller, useForm } from 'react-hook-form'
 import WFormSelect from '../widgets/WFormSelect'
 import isObjectEmpty from 'src/utils/helper/checkObjIsEmpty'
 import ToTitleCase from 'src/utils/helper/toTitleCase'
+import ipb from '../../assets/images/Logo IPB.png'
+import ubi from '../../assets/images/Logo Udara Bersih Indonesia.jpeg'
+import sea from '../../assets/images/Logo-RFMRC-SEA-Terbaru.png'
 
 const AirPollution = (props) => {
   const { register, control, handleSubmit } = useForm()
@@ -103,9 +107,15 @@ const AirPollution = (props) => {
         <CContainer>
           <CCardBody style={{ textAlign: 'center' }}>
             <CRow>
-              <CCol>Logo</CCol>
-              <CCol>Logo</CCol>
-              <CCol>Logo</CCol>
+              <CCol>
+                <CImage fluid src={ipb} width={100} />
+              </CCol>
+              <CCol>
+                <CImage fluid src={ubi} width={100} />
+              </CCol>
+              <CCol>
+                <CImage fluid src={sea} width={100} />
+              </CCol>
             </CRow>
           </CCardBody>
         </CContainer>
