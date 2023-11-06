@@ -15,12 +15,20 @@ module.exports = {
   extends: [
     'react-app',
     'react-app/jest',
+    'eslint:recommended',
+    'plugin:react-hooks/recommended',
+    'plugin:react/jsx-runtime',
     'plugin:react/recommended', // Uses the recommended rules from @eslint-plugin-react
     'plugin:prettier/recommended', // Enables eslint-plugin-prettier and eslint-config-prettier. This will display prettier errors as ESLint errors. Make sure this is always the last configuration in the extends array.
   ],
-  plugins: ['react', 'react-hooks'],
+  plugins: ['prettier', 'react', 'react-hooks'],
   rules: {
     // Place to specify ESLint rules. Can be used to overwrite rules specified from the extended configs
     // e.g. "@typescript-eslint/explicit-function-return-type": "off",
+    'react/react-in-jsx-scope': 'off',
+    'react/jsx-uses-react': 'off',
+    'react/prop-types': 'off',
+    'prettier/prettier': ['warn', { singleQuote: true }],
+    quotes: ['warn', 'single', { avoidEscape: true }],
   },
 }

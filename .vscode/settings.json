@@ -1,9 +1,15 @@
 {
-    "workbench.colorCustomizations": {
-        "minimap.background": "#00000000",
-        "scrollbar.shadow": "#00000000",
-        "activityBar.background": "#531244",
-        "titleBar.activeBackground": "#741A5F",
-        "titleBar.activeForeground": "#FDF8FC"
-    }
+  "workbench.colorCustomizations": {
+    "minimap.background": "#00000000",
+    "scrollbar.shadow": "#00000000",
+    "activityBar.background": "#531244",
+    "titleBar.activeBackground": "#741A5F",
+    "titleBar.activeForeground": "#FDF8FC"
+  },
+  "editor.codeActionsOnSave": {
+    "source.addMissingImports": true,
+		"source.fixAll.eslint": true,
+		"source.organizeImports": true,
+  },
+  "eslint.validate": ["react"]
 }
