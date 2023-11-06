@@ -1,7 +1,6 @@
 /* eslint-disable no-undef */
 /* eslint-disable react/prop-types */
-import React from 'react'
-import {} from '@coreui/react'
+// import { } from '@coreui/react'
 import { CChartBar } from '@coreui/react-chartjs'
 
 const Chart = (props) => {

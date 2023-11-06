@@ -1,12 +1,11 @@
-import 'react-app-polyfill/stable'
 import 'core-js'
-import React from 'react'
+import 'react-app-polyfill/stable'
 import { createRoot } from 'react-dom/client'
-import App from './App'
-import reportWebVitals from './reportWebVitals'
 import { Provider } from 'react-redux'
-import store, { persistor } from './models/redux/store'
 import { PersistGate } from 'redux-persist/integration/react'
+import App from './App'
+import store, { persistor } from './models/redux/store'
+import reportWebVitals from './reportWebVitals'
 
 createRoot(document.getElementById('root')).render(
   <Provider store={store}>

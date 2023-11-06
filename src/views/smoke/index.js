@@ -1,37 +1,33 @@
 /* eslint-disable react/prop-types */
-import React, { useEffect, useState } from 'react'
+import { cilLocationPin, cilZoomIn } from '@coreui/icons'
+import CIcon from '@coreui/icons-react'
 import {
-  CButton,
   CBadge,
+  CButton,
   CCard,
   CCardBody,
+  CCardHeader,
   CCol,
   CContainer,
+  CImage,
   CRow,
-  CCardHeader,
   CTable,
-  CTableHead,
-  CTableRow,
-  CTableHeaderCell,
   CTableBody,
   CTableDataCell,
-  CForm,
-  CFormInput,
-  CFormLabel,
-  CImage,
+  CTableHead,
+  CTableHeaderCell,
+  CTableRow,
 } from '@coreui/react'
-import { cilZoomIn, cilLocationPin } from '@coreui/icons'
-import CIcon from '@coreui/icons-react'
-import Chart from './chart'
-import Level from './level'
 import dayjs from 'dayjs'
-import SmokeApi from '../../models/api/smoke'
-import regionApi from '../../models/api/region'
+import { useEffect, useState } from 'react'
 import isObjectEmpty from 'src/utils/helper/checkObjIsEmpty'
 import ToTitleCase from 'src/utils/helper/toTitleCase'
 import ipb from '../../assets/images/Logo IPB.png'
 import ubi from '../../assets/images/Logo Udara Bersih Indonesia.jpeg'
 import sea from '../../assets/images/Logo-RFMRC-SEA-Terbaru.png'
+import SmokeApi from '../../models/api/smoke'
+import Chart from './chart'
+import Level from './level'
 
 const Home = (props) => {
   const user = props.user || {}
@@ -72,7 +68,7 @@ const Home = (props) => {
 
   return (
     <div>
-      <CCard style={{ marginBottom: '2%' }} className={`border-light`}>
+      <CCard style={{ marginBottom: '2%' }} className={'border-light'}>
         <CContainer>
           <CCardBody style={{ textAlign: 'center' }}>
             <h4>Smoke</h4>
@@ -80,7 +76,7 @@ const Home = (props) => {
         </CContainer>
       </CCard>
 
-      <CCard style={{ marginBottom: '2%', textAlign: 'justify' }} className={`border-light`}>
+      <CCard style={{ marginBottom: '2%', textAlign: 'justify' }} className={'border-light'}>
         <CContainer>
           <CCardBody style={{ textAlign: 'center' }}>
             <CRow>
@@ -115,13 +111,13 @@ const Home = (props) => {
 
       {isObjectEmpty(user.user) ? <></> : <Level user={user} />}
 
-      <CCard style={{ marginBottom: '2%' }} className={`border-light`}>
+      <CCard style={{ marginBottom: '2%' }} className={'border-light'}>
         <CCardHeader>
           <h4>Daily Smoke for the last 14 days</h4>
         </CCardHeader>
         <CContainer>
           <CCardBody style={{ textAlign: 'center' }}>
-            <CRow className={`mb-5`}>
+            <CRow className={'mb-5'}>
               <Chart dates={date} values={value} />
             </CRow>
             <CRow>
@@ -259,25 +255,19 @@ const Home = (props) => {
                         }
                         return (
                           <CTableRow key={item.id}>
-                            <CTableDataCell>
-                              {dayjs(item.datetime).format('MM-DD-YYYY')}
-                            </CTableDataCell>
+                            <CTableDataCell>{dayjs(item.datetime).format('MM-DD-YYYY')}</CTableDataCell>
                             <CTableDataCell>{dayjs(item.datetime).format('HH:mm')}</CTableDataCell>
                             <CTableDataCell>{ToTitleCase(item.province.name)}</CTableDataCell>
                             <CTableDataCell>{ToTitleCase(item.city.name)}</CTableDataCell>
                             <CTableDataCell>{ToTitleCase(item.district.name)}</CTableDataCell>
                             <CTableDataCell>{ToTitleCase(item.village.name)}</CTableDataCell>
-                            <CTableDataCell style={{ textAlign: 'center' }}>
-                              {item.value}
-                            </CTableDataCell>
+                            <CTableDataCell style={{ textAlign: 'center' }}>{item.value}</CTableDataCell>
                             <CTableDataCell style={{ textAlign: 'center' }}>
                               <CBadge color={item.statusColor} shape="rounded-pill">
                                 {item.status}
                               </CBadge>
                             </CTableDataCell>
-                            <CTableDataCell style={{ textAlign: 'center' }}>
-                              {item.value}
-                            </CTableDataCell>
+                            <CTableDataCell style={{ textAlign: 'center' }}>{item.value}</CTableDataCell>
                             <CTableDataCell style={{ textAlign: 'center' }}>
                               <CButton color="dark" variant="ghost" size="sm" className={'mx-1'}>
                                 <CIcon icon={cilZoomIn} />

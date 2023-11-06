@@ -1,5 +1,4 @@
 import axios from 'axios'
-import store from '../redux/store'
 
 // const BASE_URL = "https://backend-pm-25.herokuapp.com";
 // const BASE_URL = 'http://localhost:8010/proxy/'

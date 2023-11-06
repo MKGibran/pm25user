@@ -48,17 +48,14 @@ export const AppSidebarNav = ({ items }) => {
         visible={location.pathname.startsWith(to)}
         {...rest}
       >
-        {item.items?.map((item, index) =>
-          item.items ? navGroup(item, index) : navItem(item, index),
-        )}
+        {item.items?.map((item, index) => (item.items ? navGroup(item, index) : navItem(item, index)))}
       </Component>
     )
   }
 
   return (
     <React.Fragment>
-      {items &&
-        items.map((item, index) => (item.items ? navGroup(item, index) : navItem(item, index)))}
+      {items && items.map((item, index) => (item.items ? navGroup(item, index) : navItem(item, index)))}
     </React.Fragment>
   )
 }

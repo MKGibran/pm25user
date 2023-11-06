@@ -1,11 +1,10 @@
-import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import { devToolsEnhancer } from '@redux-devtools/extension'
-import storage from 'redux-persist/lib/storage'
+import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import { persistReducer, persistStore } from 'redux-persist'
-import thunk from 'redux-thunk'
+import storage from 'redux-persist/lib/storage'
+import globalUiSlice from './globalUiSlice'
 import regionalSlice from './regionalSlice'
 import userSlice from './userSlice'
-import globalUiSlice from './globalUiSlice'
 
 const rootPersistConfig = {
   key: 'root',

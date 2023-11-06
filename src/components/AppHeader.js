@@ -1,22 +1,10 @@
 /* eslint-disable react/prop-types */
-import React, { useState } from 'react'
-import { NavLink } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux'
-import {
-  CContainer,
-  CHeader,
-  CHeaderBrand,
-  CHeaderNav,
-  CHeaderToggler,
-  CNavLink,
-  CNavItem,
-} from '@coreui/react'
-import CIcon from '@coreui/icons-react'
 import { cilMenu } from '@coreui/icons'
+import CIcon from '@coreui/icons-react'
+import { CContainer, CHeader, CHeaderNav, CHeaderToggler, CNavItem } from '@coreui/react'
+import { useDispatch, useSelector } from 'react-redux'
 
-import { AppBreadcrumb } from './index'
 import { AppHeaderDropdown } from './header/index'
-import { logo } from 'src/assets/brand/logo'
 
 const AppHeader = (props) => {
   const dispatch = useDispatch()
@@ -30,10 +18,7 @@ const AppHeader = (props) => {
       }}
     >
       <CContainer fluid>
-        <CHeaderToggler
-          className="ps-1"
-          onClick={() => dispatch({ type: 'set', sidebarShow: !sidebarShow })}
-        >
+        <CHeaderToggler className="ps-1" onClick={() => dispatch({ type: 'set', sidebarShow: !sidebarShow })}>
           <CIcon icon={cilMenu} size="lg" style={{ color: '#fff' }} />
         </CHeaderToggler>
         <CHeaderNav className="d-none d-md-flex me-auto">

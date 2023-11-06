@@ -1,17 +1,14 @@
-import React from 'react'
-import CIcon from '@coreui/icons-react'
 import {
-  cilSpeedometer,
-  cilHome,
-  cilFire,
-  cilCloudy,
-  cilAudio,
-  cilPaperPlane,
   cilAddressBook,
   cilArrowThickToRight,
-  cilPencil,
+  cilAudio,
+  cilCloudy,
+  cilFire,
+  cilHome,
   cilInfo,
+  cilPencil,
 } from '@coreui/icons'
+import CIcon from '@coreui/icons-react'
 import { CNavItem } from '@coreui/react'
 
 const _nav = [
@@ -19,9 +16,7 @@ const _nav = [
     component: CNavItem,
     name: 'Log-In',
     to: '/log-in',
-    icon: (
-      <CIcon icon={cilArrowThickToRight} customClassName="nav-icon" style={{ color: '#fff' }} />
-    ),
+    icon: <CIcon icon={cilArrowThickToRight} customClassName="nav-icon" style={{ color: '#fff' }} />,
   },
   {
     component: CNavItem,

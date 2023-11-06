@@ -1,42 +1,40 @@
 /* eslint-disable react/jsx-key */
 /* eslint-disable react/prop-types */
-import React, { useEffect, useState } from 'react'
+import { cilLocationPin, cilZoomIn } from '@coreui/icons'
+import CIcon from '@coreui/icons-react'
 import {
-  CButton,
   CBadge,
+  CButton,
   CCard,
   CCardBody,
+  CCardHeader,
   CCol,
   CContainer,
-  CRow,
-  CCardHeader,
-  CTable,
-  CTableHead,
-  CTableRow,
-  CTableHeaderCell,
-  CTableBody,
-  CTableDataCell,
   CForm,
   CFormInput,
   CFormLabel,
   CImage,
-  CInputGroup,
-  CInputGroupText,
+  CRow,
+  CTable,
+  CTableBody,
+  CTableDataCell,
+  CTableHead,
+  CTableHeaderCell,
+  CTableRow,
 } from '@coreui/react'
-import { cilZoomIn, cilLocationPin } from '@coreui/icons'
-import CIcon from '@coreui/icons-react'
-import Chart from './chart'
-import Level from './level'
 import dayjs from 'dayjs'
-import ParticulateMatterApi from '../../models/api/particulate-matter'
-import regionApi from '../../models/api/region'
+import { useEffect, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
-import WFormSelect from '../widgets/WFormSelect'
 import isObjectEmpty from 'src/utils/helper/checkObjIsEmpty'
 import ToTitleCase from 'src/utils/helper/toTitleCase'
 import ipb from '../../assets/images/Logo IPB.png'
 import ubi from '../../assets/images/Logo Udara Bersih Indonesia.jpeg'
 import sea from '../../assets/images/Logo-RFMRC-SEA-Terbaru.png'
+import ParticulateMatterApi from '../../models/api/particulate-matter'
+import regionApi from '../../models/api/region'
+import WFormSelect from '../widgets/WFormSelect'
+import Chart from './chart'
+import Level from './level'
 
 const AirPollution = (props) => {
   const { register, control, handleSubmit } = useForm()
@@ -48,8 +46,7 @@ const AirPollution = (props) => {
 
   const getData = (formData) => {
     const endDate =
-      dayjs(new Date()).format('YYYY-MM-DDThh:mm:ss') ||
-      dayjs(formData.endDate).format('YYYY-MM-DDThh:mm:ss')
+      dayjs(new Date()).format('YYYY-MM-DDThh:mm:ss') || dayjs(formData.endDate).format('YYYY-MM-DDThh:mm:ss')
     const startDate =
       dayjs('2022-09-26').subtract(14, 'day').format('YYYY-MM-DDThh:mm:ss') ||
       dayjs(formData.startDate).format('YYYY-MM-DDThh:mm:ss')
@@ -95,7 +92,7 @@ const AirPollution = (props) => {
 
   return (
     <div>
-      <CCard style={{ marginBottom: '2%' }} className={`border-light`}>
+      <CCard style={{ marginBottom: '2%' }} className={'border-light'}>
         <CContainer>
           <CCardBody style={{ textAlign: 'center' }}>
             <h4>Air Pollution (PM 2.5)</h4>
@@ -103,7 +100,7 @@ const AirPollution = (props) => {
         </CContainer>
       </CCard>
 
-      <CCard style={{ marginBottom: '2%', textAlign: 'justify' }} className={`border-light`}>
+      <CCard style={{ marginBottom: '2%', textAlign: 'justify' }} className={'border-light'}>
         <CContainer>
           <CCardBody style={{ textAlign: 'center' }}>
             <CRow>
@@ -138,13 +135,13 @@ const AirPollution = (props) => {
 
       {isObjectEmpty(user.user) ? <></> : <Level user={user} />}
 
-      <CCard style={{ marginBottom: '2%' }} className={`border-light`}>
+      <CCard style={{ marginBottom: '2%' }} className={'border-light'}>
         <CCardHeader>
           <h4>Daily Air Pollution (PM 2.5) for last 14 days</h4>
         </CCardHeader>
         <CContainer>
           <CCardBody style={{ textAlign: 'center' }}>
-            <CRow className={`mb-5`}>
+            <CRow className={'mb-5'}>
               <Chart dates={date} values={value} />
             </CRow>
             <CRow>
@@ -165,10 +162,7 @@ const AirPollution = (props) => {
                     <CRow>
                       <CCol>
                         <CRow className="mb-3">
-                          <CFormLabel
-                            htmlFor="Provinsi"
-                            className="col-sm-4 col-form-label text-start"
-                          >
+                          <CFormLabel htmlFor="Provinsi" className="col-sm-4 col-form-label text-start">
                             Provinsi
                           </CFormLabel>
                           <CCol sm={6}>
@@ -183,9 +177,7 @@ const AirPollution = (props) => {
                                   value={value}
                                   onChange={(e) => {
                                     onChange(e)
-                                    regionApi
-                                      .getCities(e.target.value)
-                                      .then((res) => setCitiesData(res))
+                                    regionApi.getCities(e.target.value).then((res) => setCitiesData(res))
                                   }}
                                   className="mb-2"
                                 />
@@ -194,10 +186,7 @@ const AirPollution = (props) => {
                           </CCol>
                         </CRow>
                         <CRow className="mb-3">
-                          <CFormLabel
-                            htmlFor="Kabupaten/Kota"
-                            className="col-sm-4 col-form-label text-start"
-                          >
+                          <CFormLabel htmlFor="Kabupaten/Kota" className="col-sm-4 col-form-label text-start">
                             Kabupaten/Kota
                           </CFormLabel>
                           <CCol sm={6}>
@@ -212,9 +201,7 @@ const AirPollution = (props) => {
                                   value={value}
                                   onChange={(e) => {
                                     onChange(e)
-                                    regionApi
-                                      .getDistricts(e.target.value)
-                                      .then((res) => setDistrictData(res))
+                                    regionApi.getDistricts(e.target.value).then((res) => setDistrictData(res))
                                   }}
                                   className="mb-2"
                                 />
@@ -223,10 +210,7 @@ const AirPollution = (props) => {
                           </CCol>
                         </CRow>
                         <CRow className="mb-3">
-                          <CFormLabel
-                            htmlFor="Kecamatan"
-                            className="col-sm-4 col-form-label text-start"
-                          >
+                          <CFormLabel htmlFor="Kecamatan" className="col-sm-4 col-form-label text-start">
                             Kecamatan
                           </CFormLabel>
                           <CCol sm={6}>
@@ -241,9 +225,7 @@ const AirPollution = (props) => {
                                   value={value}
                                   onChange={(e) => {
                                     onChange(e)
-                                    regionApi
-                                      .getVillages(e.target.value)
-                                      .then((res) => setVillageData(res))
+                                    regionApi.getVillages(e.target.value).then((res) => setVillageData(res))
                                   }}
                                   className="mb-2"
                                 />
@@ -252,10 +234,7 @@ const AirPollution = (props) => {
                           </CCol>
                         </CRow>
                         <CRow className="mb-3">
-                          <CFormLabel
-                            htmlFor="Kelurahan/Desa"
-                            className="col-sm-4 col-form-label text-start"
-                          >
+                          <CFormLabel htmlFor="Kelurahan/Desa" className="col-sm-4 col-form-label text-start">
                             Kelurahan/Desa
                           </CFormLabel>
                           <CCol sm={6}>
@@ -278,10 +257,7 @@ const AirPollution = (props) => {
                       </CCol>
                       <CCol>
                         <CRow className="mb-3">
-                          <CFormLabel
-                            htmlFor="Waktu Awal"
-                            className="col-sm-4 col-form-label text-start"
-                          >
+                          <CFormLabel htmlFor="Waktu Awal" className="col-sm-4 col-form-label text-start">
                             Waktu Awal
                           </CFormLabel>
                           <CCol sm={6}>
@@ -295,10 +271,7 @@ const AirPollution = (props) => {
                           </CCol>
                         </CRow>
                         <CRow className="mb-3">
-                          <CFormLabel
-                            htmlFor="Waktu Akhir"
-                            className="col-sm-4 col-form-label text-start"
-                          >
+                          <CFormLabel htmlFor="Waktu Akhir" className="col-sm-4 col-form-label text-start">
                             Waktu Akhir
                           </CFormLabel>
                           <CCol sm={6}>
@@ -314,11 +287,7 @@ const AirPollution = (props) => {
 
                         <CRow className="mb-3">
                           <CCol sm={10}>
-                            <CButton
-                              color="success"
-                              style={{ color: '#fff', float: 'right' }}
-                              type="submit"
-                            >
+                            <CButton color="success" style={{ color: '#fff', float: 'right' }} type="submit">
                               <span className="mx-3">Cari</span>
                             </CButton>
                           </CCol>
@@ -374,34 +343,21 @@ const AirPollution = (props) => {
                           } else {
                             return (
                               <CTableRow key={item.id}>
-                                <CTableDataCell>
-                                  {dayjs(item.datetime).format('MM-DD-YYYY')}
-                                </CTableDataCell>
-                                <CTableDataCell>
-                                  {dayjs(item.datetime).format('HH:mm')}
-                                </CTableDataCell>
+                                <CTableDataCell>{dayjs(item.datetime).format('MM-DD-YYYY')}</CTableDataCell>
+                                <CTableDataCell>{dayjs(item.datetime).format('HH:mm')}</CTableDataCell>
                                 <CTableDataCell>{ToTitleCase(item.province.name)}</CTableDataCell>
                                 <CTableDataCell>{ToTitleCase(item.city.name)}</CTableDataCell>
                                 <CTableDataCell>{ToTitleCase(item.district.name)}</CTableDataCell>
                                 <CTableDataCell>{ToTitleCase(item.village.name)}</CTableDataCell>
-                                <CTableDataCell style={{ textAlign: 'center' }}>
-                                  {item?.value}
-                                </CTableDataCell>
+                                <CTableDataCell style={{ textAlign: 'center' }}>{item?.value}</CTableDataCell>
                                 <CTableDataCell style={{ textAlign: 'center' }}>
                                   <CBadge color={item.statusColor} shape="rounded-pill">
                                     {item.status}
                                   </CBadge>
                                 </CTableDataCell>
+                                <CTableDataCell style={{ textAlign: 'center' }}>{item?.value}</CTableDataCell>
                                 <CTableDataCell style={{ textAlign: 'center' }}>
-                                  {item?.value}
-                                </CTableDataCell>
-                                <CTableDataCell style={{ textAlign: 'center' }}>
-                                  <CButton
-                                    color="dark"
-                                    variant="ghost"
-                                    size="sm"
-                                    className={'mx-1'}
-                                  >
+                                  <CButton color="dark" variant="ghost" size="sm" className={'mx-1'}>
                                     <CIcon icon={cilZoomIn} />
                                   </CButton>
                                 </CTableDataCell>

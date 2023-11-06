@@ -1,8 +1,8 @@
 /* eslint-disable react/prop-types */
-import React, { useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
-import { CSidebar, CSidebarBrand, CSidebarNav, CSidebarToggler, CAvatar } from '@coreui/react'
+import { CAvatar, CSidebar, CSidebarBrand, CSidebarNav, CSidebarToggler } from '@coreui/react'
 // import CIcon from '@coreui/icons-react'
 
 import { AppSidebarNav } from './AppSidebarNav'

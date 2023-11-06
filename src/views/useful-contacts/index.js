@@ -1,17 +1,15 @@
-import React from 'react'
 import {
   CCard,
   CCardBody,
+  CCardHeader,
   CContainer,
   CTable,
-  CCardHeader,
-  CTableHead,
-  CTableRow,
-  CTableHeaderCell,
   CTableBody,
   CTableDataCell,
+  CTableHead,
+  CTableHeaderCell,
+  CTableRow,
 } from '@coreui/react'
-import CIcon from '@coreui/icons-react'
 
 const FireData = (props) => {
   return (
@@ -47,8 +45,8 @@ const FireData = (props) => {
                   <CTableDataCell>+6281290002231</CTableDataCell>
                   <CTableDataCell>ubi.fahutanipb@gmail.com / rfmrcsea.ipb@gmail.com</CTableDataCell>
                   <CTableDataCell>
-                    Jl. Ulin Lingkar Kampus IPB Dramaga, Gedung Biologi Kehutanan BK 214 Faculty of
-                    Forestry, Bogor 16680, West Java, Indonesia
+                    Jl. Ulin Lingkar Kampus IPB Dramaga, Gedung Biologi Kehutanan BK 214 Faculty of Forestry, Bogor
+                    16680, West Java, Indonesia
                   </CTableDataCell>
                 </CTableRow>
               </CTableBody>

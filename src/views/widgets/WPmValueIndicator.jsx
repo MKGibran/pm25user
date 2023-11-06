@@ -1,5 +1,3 @@
-import React from 'react'
-
 export default function PmValueIndicator({ value, severity }) {
   return (
     <div className={`val-indicator val-indicator-${severity}-3`}>

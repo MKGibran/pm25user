@@ -1,34 +1,33 @@
 /* eslint-disable react/prop-types */
-import React, { useEffect, useState } from 'react'
+import CIcon from '@coreui/icons-react'
 import {
   CButton,
   CCard,
   CCardBody,
+  CCardHeader,
   CCol,
   CContainer,
+  CImage,
   CRow,
-  CCardHeader,
   CTable,
-  CTableHead,
-  CTableRow,
-  CTableHeaderCell,
   CTableBody,
   CTableDataCell,
-  CImage,
+  CTableHead,
+  CTableHeaderCell,
+  CTableRow,
 } from '@coreui/react'
-import CIcon from '@coreui/icons-react'
+import { useEffect, useState } from 'react'
 import Chart from './chart'
 import Level from './level'
 // import Filter from './filter'
-import dayjs from 'dayjs'
 import { cilLocationPin, cilZoomIn } from '@coreui/icons'
-import HotspotApi from '../../models/api/hotspot'
-import regionApi from '../../models/api/region'
+import dayjs from 'dayjs'
 import isObjectEmpty from 'src/utils/helper/checkObjIsEmpty'
 import ToTitleCase from 'src/utils/helper/toTitleCase'
 import ipb from '../../assets/images/Logo IPB.png'
 import ubi from '../../assets/images/Logo Udara Bersih Indonesia.jpeg'
 import sea from '../../assets/images/Logo-RFMRC-SEA-Terbaru.png'
+import HotspotApi from '../../models/api/hotspot'
 
 const Hotspot = (props) => {
   const user = props.user || {}
@@ -71,7 +70,7 @@ const Hotspot = (props) => {
 
   return (
     <div>
-      <CCard style={{ marginBottom: '2%' }} className={`border-light`}>
+      <CCard style={{ marginBottom: '2%' }} className={'border-light'}>
         <CContainer>
           <CCardBody style={{ textAlign: 'center' }}>
             <h4>Hotspot</h4>
@@ -79,7 +78,7 @@ const Hotspot = (props) => {
         </CContainer>
       </CCard>
 
-      <CCard style={{ marginBottom: '2%', textAlign: 'justify' }} className={`border-light`}>
+      <CCard style={{ marginBottom: '2%', textAlign: 'justify' }} className={'border-light'}>
         <CContainer>
           <CCardBody style={{ textAlign: 'center' }}>
             <CRow>
@@ -114,13 +113,13 @@ const Hotspot = (props) => {
 
       {isObjectEmpty(user) ? <></> : <Level user={user} />}
 
-      <CCard style={{ marginBottom: '2%' }} className={`border-light`}>
+      <CCard style={{ marginBottom: '2%' }} className={'border-light'}>
         <CCardHeader>
           <h4>Daily Hotspot (PM 2.5) for last 14 days</h4>
         </CCardHeader>
         <CContainer>
           <CCardBody style={{ textAlign: 'center' }}>
-            <CRow className={`mb-5`}>
+            <CRow className={'mb-5'}>
               <Chart dates={date} values={value} />
             </CRow>
             <CRow>
@@ -240,17 +239,13 @@ const Hotspot = (props) => {
                       data?.map((item) => {
                         return (
                           <CTableRow key={item.id}>
-                            <CTableDataCell>
-                              {dayjs(item.datetime).format('MM-DD-YYYY')}
-                            </CTableDataCell>
+                            <CTableDataCell>{dayjs(item.datetime).format('MM-DD-YYYY')}</CTableDataCell>
                             <CTableDataCell>{dayjs(item.datetime).format('HH:mm')}</CTableDataCell>
                             <CTableDataCell>{ToTitleCase(item.province.name)}</CTableDataCell>
                             <CTableDataCell>{ToTitleCase(item.city.name)}</CTableDataCell>
                             <CTableDataCell>{ToTitleCase(item.district.name)}</CTableDataCell>
                             <CTableDataCell>{ToTitleCase(item.village.name)}</CTableDataCell>
-                            <CTableDataCell style={{ textAlign: 'center' }}>
-                              {item.value}
-                            </CTableDataCell>
+                            <CTableDataCell style={{ textAlign: 'center' }}>{item.value}</CTableDataCell>
                             <CTableDataCell style={{ textAlign: 'center' }}>
                               <CButton color="dark" variant="ghost" size="sm" className={'mx-1'}>
                                 <CIcon icon={cilZoomIn} />
@@ -271,7 +266,6 @@ const Hotspot = (props) => {
       </CCard>
     </div>
   )
-  return
 }
 
 export default Hotspot
