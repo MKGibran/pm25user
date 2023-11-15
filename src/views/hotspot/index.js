@@ -15,6 +15,7 @@ import {
   CTableBody,
   CTableDataCell,
   CImage,
+  CBadge,
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import Chart from './chart'
@@ -31,11 +32,13 @@ import ubi from '../../assets/images/Logo Udara Bersih Indonesia.jpeg'
 import sea from '../../assets/images/Logo-RFMRC-SEA-Terbaru.png'
 
 const Hotspot = (props) => {
-  const user = props.user || {}
-  const region = props.user.region || {}
+  const user = props?.user || {}
+  const region = props?.user?.region || {}
   const [data, setData] = useState([])
   const [date, setDate] = useState([])
-  const [value, setValue] = useState([])
+  const [valueLow, setValueLow] = useState([])
+  const [valueMedium, setValueMedium] = useState([])
+  const [valueHigh, setValueHigh] = useState([])
 
   const getData = () => {
     const endDate = dayjs(new Date()).format('YYYY-MM-DDThh:mm:ss')
@@ -48,19 +51,25 @@ const Hotspot = (props) => {
       sortOrder: 'desc',
     })
       .then((response) => {
-        return response
-      })
-      .then((data) => {
-        setData(data.data)
-        const dates = []
-        const values = []
-        data.data.forEach((data, index) => {
-          dates.push(dayjs(data.datetime).format('MM-DD-YYYY'))
-          values.push(data.value)
+        setData(response.data)
+        const date = []
+        const valuesLow = []
+        const valuesMedium = []
+        const valuesHigh = []
+        response.data.forEach((data, index) => {
+          date.push(dayjs(data.date).format('DD-MM-YYYY'))
+          valuesLow.push(data.low_confidence_hotspot.value)
+          valuesMedium.push(data.medium_confidence_hotspot.value)
+          valuesHigh.push(data.high_confidence_hotspot.value)
         })
-        setDate(dates)
-        setValue(values)
+        console.log('Test')
+        console.log(valuesLow)
+        setDate(date)
+        setValueLow(valuesLow)
+        setValueMedium(valuesMedium)
+        setValueHigh(valuesHigh)
       })
+      .then((data) => {})
       .catch((error) => console.error(error))
   }
 
@@ -71,42 +80,38 @@ const Hotspot = (props) => {
 
   return (
     <div>
-      <CCard style={{ marginBottom: '2%' }} className={`border-light`}>
-        <CContainer>
-          <CCardBody style={{ textAlign: 'center' }}>
-            <h4>Hotspot</h4>
-          </CCardBody>
-        </CContainer>
-      </CCard>
+      <CRow>
+        <CCol className="col-8">
+          <h4>Hotspot</h4>
+        </CCol>
+        <CCol>
+          <CRow>
+            <CCol>
+              <CImage fluid src={ipb} width={70} />
+            </CCol>
+            <CCol>
+              <CImage fluid src={ubi} width={70} />
+            </CCol>
+            <CCol>
+              <CImage fluid src={sea} width={70} />
+            </CCol>
+          </CRow>
+        </CCol>
+      </CRow>
 
-      <CCard style={{ marginBottom: '2%', textAlign: 'justify' }} className={`border-light`}>
-        <CContainer>
-          <CCardBody style={{ textAlign: 'center' }}>
-            <CRow>
-              <CCol>
-                <CImage fluid src={ipb} width={100} />
-              </CCol>
-              <CCol>
-                <CImage fluid src={ubi} width={100} />
-              </CCol>
-              <CCol>
-                <CImage fluid src={sea} width={100} />
-              </CCol>
-            </CRow>
-          </CCardBody>
-        </CContainer>
-      </CCard>
-
-      <CContainer style={{ marginBottom: '1%' }}>
+      <CContainer
+        style={{ marginBottom: '1%', fontSize: '10pt' }}
+        className={`text-secondary mb-0`}
+      >
         <CRow>
           <CCol>
-            {isObjectEmpty(region) || !region.length ? (
-              <p>Please login and/or select region</p>
-            ) : (
+            {!isObjectEmpty(region) ? (
               <p>
                 <CIcon icon={cilLocationPin} size="sm" style={{ marginRight: '1%' }} />
-                {region?.village.name}, {region?.district.name}, {region?.province.name}
+                {region?.village?.name}, {region?.district?.name}, {region?.province?.name}
               </p>
+            ) : (
+              <p>Please login and/or select region</p>
             )}
           </CCol>
         </CRow>
@@ -115,163 +120,117 @@ const Hotspot = (props) => {
       {isObjectEmpty(user) ? <></> : <Level user={user} />}
 
       <CCard style={{ marginBottom: '2%' }} className={`border-light`}>
-        <CCardHeader>
-          <h4>Daily Hotspot (PM 2.5) for last 14 days</h4>
-        </CCardHeader>
         <CContainer>
+          <h5 className={`m-3`}>Overview</h5>
           <CCardBody style={{ textAlign: 'center' }}>
             <CRow className={`mb-5`}>
-              <Chart dates={date} values={value} />
+              <Chart
+                dates={date}
+                valuesLow={valueLow}
+                valuesMedium={valueMedium}
+                valuesHigh={valueHigh}
+              />
             </CRow>
-            <CRow>
-              <CContainer>
-                <CRow>
-                  <CCol style={{ textAlign: 'left' }}>
-                    <h5>List Data Smoke</h5>
-                  </CCol>
-                  {/* <CCol>
-                    <CButton color="light" style={{ float: 'right' }}>
-                      Date Range
-                    </CButton>
-                  </CCol> */}
-                </CRow>
+          </CCardBody>
+        </CContainer>
+      </CCard>
 
-                {/* <CRow>
-                  <CForm className="my-4">
-                    <CRow>
-                      <CCol>
-                        <CRow className="mb-3">
-                          <CFormLabel
-                            htmlFor="Provinsi"
-                            className="col-sm-4 col-form-label text-start"
-                          >
-                            Provinsi
-                          </CFormLabel>
-                          <CCol sm={6}>
-                            <CFormInput type="text" id="Provinsi" />
-                          </CCol>
-                        </CRow>
-                        <CRow className="mb-3">
-                          <CFormLabel
-                            htmlFor="Kabupaten/Kota"
-                            className="col-sm-4 col-form-label text-start"
-                          >
-                            Kabupaten/Kota
-                          </CFormLabel>
-                          <CCol sm={6}>
-                            <CFormInput type="text" id="Kabupaten/Kota" />
-                          </CCol>
-                        </CRow>
-                        <CRow className="mb-3">
-                          <CFormLabel
-                            htmlFor="Kecamatan"
-                            className="col-sm-4 col-form-label text-start"
-                          >
-                            Kecamatan
-                          </CFormLabel>
-                          <CCol sm={6}>
-                            <CFormInput type="text" id="Kecamatan" />
-                          </CCol>
-                        </CRow>
-                        <CRow className="mb-3">
-                          <CFormLabel
-                            htmlFor="Kelurahan/Desa"
-                            className="col-sm-4 col-form-label text-start"
-                          >
-                            Kelurahan/Desa
-                          </CFormLabel>
-                          <CCol sm={6}>
-                            <CFormInput type="text" id="Kelurahan/Desa" />
-                          </CCol>
-                        </CRow>
-                      </CCol>
-                      <CCol>
-                        <CRow className="mb-3">
-                          <CFormLabel
-                            htmlFor="Tanggal"
-                            className="col-sm-2 col-form-label text-start"
-                          >
-                            Tanggal
-                          </CFormLabel>
-                          <CCol sm={8}>
-                            <CFormInput type="date" id="Tanggal" />
-                          </CCol>
-                        </CRow>
-                        <CRow className="mb-3">
-                          <CFormLabel
-                            htmlFor="Waktu"
-                            className="col-sm-2 col-form-label text-start"
-                          >
-                            Waktu
-                          </CFormLabel>
-                          <CCol sm={4}>
-                            <CFormInput type="time" id="Waktu" />
-                          </CCol>
-                          <CCol sm={4}>
-                            <CFormInput type="time" id="Waktu" />
-                          </CCol>
-                        </CRow>
-                        <CRow className="mb-3">
-                          <CCol sm={10}>
-                            <CButton color="success" style={{ color: '#fff', float: 'right' }}>
-                              Cari
-                            </CButton>
-                          </CCol>
-                        </CRow>
-                      </CCol>
-                    </CRow>
-                  </CForm>
-                </CRow> */}
-                <CTable responsive>
-                  <CTableHead>
-                    <CTableRow>
-                      <CTableHeaderCell scope="col">Tanggal</CTableHeaderCell>
-                      <CTableHeaderCell scope="col">Waktu</CTableHeaderCell>
-                      <CTableHeaderCell scope="col">Provinsi</CTableHeaderCell>
-                      <CTableHeaderCell scope="col">Kab/Kota</CTableHeaderCell>
-                      <CTableHeaderCell scope="col">Kecamatan</CTableHeaderCell>
-                      <CTableHeaderCell scope="col">Keluarahan/Desa</CTableHeaderCell>
-                      <CTableHeaderCell scope="col">Hotspot</CTableHeaderCell>
-                      <CTableHeaderCell scope="col">Aksi</CTableHeaderCell>
-                    </CTableRow>
-                  </CTableHead>
-                  <CTableBody style={{ textAlign: 'left' }}>
-                    {data.length ? (
-                      data?.map((item) => {
-                        return (
-                          <CTableRow key={item.id}>
-                            <CTableDataCell>
-                              {dayjs(item.datetime).format('MM-DD-YYYY')}
-                            </CTableDataCell>
-                            <CTableDataCell>{dayjs(item.datetime).format('HH:mm')}</CTableDataCell>
-                            <CTableDataCell>{ToTitleCase(item.province.name)}</CTableDataCell>
-                            <CTableDataCell>{ToTitleCase(item.city.name)}</CTableDataCell>
-                            <CTableDataCell>{ToTitleCase(item.district.name)}</CTableDataCell>
-                            <CTableDataCell>{ToTitleCase(item.village.name)}</CTableDataCell>
-                            <CTableDataCell style={{ textAlign: 'center' }}>
-                              {item.value}
-                            </CTableDataCell>
-                            <CTableDataCell style={{ textAlign: 'center' }}>
-                              <CButton color="dark" variant="ghost" size="sm" className={'mx-1'}>
-                                <CIcon icon={cilZoomIn} />
-                              </CButton>
-                            </CTableDataCell>
-                          </CTableRow>
-                        )
-                      })
-                    ) : (
-                      <>No data found!</>
-                    )}
-                  </CTableBody>
-                </CTable>
-              </CContainer>
-            </CRow>
+      <CCard style={{ marginBottom: '2%' }} className={`border-light`}>
+        <CContainer>
+          <div className={`m-3`}>
+            <h5>List Data</h5>
+            <p className="text-secondary mb-0" style={{ fontSize: '10pt' }}>
+              For last 14 days
+            </p>
+          </div>
+          <CCardBody style={{ textAlign: 'center' }}>
+            <CTable responsive>
+              <CTableHead>
+                <CTableRow>
+                  <CTableDataCell scope="col" style={{ color: 'rgba(125, 123, 122)' }}>
+                    No
+                  </CTableDataCell>
+                  <CTableDataCell scope="col" style={{ color: 'rgba(125, 123, 122)' }}>
+                    Date
+                  </CTableDataCell>
+                  <CTableDataCell scope="col" style={{ color: 'rgba(125, 123, 122)' }}>
+                    Time
+                  </CTableDataCell>
+                  <CTableDataCell scope="col" style={{ color: 'rgba(125, 123, 122)' }}>
+                    Province
+                  </CTableDataCell>
+                  <CTableDataCell scope="col" style={{ color: 'rgba(125, 123, 122)' }}>
+                    City
+                  </CTableDataCell>
+                  <CTableDataCell scope="col" style={{ color: 'rgba(125, 123, 122)' }}>
+                    District
+                  </CTableDataCell>
+                  <CTableDataCell scope="col" style={{ color: 'rgba(125, 123, 122)' }}>
+                    Village
+                  </CTableDataCell>
+                  <CTableDataCell scope="col" style={{ color: 'rgba(125, 123, 122)' }}>
+                    Low
+                  </CTableDataCell>
+                  <CTableDataCell scope="col" style={{ color: 'rgba(125, 123, 122)' }}>
+                    Medium
+                  </CTableDataCell>
+                  <CTableDataCell scope="col" style={{ color: 'rgba(125, 123, 122)' }}>
+                    High
+                  </CTableDataCell>
+                </CTableRow>
+              </CTableHead>
+              <CTableBody style={{ textAlign: 'left' }}>
+                {data.length ? (
+                  data.map((item, index) => {
+                    return (
+                      <CTableRow key={item.id}>
+                        <CTableDataCell style={{ textAlign: 'center' }}>{index + 1}</CTableDataCell>
+                        <CTableDataCell style={{ textAlign: 'center' }}>
+                          {dayjs(item.datetime).format('DD-MM-YYYY')}
+                        </CTableDataCell>
+                        <CTableDataCell style={{ textAlign: 'center' }}>
+                          {dayjs(item.datetime).format('HH:mm')}
+                        </CTableDataCell>
+                        <CTableDataCell style={{ textAlign: 'center' }}>
+                          {ToTitleCase(item.province.name)}
+                        </CTableDataCell>
+                        <CTableDataCell style={{ textAlign: 'center' }}>
+                          {ToTitleCase(item.city.name)}
+                        </CTableDataCell>
+                        <CTableDataCell style={{ textAlign: 'center' }}>
+                          {ToTitleCase(item.district.name)}
+                        </CTableDataCell>
+                        <CTableDataCell style={{ textAlign: 'center' }}>
+                          {ToTitleCase(item.village.name)}
+                        </CTableDataCell>
+                        <CTableDataCell style={{ textAlign: 'center' }}>
+                          <CBadge color={'success'} shape="rounded-pill">
+                            {item.low_confidence_hotspot.value}
+                          </CBadge>
+                        </CTableDataCell>
+                        <CTableDataCell style={{ textAlign: 'center' }}>
+                          <CBadge color={'warning'} shape="rounded-pill">
+                            {item.medium_confidence_hotspot.value}
+                          </CBadge>
+                        </CTableDataCell>
+                        <CTableDataCell style={{ textAlign: 'center' }}>
+                          <CBadge color={'danger'} shape="rounded-pill">
+                            {item.high_confidence_hotspot.value}
+                          </CBadge>
+                        </CTableDataCell>
+                      </CTableRow>
+                    )
+                  })
+                ) : (
+                  <>No data found!</>
+                )}
+              </CTableBody>
+            </CTable>
           </CCardBody>
         </CContainer>
       </CCard>
     </div>
   )
-  return
 }
 
 export default Hotspot

@@ -10,84 +10,59 @@ const Level = (props) => {
   const [status, setStatus] = useState([])
   const [pmSeverity, setPmSeverity] = useState([])
   const fetchInformationData = () => {
-    InformationApi.getDataInformation(user.village_code)
-      .then((response) => {
-        return response.data
-      })
-      .then((data) => {
-        setInformation(data.particulate_matter)
-        setStatus(data.particulate_matter.status.status)
-        if (data.particulate_matter.value > 300) {
-          data.pmSeverity = { value: 'very-dangerous' }
-          setPmSeverity(data.pmSeverity)
-        } else if (data.particulate_matter.value > 200) {
-          data.pmSeverity = { value: 'dangerous' }
-          setPmSeverity(data.pmSeverity)
-        } else if (data.particulate_matter.value > 100) {
-          data.pmSeverity = { value: 'severe' }
-          setPmSeverity(data.pmSeverity)
-        } else if (data.particulate_matter.value > 50) {
-          data.pmSeverity = { value: 'abnormal' }
-          setPmSeverity(data.pmSeverity)
-        } else if (data.particulate_matter.value > 0) {
-          data.pmSeverity = { value: 'normal' }
-          setPmSeverity(data.pmSeverity)
+    InformationApi.getDataInformation(user.village_code).then((response) => {
+      if (response.particulate_matter != null) {
+        setInformation(response.particulate_matter)
+        setStatus(information.particulate_matter.status.status)
+        if (information.particulate_matter.value > 300) {
+          information.pmSeverity = { value: 'very-dangerous' }
+          setPmSeverity(information.pmSeverity)
+        } else if (information.particulate_matter.value > 200) {
+          information.pmSeverity = { value: 'dangerous' }
+          setPmSeverity(information.pmSeverity)
+        } else if (information.particulate_matter.value > 100) {
+          information.pmSeverity = { value: 'severe' }
+          setPmSeverity(information.pmSeverity)
+        } else if (information.particulate_matter.value > 50) {
+          information.pmSeverity = { value: 'abnormal' }
+          setPmSeverity(information.pmSeverity)
+        } else if (information.particulate_matter.value > 0) {
+          information.pmSeverity = { value: 'normal' }
+          setPmSeverity(information.pmSeverity)
         }
-      })
+      } else {
+        setInformation(0)
+        setPmSeverity({ value: 'normal' })
+        setStatus(0)
+      }
+    })
   }
   useEffect(() => {
     fetchInformationData()
   }, [])
   return (
     <CCard style={{ marginBottom: '2%' }} className={`border-light`}>
-      <CCardBody style={{ textAlign: 'center' }}>
-        <CRow>
-          <CCol>
-            <CRow>
-              <h5 className={`mb-3`}>The current air pollution level in your commune is</h5>
-              <PmValueIndicator
-                value={information.value}
-                severity={pmSeverity.value}
-                className={`my-5`}
-              />
-            </CRow>
-          </CCol>
-          <CCol>
-            <CContainer>
-              <CRow>
-                <CCard
-                  style={{
-                    marginBottom: '2%',
-                    backgroundColor: 'rgb(72, 156, 193)',
-                    color: '#FFF',
-                  }}
-                  className={`rounded-5 border-light`}
-                >
-                  <CCardBody style={{ textAlign: 'left' }}>
-                    <h4>What does this mean ?</h4>
-                  </CCardBody>
-                </CCard>
+      <CContainer>
+        <h5 className={`m-3`}>Current Level</h5>
+        <CCardBody>
+          <CRow>
+            <CCol>
+              <CRow style={{ align: 'start' }}>
+                <PmValueIndicator
+                  value={information.value}
+                  severity={pmSeverity.value}
+                  className={`m-0`}
+                />
               </CRow>
               <CRow>
-                <CCard
-                  style={{
-                    marginBottom: '2%',
-                    backgroundColor: 'rgb(72, 156, 193)',
-                    color: '#FFF',
-                  }}
-                  className={`rounded-5 border-light`}
-                >
-                  <CCardBody style={{ textAlign: 'left' }}>
-                    <h4>
-                      Level {information.value} is equivalent to {status}
-                    </h4>
-                  </CCardBody>
-                </CCard>
+                <h6>
+                  Level {information.value} is equivalent to {status} 
+                </h6>
               </CRow>
-            </CContainer>
-          </CCol>
-        </CRow>
-      </CCardBody>
+            </CCol>
+          </CRow>
+        </CCardBody>
+      </CContainer>
     </CCard>
   )
 }

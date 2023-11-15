@@ -10,49 +10,69 @@ import {
   CTableHeaderCell,
   CTableBody,
   CTableDataCell,
+  CRow,
+  CCol,
+  CBadge,
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 
 const FireData = (props) => {
   return (
     <div>
-      <CCard style={{ marginBottom: '2%' }}>
+      <CRow>
+        <h4>Contacts</h4>
+      </CRow>
+
+      <CCard className="border-light my-4">
         <CContainer>
           <CCardBody style={{ textAlign: 'center' }}>
-            <h4>Useful Contacts</h4>
-          </CCardBody>
-        </CContainer>
-      </CCard>
-
-      <CCard style={{ marginBottom: '2%' }}>
-        <CCardHeader>
-          <h4>Here is a list of useful contacts for your region in the event of a fire</h4>
-        </CCardHeader>
-        <CContainer>
-          <CCardBody>
-            <CTable responsive>
-              <CTableHead>
-                <CTableRow>
-                  <CTableHeaderCell scope="col">Name</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Phone</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Whatsapp</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Email</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Address</CTableHeaderCell>
-                </CTableRow>
-              </CTableHead>
-              <CTableBody style={{ textAlign: 'left' }}>
-                <CTableRow>
-                  <CTableDataCell>Robi Deslia Waldi, S.Hut., M.Si</CTableDataCell>
-                  <CTableDataCell>(0251) 8421929</CTableDataCell>
-                  <CTableDataCell>+6281290002231</CTableDataCell>
-                  <CTableDataCell>ubi.fahutanipb@gmail.com / rfmrcsea.ipb@gmail.com</CTableDataCell>
-                  <CTableDataCell>
-                    Jl. Ulin Lingkar Kampus IPB Dramaga, Gedung Biologi Kehutanan BK 214 Faculty of
-                    Forestry, Bogor 16680, West Java, Indonesia
-                  </CTableDataCell>
-                </CTableRow>
-              </CTableBody>
-            </CTable>
+            <CRow className={`mb-5`}>
+              <CTable responsive>
+                <CTableHead>
+                  <CTableRow>
+                    <CTableDataCell scope="col" style={{ color: 'rgba(125, 123, 122)' }}>
+                      Name
+                    </CTableDataCell>
+                    <CTableDataCell scope="col" style={{ color: 'rgba(125, 123, 122)' }}>
+                      Phone
+                    </CTableDataCell>
+                    <CTableDataCell scope="col" style={{ color: 'rgba(125, 123, 122)' }}>
+                      Whatsapp
+                    </CTableDataCell>
+                    <CTableDataCell scope="col" style={{ color: 'rgba(125, 123, 122)' }}>
+                      Email
+                    </CTableDataCell>
+                    <CTableDataCell scope="col" style={{ color: 'rgba(125, 123, 122)' }}>
+                      Address
+                    </CTableDataCell>
+                  </CTableRow>
+                </CTableHead>
+                <CTableBody style={{ textAlign: 'left' }}>
+                  <CTableRow>
+                    <CTableDataCell style={{ textAlign: 'center' }}>
+                      Robi Deslia Waldi, S.Hut., M.Si
+                    </CTableDataCell>
+                    <CTableDataCell style={{ textAlign: 'center' }}>
+                      <CBadge color={'warning'} shape="rounded-pill">
+                        (0251) 8421929
+                      </CBadge>
+                    </CTableDataCell>
+                    <CTableDataCell style={{ textAlign: 'center' }}>
+                      <CBadge color={'success'} shape="rounded-pill">
+                        +6281290002231
+                      </CBadge>
+                    </CTableDataCell>
+                    <CTableDataCell style={{ textAlign: 'center' }}>
+                      ubi.fahutanipb@gmail.com / rfmrcsea.ipb@gmail.com
+                    </CTableDataCell>
+                    <CTableDataCell style={{ textAlign: 'center' }}>
+                      Jl. Ulin Lingkar Kampus IPB Dramaga, Gedung Biologi Kehutanan BK 214 Faculty
+                      of Forestry, Bogor 16680, West Java, Indonesia
+                    </CTableDataCell>
+                  </CTableRow>
+                </CTableBody>
+              </CTable>
+            </CRow>
           </CCardBody>
         </CContainer>
       </CCard>

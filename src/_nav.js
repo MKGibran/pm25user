@@ -35,12 +35,12 @@ const _nav = [
     to: '/home',
     icon: <CIcon icon={cilHome} customClassName="nav-icon" style={{ color: '#fff' }} />,
   },
-  {
-    component: CNavItem,
-    name: 'About',
-    to: '/about',
-    icon: <CIcon icon={cilInfo} customClassName="nav-icon" style={{ color: '#fff' }} />,
-  },
+  // {
+  //   component: CNavItem,
+  //   name: 'About',
+  //   to: '/about',
+  //   icon: <CIcon icon={cilInfo} customClassName="nav-icon" style={{ color: '#fff' }} />,
+  // },
   {
     component: CNavItem,
     name: 'Fire data',
