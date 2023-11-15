@@ -1,42 +1,38 @@
 /* eslint-disable react/jsx-key */
 /* eslint-disable react/prop-types */
-import React, { useEffect, useState } from 'react'
+import { cilLocationPin } from "@coreui/icons"
+import CIcon from "@coreui/icons-react"
 import {
-  CButton,
   CBadge,
+  CButton,
   CCard,
   CCardBody,
   CCol,
   CContainer,
-  CRow,
-  CCardHeader,
-  CTable,
-  CTableHead,
-  CTableRow,
-  CTableHeaderCell,
-  CTableBody,
-  CTableDataCell,
   CForm,
   CFormInput,
   CFormLabel,
   CImage,
-  CInputGroup,
-  CInputGroupText,
-} from '@coreui/react'
-import { cilZoomIn, cilLocationPin } from '@coreui/icons'
-import CIcon from '@coreui/icons-react'
-import Chart from './chart'
-import Level from './level'
-import dayjs from 'dayjs'
-import ParticulateMatterApi from '../../models/api/particulate-matter'
-import regionApi from '../../models/api/region'
-import { Controller, useForm } from 'react-hook-form'
-import WFormSelect from '../widgets/WFormSelect'
-import isObjectEmpty from 'src/utils/helper/checkObjIsEmpty'
-import ToTitleCase from 'src/utils/helper/toTitleCase'
-import ipb from '../../assets/images/Logo IPB.png'
-import ubi from '../../assets/images/Logo Udara Bersih Indonesia.jpeg'
-import sea from '../../assets/images/Logo-RFMRC-SEA-Terbaru.png'
+  CRow,
+  CTable,
+  CTableBody,
+  CTableDataCell,
+  CTableHead,
+  CTableRow,
+} from "@coreui/react"
+import dayjs from "dayjs"
+import { useEffect, useState } from "react"
+import { Controller, useForm } from "react-hook-form"
+import isObjectEmpty from "src/utils/helper/checkObjIsEmpty"
+import ToTitleCase from "src/utils/helper/toTitleCase"
+import ipb from "../../assets/images/Logo IPB.png"
+import ubi from "../../assets/images/Logo Udara Bersih Indonesia.jpeg"
+import sea from "../../assets/images/Logo-RFMRC-SEA-Terbaru.png"
+import ParticulateMatterApi from "../../models/api/particulate-matter"
+import regionApi from "../../models/api/region"
+import WFormSelect from "../widgets/WFormSelect"
+import Chart from "./chart"
+import Level from "./level"
 
 const AirPollution = (props) => {
   const { register, control, handleSubmit } = useForm()
@@ -48,18 +44,17 @@ const AirPollution = (props) => {
 
   const getData = (formData) => {
     const endDate =
-      dayjs(new Date()).format('YYYY-MM-DDThh:mm:ss') ||
-      dayjs(formData.endDate).format('YYYY-MM-DDThh:mm:ss')
+      dayjs(new Date()).format("YYYY-MM-DDThh:mm:ss") || dayjs(formData.endDate).format("YYYY-MM-DDThh:mm:ss")
     const startDate =
-      dayjs('2022-09-26').subtract(14, 'day').format('YYYY-MM-DDThh:mm:ss') ||
-      dayjs(formData.startDate).format('YYYY-MM-DDThh:mm:ss')
+      dayjs("2022-09-26").subtract(14, "day").format("YYYY-MM-DDThh:mm:ss") ||
+      dayjs(formData.startDate).format("YYYY-MM-DDThh:mm:ss")
     const villageCode = formData?.village_code || region?.village?.code
     ParticulateMatterApi.getDataPM({
       startDate: startDate,
       endDate: endDate,
       villageCode: villageCode ?? undefined,
-      sortBy: 'id',
-      sortOrder: 'desc',
+      sortBy: "id",
+      sortOrder: "desc",
     })
       .then((response) => response.data)
       .then((data) => {
@@ -67,7 +62,7 @@ const AirPollution = (props) => {
         const dates = []
         const values = []
         data?.forEach((data, index) => {
-          dates.push(dayjs(data?.datetime).format('DD-MM-YYYY'))
+          dates.push(dayjs(data?.datetime).format("DD-MM-YYYY"))
           values.push(data?.value)
         })
         setDate(dates)
@@ -114,15 +109,12 @@ const AirPollution = (props) => {
         </CCol>
       </CRow>
 
-      <CContainer
-        style={{ marginBottom: '1%', fontSize: '10pt' }}
-        className={`text-secondary mb-0`}
-      >
+      <CContainer style={{ marginBottom: "1%", fontSize: "10pt" }} className={"text-secondary mb-0"}>
         <CRow>
           <CCol>
             {!isObjectEmpty(region) ? (
               <p>
-                <CIcon icon={cilLocationPin} size="sm" style={{ marginRight: '1%' }} />
+                <CIcon icon={cilLocationPin} size="sm" style={{ marginRight: "1%" }} />
                 {region?.village?.name}, {region?.district?.name}, {region?.province?.name}
               </p>
             ) : (
@@ -134,26 +126,26 @@ const AirPollution = (props) => {
 
       {isObjectEmpty(user.user) ? <></> : <Level user={user} />}
 
-      <CCard style={{ marginBottom: '2%' }} className={`border-light`}>
+      <CCard style={{ marginBottom: "2%" }} className={"border-light"}>
         <CContainer>
-          <h5 className={`m-3`}>Overview</h5>
-          <CCardBody style={{ textAlign: 'center' }}>
-            <CRow className={`mb-5`}>
+          <h5 className={"m-3"}>Overview</h5>
+          <CCardBody style={{ textAlign: "center" }}>
+            <CRow className={"mb-5"}>
               <Chart dates={date} values={value} />
             </CRow>
           </CCardBody>
         </CContainer>
       </CCard>
 
-      <CCard style={{ marginBottom: '2%' }} className={`border-light`}>
+      <CCard style={{ marginBottom: "2%" }} className={"border-light"}>
         <CContainer>
-          <div className={`m-3`}>
+          <div className={"m-3"}>
             <h5>List Data</h5>
-            <p className="text-secondary mb-0" style={{ fontSize: '10pt' }}>
+            <p className="text-secondary mb-0" style={{ fontSize: "10pt" }}>
               For last 14 days
             </p>
           </div>
-          <CCardBody style={{ textAlign: 'center' }}>
+          <CCardBody style={{ textAlign: "center" }}>
             <CRow>
               <CForm className="my-4" onSubmit={handleSubmit(onSubmit)}>
                 <CRow>
@@ -174,9 +166,7 @@ const AirPollution = (props) => {
                               value={value}
                               onChange={(e) => {
                                 onChange(e)
-                                regionApi
-                                  .getCities(e.target.value)
-                                  .then((res) => setCitiesData(res))
+                                regionApi.getCities(e.target.value).then((res) => setCitiesData(res))
                               }}
                               className="mb-2"
                             />
@@ -200,9 +190,7 @@ const AirPollution = (props) => {
                               value={value}
                               onChange={(e) => {
                                 onChange(e)
-                                regionApi
-                                  .getDistricts(e.target.value)
-                                  .then((res) => setDistrictData(res))
+                                regionApi.getDistricts(e.target.value).then((res) => setDistrictData(res))
                               }}
                               className="mb-2"
                             />
@@ -226,9 +214,7 @@ const AirPollution = (props) => {
                               value={value}
                               onChange={(e) => {
                                 onChange(e)
-                                regionApi
-                                  .getVillages(e.target.value)
-                                  .then((res) => setVillageData(res))
+                                regionApi.getVillages(e.target.value).then((res) => setVillageData(res))
                               }}
                               className="mb-2"
                             />
@@ -260,10 +246,7 @@ const AirPollution = (props) => {
                   </CCol>
                   <CCol>
                     <CRow className="mb-3">
-                      <CFormLabel
-                        htmlFor="Start Date"
-                        className="col-sm-4 col-form-label text-start"
-                      >
+                      <CFormLabel htmlFor="Start Date" className="col-sm-4 col-form-label text-start">
                         Start Date
                       </CFormLabel>
                       <CCol sm={6}>
@@ -272,7 +255,7 @@ const AirPollution = (props) => {
                           type="datetime-local"
                           id="Tanggal"
                           name="startDate"
-                          {...register('startDate')}
+                          {...register("startDate")}
                         />
                       </CCol>
                     </CRow>
@@ -286,18 +269,14 @@ const AirPollution = (props) => {
                           type="datetime-local"
                           id="Tanggal"
                           name="endDate"
-                          {...register('endDate')}
+                          {...register("endDate")}
                         />
                       </CCol>
                     </CRow>
 
                     <CRow className="mb-3">
                       <CCol sm={10}>
-                        <CButton
-                          color="success"
-                          style={{ color: '#fff', float: 'right' }}
-                          type="submit"
-                        >
+                        <CButton color="success" style={{ color: "#fff", float: "right" }} type="submit">
                           <span className="mx-3">Search</span>
                         </CButton>
                       </CCol>
@@ -310,53 +289,53 @@ const AirPollution = (props) => {
               <CTable responsive>
                 <CTableHead>
                   <CTableRow>
-                    <CTableDataCell scope="col" style={{ color: 'rgba(125, 123, 122)' }}>
+                    <CTableDataCell scope="col" style={{ color: "rgba(125, 123, 122)" }}>
                       No
                     </CTableDataCell>
-                    <CTableDataCell scope="col" style={{ color: 'rgba(125, 123, 122)' }}>
+                    <CTableDataCell scope="col" style={{ color: "rgba(125, 123, 122)" }}>
                       Date
                     </CTableDataCell>
-                    <CTableDataCell scope="col" style={{ color: 'rgba(125, 123, 122)' }}>
+                    <CTableDataCell scope="col" style={{ color: "rgba(125, 123, 122)" }}>
                       Time
                     </CTableDataCell>
-                    <CTableDataCell scope="col" style={{ color: 'rgba(125, 123, 122)' }}>
+                    <CTableDataCell scope="col" style={{ color: "rgba(125, 123, 122)" }}>
                       Province
                     </CTableDataCell>
-                    <CTableDataCell scope="col" style={{ color: 'rgba(125, 123, 122)' }}>
+                    <CTableDataCell scope="col" style={{ color: "rgba(125, 123, 122)" }}>
                       City
                     </CTableDataCell>
-                    <CTableDataCell scope="col" style={{ color: 'rgba(125, 123, 122)' }}>
+                    <CTableDataCell scope="col" style={{ color: "rgba(125, 123, 122)" }}>
                       District
                     </CTableDataCell>
-                    <CTableDataCell scope="col" style={{ color: 'rgba(125, 123, 122)' }}>
+                    <CTableDataCell scope="col" style={{ color: "rgba(125, 123, 122)" }}>
                       Village
                     </CTableDataCell>
-                    <CTableDataCell scope="col" style={{ color: 'rgba(125, 123, 122)' }}>
+                    <CTableDataCell scope="col" style={{ color: "rgba(125, 123, 122)" }}>
                       Value
                     </CTableDataCell>
-                    <CTableDataCell scope="col" style={{ color: 'rgba(125, 123, 122)' }}>
+                    <CTableDataCell scope="col" style={{ color: "rgba(125, 123, 122)" }}>
                       Status
                     </CTableDataCell>
                   </CTableRow>
                 </CTableHead>
-                <CTableBody style={{ textAlign: 'left' }}>
+                <CTableBody style={{ textAlign: "left" }}>
                   {data.length ? (
                     data.map((item, index) => {
                       if (item.value < 25) {
-                        item.status = 'good'
-                        item.statusColor = 'primary'
+                        item.status = "good"
+                        item.statusColor = "primary"
                       } else if (item.value >= 25 && item.value <= 50) {
-                        item.status = 'fair'
-                        item.statusColor = 'success'
+                        item.status = "fair"
+                        item.statusColor = "success"
                       } else if (item.value >= 50 && item.value <= 100) {
-                        item.status = 'poor'
-                        item.statusColor = 'warning'
+                        item.status = "poor"
+                        item.statusColor = "warning"
                       } else if (item.value >= 100 && item.value <= 300) {
-                        item.status = 'very poor'
-                        item.statusColor = 'danger'
+                        item.status = "very poor"
+                        item.statusColor = "danger"
                       } else {
-                        item.status = 'extremely poor'
-                        item.statusColor = 'dark'
+                        item.status = "extremely poor"
+                        item.statusColor = "dark"
                       }
                       if (fetching !== false) {
                         return (
@@ -369,31 +348,27 @@ const AirPollution = (props) => {
                       } else {
                         return (
                           <CTableRow key={item.id}>
-                            <CTableDataCell style={{ textAlign: 'center' }}>
-                              {index + 1}
+                            <CTableDataCell style={{ textAlign: "center" }}>{index + 1}</CTableDataCell>
+                            <CTableDataCell style={{ textAlign: "center" }}>
+                              {dayjs(item.datetime).format("DD-MM-YYYY")}
                             </CTableDataCell>
-                            <CTableDataCell style={{ textAlign: 'center' }}>
-                              {dayjs(item.datetime).format('DD-MM-YYYY')}
+                            <CTableDataCell style={{ textAlign: "center" }}>
+                              {dayjs(item.datetime).format("HH:mm")}
                             </CTableDataCell>
-                            <CTableDataCell style={{ textAlign: 'center' }}>
-                              {dayjs(item.datetime).format('HH:mm')}
-                            </CTableDataCell>
-                            <CTableDataCell style={{ textAlign: 'center' }}>
+                            <CTableDataCell style={{ textAlign: "center" }}>
                               {ToTitleCase(item.province.name)}
                             </CTableDataCell>
-                            <CTableDataCell style={{ textAlign: 'center' }}>
+                            <CTableDataCell style={{ textAlign: "center" }}>
                               {ToTitleCase(item.city.name)}
                             </CTableDataCell>
-                            <CTableDataCell style={{ textAlign: 'center' }}>
+                            <CTableDataCell style={{ textAlign: "center" }}>
                               {ToTitleCase(item.district.name)}
                             </CTableDataCell>
-                            <CTableDataCell style={{ textAlign: 'center' }}>
+                            <CTableDataCell style={{ textAlign: "center" }}>
                               {ToTitleCase(item.village.name)}
                             </CTableDataCell>
-                            <CTableDataCell style={{ textAlign: 'center' }}>
-                              {item.value}
-                            </CTableDataCell>
-                            <CTableDataCell style={{ textAlign: 'center' }}>
+                            <CTableDataCell style={{ textAlign: "center" }}>{item.value}</CTableDataCell>
+                            <CTableDataCell style={{ textAlign: "center" }}>
                               <CBadge color={item.statusColor} shape="rounded-pill">
                                 {item.status}
                               </CBadge>

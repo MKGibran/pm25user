@@ -1,4 +1,18 @@
-import React from 'react'
+import {
+  cilArrowRight,
+  cilBasket,
+  cilBell,
+  cilChartPie,
+  cilLaptop,
+  cilMoon,
+  cilPeople,
+  cilSettings,
+  cilSpeech,
+  cilSpeedometer,
+  cilUser,
+  cilUserFollow,
+} from '@coreui/icons'
+import CIcon from '@coreui/icons-react'
 import {
   CCard,
   CCardBody,
@@ -12,23 +26,8 @@ import {
   CWidgetStatsE,
   CWidgetStatsF,
 } from '@coreui/react'
-import { getStyle } from '@coreui/utils'
-import CIcon from '@coreui/icons-react'
-import {
-  cilArrowRight,
-  cilBasket,
-  cilBell,
-  cilChartPie,
-  cilMoon,
-  cilLaptop,
-  cilPeople,
-  cilSettings,
-  cilSpeech,
-  cilSpeedometer,
-  cilUser,
-  cilUserFollow,
-} from '@coreui/icons'
 import { CChartBar, CChartLine } from '@coreui/react-chartjs'
+import { getStyle } from '@coreui/utils'
 import { DocsExample } from 'src/components'
 
 import WidgetsBrand from './WidgetsBrand'
@@ -141,23 +140,7 @@ const Widgets = () => {
                     className="mx-auto"
                     style={{ height: '40px', width: '80px' }}
                     data={{
-                      labels: [
-                        'M',
-                        'T',
-                        'W',
-                        'T',
-                        'F',
-                        'S',
-                        'S',
-                        'M',
-                        'T',
-                        'W',
-                        'T',
-                        'F',
-                        'S',
-                        'S',
-                        'M',
-                      ],
+                      labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S', 'M', 'T', 'W', 'T', 'F', 'S', 'S', 'M'],
                       datasets: [
                         {
                           backgroundColor: getStyle('--cui-danger'),
@@ -213,23 +196,7 @@ const Widgets = () => {
                     className="mx-auto"
                     style={{ height: '40px', width: '80px' }}
                     data={{
-                      labels: [
-                        'M',
-                        'T',
-                        'W',
-                        'T',
-                        'F',
-                        'S',
-                        'S',
-                        'M',
-                        'T',
-                        'W',
-                        'T',
-                        'F',
-                        'S',
-                        'S',
-                        'M',
-                      ],
+                      labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S', 'M', 'T', 'W', 'T', 'F', 'S', 'S', 'M'],
                       datasets: [
                         {
                           backgroundColor: getStyle('--cui-primary'),
@@ -285,23 +252,7 @@ const Widgets = () => {
                     className="mx-auto"
                     style={{ height: '40px', width: '80px' }}
                     data={{
-                      labels: [
-                        'M',
-                        'T',
-                        'W',
-                        'T',
-                        'F',
-                        'S',
-                        'S',
-                        'M',
-                        'T',
-                        'W',
-                        'T',
-                        'F',
-                        'S',
-                        'S',
-                        'M',
-                      ],
+                      labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S', 'M', 'T', 'W', 'T', 'F', 'S', 'S', 'M'],
                       datasets: [
                         {
                           backgroundColor: getStyle('--cui-success'),
@@ -357,23 +308,7 @@ const Widgets = () => {
                     className="mx-auto"
                     style={{ height: '40px', width: '80px' }}
                     data={{
-                      labels: [
-                        'M',
-                        'T',
-                        'W',
-                        'T',
-                        'F',
-                        'S',
-                        'S',
-                        'M',
-                        'T',
-                        'W',
-                        'T',
-                        'F',
-                        'S',
-                        'S',
-                        'M',
-                      ],
+                      labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S', 'M', 'T', 'W', 'T', 'F', 'S', 'S', 'M'],
                       datasets: [
                         {
                           backgroundColor: 'transparent',
@@ -437,23 +372,7 @@ const Widgets = () => {
                     className="mx-auto"
                     style={{ height: '40px', width: '80px' }}
                     data={{
-                      labels: [
-                        'M',
-                        'T',
-                        'W',
-                        'T',
-                        'F',
-                        'S',
-                        'S',
-                        'M',
-                        'T',
-                        'W',
-                        'T',
-                        'F',
-                        'S',
-                        'S',
-                        'M',
-                      ],
+                      labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S', 'M', 'T', 'W', 'T', 'F', 'S', 'S', 'M'],
                       datasets: [
                         {
                           backgroundColor: 'transparent',
@@ -517,23 +436,7 @@ const Widgets = () => {
                     className="mx-auto"
                     style={{ height: '40px', width: '80px' }}
                     data={{
-                      labels: [
-                        'M',
-                        'T',
-                        'W',
-                        'T',
-                        'F',
-                        'S',
-                        'S',
-                        'M',
-                        'T',
-                        'W',
-                        'T',
-                        'F',
-                        'S',
-                        'S',
-                        'M',
-                      ],
+                      labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S', 'M', 'T', 'W', 'T', 'F', 'S', 'S', 'M'],
                       datasets: [
                         {
                           backgroundColor: 'transparent',

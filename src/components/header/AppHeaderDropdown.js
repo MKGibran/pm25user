@@ -1,19 +1,9 @@
 /* eslint-disable react/prop-types */
-import React from 'react'
-import {
-  CAvatar,
-  CBadge,
-  CDropdown,
-  CDropdownDivider,
-  CDropdownHeader,
-  CDropdownItem,
-  CDropdownMenu,
-  CDropdownToggle,
-} from '@coreui/react'
 import { cilAccountLogout, cilCaretBottom } from '@coreui/icons'
-import { useDispatch } from 'react-redux'
-import { userActions, userLogout } from 'src/models/redux/actions/userActions'
 import CIcon from '@coreui/icons-react'
+import { CDropdown, CDropdownItem, CDropdownMenu, CDropdownToggle } from '@coreui/react'
+import { useDispatch } from 'react-redux'
+import { userLogout } from 'src/models/redux/actions/userActions'
 
 // import avatar8 from './../../assets/images/avatars/8.jpg'
 

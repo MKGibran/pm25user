@@ -1,24 +1,24 @@
-import React, { useState } from 'react'
 import {
+  CButton,
   CCard,
   CCardBody,
   CCardHeader,
   CCollapse,
+  CDropdown,
   CDropdownItem,
   CDropdownMenu,
   CDropdownToggle,
   CForm,
   CFormInput,
   CImage,
+  CNavLink,
   CNavbar,
-  CNavbarNav,
   CNavbarBrand,
+  CNavbarNav,
   CNavbarText,
   CNavbarToggler,
-  CNavLink,
-  CDropdown,
-  CButton,
 } from '@coreui/react'
+import { useState } from 'react'
 import { DocsLink } from 'src/components'
 
 const CNavbars = () => {
@@ -76,11 +76,7 @@ const CNavbars = () => {
         <CCardBody>
           <CNavbar color="faded" light>
             <CNavbarBrand>
-              <CImage
-                src="https://placekitten.com/g/30/30"
-                className="d-inline-block align-top"
-                alt="CoreuiVue"
-              />
+              <CImage src="https://placekitten.com/g/30/30" className="d-inline-block align-top" alt="CoreuiVue" />
               CoreUI React
             </CNavbarBrand>
           </CNavbar>

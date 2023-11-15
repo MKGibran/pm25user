@@ -1,5 +1,4 @@
-import React from 'react'
-import { CCol, CRow, CForm, CFormInput, CFormLabel, CButton } from '@coreui/react'
+import { CButton, CCol, CForm, CFormInput, CFormLabel, CRow } from '@coreui/react'
 
 const Filter = (props) => {
   return (

@@ -1,6 +1,6 @@
 import { CToast, CToastBody, CToastClose } from '@coreui/react'
 
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { globalUiActions } from 'src/models/redux/actions/globalUiActions'
 import { initialStateGlobalUi } from 'src/models/redux/store/globalUiSlice'

@@ -1,34 +1,33 @@
-import React, { useState, useEffect } from 'react'
-import { Controller, useForm } from 'react-hook-form'
+import { cilLocationPin } from '@coreui/icons'
+import CIcon from '@coreui/icons-react'
 import {
   CButton,
+  CButtonGroup,
   CCard,
   CCardBody,
   CCol,
   CContainer,
-  CRow,
-  CButtonGroup,
   CModal,
-  CModalHeader,
-  CModalTitle,
   CModalBody,
   CModalFooter,
+  CModalHeader,
+  CModalTitle,
+  CRow,
 } from '@coreui/react'
-import CIcon from '@coreui/icons-react'
-import { cilLocationPin } from '@coreui/icons'
-import WFormSelect from '../widgets/WFormSelect'
-import InformationApi from '../../models/api/information'
-import PmValueIndicator from 'src/views/widgets/WPmValueIndicator'
-import regionApi from '../../models/api/region'
+import { useEffect, useState } from 'react'
+import { Controller, useForm } from 'react-hook-form'
 import { useSelector } from 'react-redux'
-import isObjectEmpty from 'src/utils/helper/checkObjIsEmpty'
+import PmValueIndicator from 'src/views/widgets/WPmValueIndicator'
+import InformationApi from '../../models/api/information'
+import regionApi from '../../models/api/region'
+import WFormSelect from '../widgets/WFormSelect'
 
 export default function FireData(props) {
   // const user = props.user.user.village_code
   const user = useSelector((state) => state.user.current_user.village_code)
   // const region = props.user.region
-  const { register, control, handleSubmit } = useForm()
-  const [regionSelected, setRegionSelected] = useState({
+  const { control, handleSubmit } = useForm()
+  const [regionSelected] = useState({
     province: null,
     district: null,
   })
@@ -40,7 +39,7 @@ export default function FireData(props) {
   const [valueDistrict, setValueDistrict] = useState([])
   const [pmSeverity, setPmSeverity] = useState([])
   const [valueProvince, setValueProvince] = useState([])
-  const [region, setRegion] = useState([])
+  const [region] = useState([])
   const [provinceData, setProvinceData] = useState([{}])
   const [citiesData, setCitiesData] = useState([{}])
   const [districtData, setDistrictData] = useState([{}])
@@ -85,7 +84,7 @@ export default function FireData(props) {
   }
 
   useEffect(() => {
-    if (Boolean(user)) fetchInformationData(user, region)
+    if (user) fetchInformationData(user, region)
     regionApi.getProvinces().then((res) => setProvinceData(res))
   }, [])
 
@@ -152,7 +151,7 @@ export default function FireData(props) {
           </CCardBody>
         </CContainer>
       </CCard>
-      {Boolean(user) ? (
+      {user ? (
         <>
           <CContainer style={{ marginBottom: '1%' }}>
             <CRow>
@@ -163,11 +162,7 @@ export default function FireData(props) {
                 </p>
               </CCol>
               <CCol>
-                <CButton
-                  color="success"
-                  style={{ color: '#fff', float: 'right' }}
-                  onClick={() => setVisible(!visible)}
-                >
+                <CButton color="success" style={{ color: '#fff', float: 'right' }} onClick={() => setVisible(!visible)}>
                   Change location
                 </CButton>
                 <CModal visible={visible} onClose={() => setVisible(false)}>
@@ -204,9 +199,7 @@ export default function FireData(props) {
                             value={value}
                             onChange={(e) => {
                               onChange(e)
-                              regionApi
-                                .getDistricts(e.target.value)
-                                .then((res) => setDistrictData(res))
+                              regionApi.getDistricts(e.target.value).then((res) => setDistrictData(res))
                             }}
                             className="mb-2"
                           />
@@ -223,9 +216,7 @@ export default function FireData(props) {
                             value={value}
                             onChange={(e) => {
                               onChange(e)
-                              regionApi
-                                .getVillages(e.target.value)
-                                .then((res) => setVillageData(res))
+                              regionApi.getVillages(e.target.value).then((res) => setVillageData(res))
                             }}
                             className="mb-2"
                           />
@@ -272,11 +263,7 @@ export default function FireData(props) {
                           Nilai partikel PM 2.5 <br />
                           (g/m2)
                         </p>
-                        <PmValueIndicator
-                          value={valuePM.value}
-                          severity={pmSeverity.value}
-                          className={`my-5`}
-                        />
+                        <PmValueIndicator value={valuePM.value} severity={pmSeverity.value} className={'my-5'} />
                         <CButtonGroup role="group" aria-label="Basic example" className="mt-4">
                           <CButton color="success"></CButton>
                           <CButton color="warning"></CButton>
@@ -299,11 +286,7 @@ export default function FireData(props) {
                     <CContainer>
                       <CCardBody>
                         <h5>The current number of hotspot in your commune is</h5>
-                        <PmValueIndicator
-                          value={valueHotspot.value}
-                          severity={'normal'}
-                          className={`my-5`}
-                        />
+                        <PmValueIndicator value={valueHotspot.value} severity={'normal'} className={'my-5'} />
                       </CCardBody>
                     </CContainer>
                   </CCard>
@@ -313,11 +296,7 @@ export default function FireData(props) {
                     <CContainer>
                       <CCardBody>
                         <h5>The current carbon monoxide level in your commune is</h5>
-                        <PmValueIndicator
-                          value={valueSmoke.value}
-                          severity={'normal'}
-                          className={`my-5`}
-                        />
+                        <PmValueIndicator value={valueSmoke.value} severity={'normal'} className={'my-5'} />
                       </CCardBody>
                     </CContainer>
                   </CCard>
@@ -327,7 +306,7 @@ export default function FireData(props) {
           </CContainer>
         </>
       ) : (
-        <CContainer>Couldn't detect currect location. Please login first!</CContainer>
+        <CContainer>Couldn&apos;t detect currect location. Please login first!</CContainer>
       )}
     </div>
   )

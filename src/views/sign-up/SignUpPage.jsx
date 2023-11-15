@@ -2,32 +2,26 @@ import {
   CButton,
   CCard,
   CCardBody,
+  CCol,
+  CContainer,
   CFormInput,
   CFormSelect,
-  CContainer,
-  CCardHeader,
   CRow,
-  CCol,
-  CModal,
-  CModalHeader,
-  CModalTitle,
-  CModalBody,
-  CModalFooter,
 } from '@coreui/react'
-import React, { useEffect, useState } from 'react'
-import WFormSelect from '../widgets/WFormSelect'
+import { useEffect, useState } from 'react'
+import { Controller, useForm } from 'react-hook-form'
+import { useDispatch } from 'react-redux'
+import { Link } from 'react-router-dom'
+import { globalUiActions } from 'src/models/redux/actions/globalUiActions'
 import regionApi from '../../models/api/region'
 import signUpApi from '../../models/api/sign-up'
-import { Controller, useForm } from 'react-hook-form'
-import { Link } from 'react-router-dom'
+import WFormSelect from '../widgets/WFormSelect'
 import SignUpOTPPopup from './SignUpOTPPopup'
-import { useDispatch } from 'react-redux'
-import { globalUiActions } from 'src/models/redux/actions/globalUiActions'
 
 export default function SignUpPage() {
   const { register, control, handleSubmit } = useForm()
 
-  const [regionSelected, setRegionSelected] = useState({
+  const [regionSelected] = useState({
     province: null,
     district: null,
   })

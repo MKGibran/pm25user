@@ -1,4 +1,4 @@
-import axios, { BASE_URL_API, HEADERS_API, TOKEN_NAME } from './config'
+import axios, { BASE_URL_API, HEADERS_API } from './config'
 
 export default {
   async signUp(data) {

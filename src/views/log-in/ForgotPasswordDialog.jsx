@@ -1,17 +1,17 @@
 import {
-  CModal,
-  CModalHeader,
-  CModalTitle,
-  CModalBody,
-  CRow,
-  CCol,
-  CFormInput,
-  CModalFooter,
-  CButton,
   CBreadcrumb,
   CBreadcrumbItem,
+  CButton,
+  CCol,
+  CFormInput,
+  CModal,
+  CModalBody,
+  CModalFooter,
+  CModalHeader,
+  CModalTitle,
+  CRow,
 } from '@coreui/react'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
 import loginAPI from 'src/models/api/login'
@@ -140,6 +140,7 @@ export default function ForgotPassword({ visible, setVisible }) {
                 <CBreadcrumbItem
                   active={currStep === index}
                   style={{ '--cui-breadcrumb-item-active-color': '#8C8154' }}
+                  key={index}
                 >
                   {item}
                 </CBreadcrumbItem>

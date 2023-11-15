@@ -1,37 +1,30 @@
 /* eslint-disable react/prop-types */
-import React, { useEffect, useState } from 'react'
+import { cilLocationPin } from "@coreui/icons"
+import CIcon from "@coreui/icons-react"
 import {
-  CButton,
   CBadge,
   CCard,
   CCardBody,
   CCol,
   CContainer,
+  CImage,
   CRow,
-  CCardHeader,
   CTable,
-  CTableHead,
-  CTableRow,
-  CTableHeaderCell,
   CTableBody,
   CTableDataCell,
-  CForm,
-  CFormInput,
-  CFormLabel,
-  CImage,
-} from '@coreui/react'
-import { cilZoomIn, cilLocationPin } from '@coreui/icons'
-import CIcon from '@coreui/icons-react'
-import Chart from './chart'
-import Level from './level'
-import dayjs from 'dayjs'
-import SmokeApi from '../../models/api/smoke'
-import regionApi from '../../models/api/region'
-import isObjectEmpty from 'src/utils/helper/checkObjIsEmpty'
-import ToTitleCase from 'src/utils/helper/toTitleCase'
-import ipb from '../../assets/images/Logo IPB.png'
-import ubi from '../../assets/images/Logo Udara Bersih Indonesia.jpeg'
-import sea from '../../assets/images/Logo-RFMRC-SEA-Terbaru.png'
+  CTableHead,
+  CTableRow,
+} from "@coreui/react"
+import dayjs from "dayjs"
+import { useEffect, useState } from "react"
+import isObjectEmpty from "src/utils/helper/checkObjIsEmpty"
+import ToTitleCase from "src/utils/helper/toTitleCase"
+import ipb from "../../assets/images/Logo IPB.png"
+import ubi from "../../assets/images/Logo Udara Bersih Indonesia.jpeg"
+import sea from "../../assets/images/Logo-RFMRC-SEA-Terbaru.png"
+import SmokeApi from "../../models/api/smoke"
+import Chart from "./chart"
+import Level from "./level"
 
 const Smoke = (props) => {
   const user = props?.user || {}
@@ -41,24 +34,24 @@ const Smoke = (props) => {
   const [value, setValue] = useState([])
 
   const getData = () => {
-    console.log('Test')
+    console.log("Test")
     console.log(region)
-    console.log('Test')
-    const endDate = dayjs(new Date()).format('YYYY-MM-DDThh:mm:ss')
-    const startDate = dayjs('2022-09-26').subtract(14, 'day').format('YYYY-MM-DDThh:mm:ss')
+    console.log("Test")
+    const endDate = dayjs(new Date()).format("YYYY-MM-DDThh:mm:ss")
+    const startDate = dayjs("2022-09-26").subtract(14, "day").format("YYYY-MM-DDThh:mm:ss")
     SmokeApi.getDataSmoke({
       startDate: startDate,
       endDate: endDate,
       villageCode: isObjectEmpty(region) || !region.length ? undefined : region?.village.code,
-      sortBy: 'id',
-      sortOrder: 'desc',
+      sortBy: "id",
+      sortOrder: "desc",
     })
       .then((response) => {
         setData(response.data)
         const dates = []
         const values = []
         response.data.forEach((data) => {
-          dates.push(dayjs(data.datetime).format('DD-MM-YYYY'))
+          dates.push(dayjs(data.datetime).format("DD-MM-YYYY"))
           values.push(data.value)
         })
         setDate(dates)
@@ -91,15 +84,12 @@ const Smoke = (props) => {
         </CCol>
       </CRow>
 
-      <CContainer
-        style={{ marginBottom: '1%', fontSize: '10pt' }}
-        className={`text-secondary mb-0`}
-      >
+      <CContainer style={{ marginBottom: "1%", fontSize: "10pt" }} className={"text-secondary mb-0"}>
         <CRow>
           <CCol>
             {!isObjectEmpty(region) ? (
               <p>
-                <CIcon icon={cilLocationPin} size="sm" style={{ marginRight: '1%' }} />
+                <CIcon icon={cilLocationPin} size="sm" style={{ marginRight: "1%" }} />
                 {region?.village?.name}, {region?.district?.name}, {region?.province?.name}
               </p>
             ) : (
@@ -111,102 +101,98 @@ const Smoke = (props) => {
 
       {isObjectEmpty(user.user) ? <></> : <Level user={user} />}
 
-      <CCard style={{ marginBottom: '2%' }} className={`border-light`}>
+      <CCard style={{ marginBottom: "2%" }} className={"border-light"}>
         <CContainer>
-          <h5 className={`m-3`}>Overview</h5>
-          <CCardBody style={{ textAlign: 'center' }}>
-            <CRow className={`mb-5`}>
+          <h5 className={"m-3"}>Overview</h5>
+          <CCardBody style={{ textAlign: "center" }}>
+            <CRow className={"mb-5"}>
               <Chart dates={date} values={value} />
             </CRow>
           </CCardBody>
         </CContainer>
       </CCard>
 
-      <CCard style={{ marginBottom: '2%' }} className={`border-light`}>
+      <CCard style={{ marginBottom: "2%" }} className={"border-light"}>
         <CContainer>
-          <div className={`m-3`}>
+          <div className={"m-3"}>
             <h5>List Data</h5>
-            <p className="text-secondary mb-0" style={{ fontSize: '10pt' }}>
+            <p className="text-secondary mb-0" style={{ fontSize: "10pt" }}>
               For last 14 days
             </p>
           </div>
-          <CCardBody style={{ textAlign: 'center' }}>
+          <CCardBody style={{ textAlign: "center" }}>
             <CTable responsive>
               <CTableHead>
                 <CTableRow>
-                  <CTableDataCell scope="col" style={{ color: 'rgba(125, 123, 122)' }}>
+                  <CTableDataCell scope="col" style={{ color: "rgba(125, 123, 122)" }}>
                     No
                   </CTableDataCell>
-                  <CTableDataCell scope="col" style={{ color: 'rgba(125, 123, 122)' }}>
+                  <CTableDataCell scope="col" style={{ color: "rgba(125, 123, 122)" }}>
                     Date
                   </CTableDataCell>
-                  <CTableDataCell scope="col" style={{ color: 'rgba(125, 123, 122)' }}>
+                  <CTableDataCell scope="col" style={{ color: "rgba(125, 123, 122)" }}>
                     Time
                   </CTableDataCell>
-                  <CTableDataCell scope="col" style={{ color: 'rgba(125, 123, 122)' }}>
+                  <CTableDataCell scope="col" style={{ color: "rgba(125, 123, 122)" }}>
                     Province
                   </CTableDataCell>
-                  <CTableDataCell scope="col" style={{ color: 'rgba(125, 123, 122)' }}>
+                  <CTableDataCell scope="col" style={{ color: "rgba(125, 123, 122)" }}>
                     City
                   </CTableDataCell>
-                  <CTableDataCell scope="col" style={{ color: 'rgba(125, 123, 122)' }}>
+                  <CTableDataCell scope="col" style={{ color: "rgba(125, 123, 122)" }}>
                     District
                   </CTableDataCell>
-                  <CTableDataCell scope="col" style={{ color: 'rgba(125, 123, 122)' }}>
+                  <CTableDataCell scope="col" style={{ color: "rgba(125, 123, 122)" }}>
                     Village
                   </CTableDataCell>
-                  <CTableDataCell scope="col" style={{ color: 'rgba(125, 123, 122)' }}>
+                  <CTableDataCell scope="col" style={{ color: "rgba(125, 123, 122)" }}>
                     Value
                   </CTableDataCell>
-                  <CTableDataCell scope="col" style={{ color: 'rgba(125, 123, 122)' }}>
+                  <CTableDataCell scope="col" style={{ color: "rgba(125, 123, 122)" }}>
                     Status
                   </CTableDataCell>
                 </CTableRow>
               </CTableHead>
-              <CTableBody style={{ textAlign: 'left' }}>
+              <CTableBody style={{ textAlign: "left" }}>
                 {data.length ? (
                   data.map((item, index) => {
                     if (item.value < 25) {
-                      item.status = 'good'
-                      item.statusColor = 'primary'
+                      item.status = "good"
+                      item.statusColor = "primary"
                     } else if (item.value >= 25 && item.value <= 50) {
-                      item.status = 'fair'
-                      item.statusColor = 'success'
+                      item.status = "fair"
+                      item.statusColor = "success"
                     } else if (item.value >= 50 && item.value <= 100) {
-                      item.status = 'poor'
-                      item.statusColor = 'warning'
+                      item.status = "poor"
+                      item.statusColor = "warning"
                     } else if (item.value >= 100 && item.value <= 300) {
-                      item.status = 'very poor'
-                      item.statusColor = 'danger'
+                      item.status = "very poor"
+                      item.statusColor = "danger"
                     } else {
-                      item.status = 'extremely poor'
-                      item.statusColor = 'dark'
+                      item.status = "extremely poor"
+                      item.statusColor = "dark"
                     }
                     return (
                       <CTableRow key={item.id}>
-                        <CTableDataCell style={{ textAlign: 'center' }}>{index + 1}</CTableDataCell>
-                        <CTableDataCell style={{ textAlign: 'center' }}>
-                          {dayjs(item.datetime).format('DD-MM-YYYY')}
+                        <CTableDataCell style={{ textAlign: "center" }}>{index + 1}</CTableDataCell>
+                        <CTableDataCell style={{ textAlign: "center" }}>
+                          {dayjs(item.datetime).format("DD-MM-YYYY")}
                         </CTableDataCell>
-                        <CTableDataCell style={{ textAlign: 'center' }}>
-                          {dayjs(item.datetime).format('HH:mm')}
+                        <CTableDataCell style={{ textAlign: "center" }}>
+                          {dayjs(item.datetime).format("HH:mm")}
                         </CTableDataCell>
-                        <CTableDataCell style={{ textAlign: 'center' }}>
+                        <CTableDataCell style={{ textAlign: "center" }}>
                           {ToTitleCase(item.province.name)}
                         </CTableDataCell>
-                        <CTableDataCell style={{ textAlign: 'center' }}>
-                          {ToTitleCase(item.city.name)}
-                        </CTableDataCell>
-                        <CTableDataCell style={{ textAlign: 'center' }}>
+                        <CTableDataCell style={{ textAlign: "center" }}>{ToTitleCase(item.city.name)}</CTableDataCell>
+                        <CTableDataCell style={{ textAlign: "center" }}>
                           {ToTitleCase(item.district.name)}
                         </CTableDataCell>
-                        <CTableDataCell style={{ textAlign: 'center' }}>
+                        <CTableDataCell style={{ textAlign: "center" }}>
                           {ToTitleCase(item.village.name)}
                         </CTableDataCell>
-                        <CTableDataCell style={{ textAlign: 'center' }}>
-                          {item.value}
-                        </CTableDataCell>
-                        <CTableDataCell style={{ textAlign: 'center' }}>
+                        <CTableDataCell style={{ textAlign: "center" }}>{item.value}</CTableDataCell>
+                        <CTableDataCell style={{ textAlign: "center" }}>
                           <CBadge color={item.statusColor} shape="rounded-pill">
                             {item.status}
                           </CBadge>

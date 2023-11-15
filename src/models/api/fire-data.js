@@ -1,4 +1,4 @@
-import axios, { paramsSerializer, BASE_URL_API, HEADERS_API_BEARER } from './config'
+import axios, { BASE_URL_API, HEADERS_API_BEARER, paramsSerializer } from './config'
 // import { DashboardRes } from '../models'
 // import dateHelper, { DATE_FORMAT } from '../../utils/helper/dateHelper'
 // import { format } from 'date-fns'

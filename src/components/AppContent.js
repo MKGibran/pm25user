@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
-import React, { Suspense, useEffect, useRef } from 'react'
+import { CContainer, CSpinner } from '@coreui/react'
+import React, { Suspense } from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
-import { CContainer, CSpinner, CToaster } from '@coreui/react'
 
 // routes config
 import routes from '../routes'

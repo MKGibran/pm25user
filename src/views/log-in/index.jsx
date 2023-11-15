@@ -1,3 +1,5 @@
+import { cilLockLocked, cilUser } from '@coreui/icons'
+import CIcon from '@coreui/icons-react'
 import {
   CButton,
   CCard,
@@ -10,15 +12,13 @@ import {
   CInputGroupText,
   CRow,
 } from '@coreui/react'
-import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
-import CIcon from '@coreui/icons-react'
-import { cilLockLocked, cilUser } from '@coreui/icons'
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import loginApi from '../../models/api/login'
 import { useDispatch } from 'react-redux'
-import { userActions, userLogout } from 'src/models/redux/actions/userActions'
+import { Link } from 'react-router-dom'
 import { globalUiActions } from 'src/models/redux/actions/globalUiActions'
+import { userActions, userLogout } from 'src/models/redux/actions/userActions'
+import loginApi from '../../models/api/login'
 import ForgotPassword from './ForgotPasswordDialog'
 
 export default function LogInPage() {

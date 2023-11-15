@@ -1,20 +1,15 @@
-import React from 'react'
 import {
+  CBadge,
   CCard,
   CCardBody,
   CContainer,
+  CRow,
   CTable,
-  CCardHeader,
-  CTableHead,
-  CTableRow,
-  CTableHeaderCell,
   CTableBody,
   CTableDataCell,
-  CRow,
-  CCol,
-  CBadge,
+  CTableHead,
+  CTableRow,
 } from '@coreui/react'
-import CIcon from '@coreui/icons-react'
 
 const FireData = (props) => {
   return (
@@ -26,7 +21,7 @@ const FireData = (props) => {
       <CCard className="border-light my-4">
         <CContainer>
           <CCardBody style={{ textAlign: 'center' }}>
-            <CRow className={`mb-5`}>
+            <CRow className={'mb-5'}>
               <CTable responsive>
                 <CTableHead>
                   <CTableRow>

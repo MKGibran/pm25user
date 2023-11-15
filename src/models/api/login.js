@@ -1,21 +1,15 @@
 import axiosInstance, { HEADERS_API_BEARER } from './config'
 // import { UserData, UsersRes } from '../models/users'
-import { BASE_URL_API, HEADERS_API, TOKEN_NAME } from './config'
 import Cookies from 'js-cookie'
+import { BASE_URL_API, HEADERS_API, TOKEN_NAME } from './config'
 // import { SnackbarProps } from '../models/uiState'
-import { userActions } from 'src/models/redux/actions/userActions'
-import { useLocation, useNavigate } from 'react-router-dom'
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
   async loginUser(data) {
     // const navigate = useNavigate()
     const res = await axiosInstance
-      .post(
-        BASE_URL_API + '/login',
-        { username: data.username, password: data.password },
-        HEADERS_API,
-      )
+      .post(BASE_URL_API + '/login', { username: data.username, password: data.password }, HEADERS_API)
       .then((response) => {
         Cookies.set(TOKEN_NAME, response.data.token, { expires: 1 })
         return {

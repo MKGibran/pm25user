@@ -1,35 +1,29 @@
 /* eslint-disable react/prop-types */
-import React, { useEffect, useState } from 'react'
+import CIcon from "@coreui/icons-react"
 import {
-  CButton,
+  CBadge,
   CCard,
   CCardBody,
   CCol,
   CContainer,
+  CImage,
   CRow,
-  CCardHeader,
   CTable,
-  CTableHead,
-  CTableRow,
-  CTableHeaderCell,
   CTableBody,
   CTableDataCell,
-  CImage,
-  CBadge,
-} from '@coreui/react'
-import CIcon from '@coreui/icons-react'
-import Chart from './chart'
-import Level from './level'
+} from "@coreui/react"
+import { useEffect, useState } from "react"
+import Chart from "./chart"
+import Level from "./level"
 // import Filter from './filter'
-import dayjs from 'dayjs'
-import { cilLocationPin, cilZoomIn } from '@coreui/icons'
-import HotspotApi from '../../models/api/hotspot'
-import regionApi from '../../models/api/region'
-import isObjectEmpty from 'src/utils/helper/checkObjIsEmpty'
-import ToTitleCase from 'src/utils/helper/toTitleCase'
-import ipb from '../../assets/images/Logo IPB.png'
-import ubi from '../../assets/images/Logo Udara Bersih Indonesia.jpeg'
-import sea from '../../assets/images/Logo-RFMRC-SEA-Terbaru.png'
+import { cilLocationPin } from "@coreui/icons"
+import dayjs from "dayjs"
+import isObjectEmpty from "src/utils/helper/checkObjIsEmpty"
+import ToTitleCase from "src/utils/helper/toTitleCase"
+import ipb from "../../assets/images/Logo IPB.png"
+import ubi from "../../assets/images/Logo Udara Bersih Indonesia.jpeg"
+import sea from "../../assets/images/Logo-RFMRC-SEA-Terbaru.png"
+import HotspotApi from "../../models/api/hotspot"
 
 const Hotspot = (props) => {
   const user = props?.user || {}
@@ -41,14 +35,14 @@ const Hotspot = (props) => {
   const [valueHigh, setValueHigh] = useState([])
 
   const getData = () => {
-    const endDate = dayjs(new Date()).format('YYYY-MM-DDThh:mm:ss')
-    const startDate = dayjs('2022-09-26').subtract(14, 'day').format('YYYY-MM-DDThh:mm:ss')
+    const endDate = dayjs(new Date()).format("YYYY-MM-DDThh:mm:ss")
+    const startDate = dayjs("2022-09-26").subtract(14, "day").format("YYYY-MM-DDThh:mm:ss")
     HotspotApi.getDataHotspot({
       startDate: startDate,
       endDate: endDate,
       villageCode: region ? undefined : region?.village.code,
-      sortBy: 'id',
-      sortOrder: 'desc',
+      sortBy: "id",
+      sortOrder: "desc",
     })
       .then((response) => {
         setData(response.data)
@@ -57,12 +51,12 @@ const Hotspot = (props) => {
         const valuesMedium = []
         const valuesHigh = []
         response.data.forEach((data, index) => {
-          date.push(dayjs(data.date).format('DD-MM-YYYY'))
+          date.push(dayjs(data.date).format("DD-MM-YYYY"))
           valuesLow.push(data.low_confidence_hotspot.value)
           valuesMedium.push(data.medium_confidence_hotspot.value)
           valuesHigh.push(data.high_confidence_hotspot.value)
         })
-        console.log('Test')
+        console.log("Test")
         console.log(valuesLow)
         setDate(date)
         setValueLow(valuesLow)
@@ -99,15 +93,12 @@ const Hotspot = (props) => {
         </CCol>
       </CRow>
 
-      <CContainer
-        style={{ marginBottom: '1%', fontSize: '10pt' }}
-        className={`text-secondary mb-0`}
-      >
+      <CContainer style={{ marginBottom: "1%", fontSize: "10pt" }} className={`text-secondary mb-0`}>
         <CRow>
           <CCol>
             {!isObjectEmpty(region) ? (
               <p>
-                <CIcon icon={cilLocationPin} size="sm" style={{ marginRight: '1%' }} />
+                <CIcon icon={cilLocationPin} size="sm" style={{ marginRight: "1%" }} />
                 {region?.village?.name}, {region?.district?.name}, {region?.province?.name}
               </p>
             ) : (
@@ -119,102 +110,95 @@ const Hotspot = (props) => {
 
       {isObjectEmpty(user) ? <></> : <Level user={user} />}
 
-      <CCard style={{ marginBottom: '2%' }} className={`border-light`}>
+      <CCard style={{ marginBottom: "2%" }} className={`border-light`}>
         <CContainer>
           <h5 className={`m-3`}>Overview</h5>
-          <CCardBody style={{ textAlign: 'center' }}>
+          <CCardBody style={{ textAlign: "center" }}>
             <CRow className={`mb-5`}>
-              <Chart
-                dates={date}
-                valuesLow={valueLow}
-                valuesMedium={valueMedium}
-                valuesHigh={valueHigh}
-              />
+              <Chart dates={date} valuesLow={valueLow} valuesMedium={valueMedium} valuesHigh={valueHigh} />
             </CRow>
           </CCardBody>
         </CContainer>
       </CCard>
 
-      <CCard style={{ marginBottom: '2%' }} className={`border-light`}>
+      <CCard style={{ marginBottom: "2%" }} className={`border-light`}>
         <CContainer>
           <div className={`m-3`}>
             <h5>List Data</h5>
-            <p className="text-secondary mb-0" style={{ fontSize: '10pt' }}>
+            <p className="text-secondary mb-0" style={{ fontSize: "10pt" }}>
               For last 14 days
             </p>
           </div>
-          <CCardBody style={{ textAlign: 'center' }}>
+          <CCardBody style={{ textAlign: "center" }}>
             <CTable responsive>
               <CTableHead>
                 <CTableRow>
-                  <CTableDataCell scope="col" style={{ color: 'rgba(125, 123, 122)' }}>
+                  <CTableDataCell scope="col" style={{ color: "rgba(125, 123, 122)" }}>
                     No
                   </CTableDataCell>
-                  <CTableDataCell scope="col" style={{ color: 'rgba(125, 123, 122)' }}>
+                  <CTableDataCell scope="col" style={{ color: "rgba(125, 123, 122)" }}>
                     Date
                   </CTableDataCell>
-                  <CTableDataCell scope="col" style={{ color: 'rgba(125, 123, 122)' }}>
+                  <CTableDataCell scope="col" style={{ color: "rgba(125, 123, 122)" }}>
                     Time
                   </CTableDataCell>
-                  <CTableDataCell scope="col" style={{ color: 'rgba(125, 123, 122)' }}>
+                  <CTableDataCell scope="col" style={{ color: "rgba(125, 123, 122)" }}>
                     Province
                   </CTableDataCell>
-                  <CTableDataCell scope="col" style={{ color: 'rgba(125, 123, 122)' }}>
+                  <CTableDataCell scope="col" style={{ color: "rgba(125, 123, 122)" }}>
                     City
                   </CTableDataCell>
-                  <CTableDataCell scope="col" style={{ color: 'rgba(125, 123, 122)' }}>
+                  <CTableDataCell scope="col" style={{ color: "rgba(125, 123, 122)" }}>
                     District
                   </CTableDataCell>
-                  <CTableDataCell scope="col" style={{ color: 'rgba(125, 123, 122)' }}>
+                  <CTableDataCell scope="col" style={{ color: "rgba(125, 123, 122)" }}>
                     Village
                   </CTableDataCell>
-                  <CTableDataCell scope="col" style={{ color: 'rgba(125, 123, 122)' }}>
+                  <CTableDataCell scope="col" style={{ color: "rgba(125, 123, 122)" }}>
                     Low
                   </CTableDataCell>
-                  <CTableDataCell scope="col" style={{ color: 'rgba(125, 123, 122)' }}>
+                  <CTableDataCell scope="col" style={{ color: "rgba(125, 123, 122)" }}>
                     Medium
                   </CTableDataCell>
-                  <CTableDataCell scope="col" style={{ color: 'rgba(125, 123, 122)' }}>
+                  <CTableDataCell scope="col" style={{ color: "rgba(125, 123, 122)" }}>
                     High
                   </CTableDataCell>
                 </CTableRow>
               </CTableHead>
-              <CTableBody style={{ textAlign: 'left' }}>
+              <CTableBody style={{ textAlign: "left" }}>
                 {data.length ? (
                   data.map((item, index) => {
                     return (
                       <CTableRow key={item.id}>
-                        <CTableDataCell style={{ textAlign: 'center' }}>{index + 1}</CTableDataCell>
-                        <CTableDataCell style={{ textAlign: 'center' }}>
-                          {dayjs(item.datetime).format('DD-MM-YYYY')}
+                        <CTableDataCell style={{ textAlign: "center" }}>{index + 1}</CTableDataCell>
+                        <CTableDataCell style={{ textAlign: "center" }}>
+                          {dayjs(item.datetime).format("DD-MM-YYYY")}
                         </CTableDataCell>
-                        <CTableDataCell style={{ textAlign: 'center' }}>
-                          {dayjs(item.datetime).format('HH:mm')}
+                        <CTableDataCell style={{ textAlign: "center" }}>
+                          {dayjs(item.datetime).format("HH:mm")}
                         </CTableDataCell>
-                        <CTableDataCell style={{ textAlign: 'center' }}>
+                        <CTableDataCell style={{ textAlign: "center" }}>
                           {ToTitleCase(item.province.name)}
                         </CTableDataCell>
-                        <CTableDataCell style={{ textAlign: 'center' }}>
-                          {ToTitleCase(item.city.name)}
-                        </CTableDataCell>
-                        <CTableDataCell style={{ textAlign: 'center' }}>
+                        <CTableDataCell style={{ textAlign: "center" }}>{ToTitleCase(item.city.name)}</CTableDataCell>
+                        <CTableDataCell style={{ textAlign: "center" }}>
                           {ToTitleCase(item.district.name)}
                         </CTableDataCell>
-                        <CTableDataCell style={{ textAlign: 'center' }}>
+                        <CTableDataCell style={{ textAlign: "center" }}>
                           {ToTitleCase(item.village.name)}
                         </CTableDataCell>
-                        <CTableDataCell style={{ textAlign: 'center' }}>
-                          <CBadge color={'success'} shape="rounded-pill">
+                        <CTableDataCell style={{ textAlign: "center" }}>
+                          <CBadge color={"success"} shape="rounded-pill">
                             {item.low_confidence_hotspot.value}
                           </CBadge>
                         </CTableDataCell>
-                        <CTableDataCell style={{ textAlign: 'center' }}>
-                          <CBadge color={'warning'} shape="rounded-pill">
+                        <CTableDataCell style={{ textAlign: "center" }}>
+                          <CBadge color={"warning"} shape="rounded-pill">
                             {item.medium_confidence_hotspot.value}
                           </CBadge>
                         </CTableDataCell>
-                        <CTableDataCell style={{ textAlign: 'center' }}>
-                          <CBadge color={'danger'} shape="rounded-pill">
+                        <CTableDataCell style={{ textAlign: "center" }}>
+                          <CBadge color={"danger"} shape="rounded-pill">
                             {item.high_confidence_hotspot.value}
                           </CBadge>
                         </CTableDataCell>

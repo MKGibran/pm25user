@@ -1,24 +1,24 @@
 /* eslint-disable react/prop-types */
-import React, { useEffect } from 'react'
 import {
-  CModal,
-  CModalHeader,
-  CModalTitle,
-  CFormInput,
-  CRow,
+  CButton,
   CCol,
+  CFormInput,
+  CModal,
   CModalBody,
   CModalFooter,
-  CButton,
+  CModalHeader,
+  CModalTitle,
+  CRow,
 } from '@coreui/react'
+import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
-import signUp from 'src/models/api/sign-up'
-import { Link, redirect, useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import signUp from 'src/models/api/sign-up'
 import { globalUiActions } from 'src/models/redux/actions/globalUiActions'
 
 export default function SignUpOTPPopup({ visible, setVisible, data }) {
-  const { register, control, handleSubmit, setValue, getValues } = useForm()
+  const { register, handleSubmit, setValue, getValues } = useForm()
 
   const dispatch = useDispatch()
   const navigator = useNavigate()

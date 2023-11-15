@@ -1,13 +1,5 @@
-import React from 'react'
-import { CCard, CCardBody, CCol, CCardHeader, CRow } from '@coreui/react'
-import {
-  CChartBar,
-  CChartDoughnut,
-  CChartLine,
-  CChartPie,
-  CChartPolarArea,
-  CChartRadar,
-} from '@coreui/react-chartjs'
+import { CCard, CCardBody, CCardHeader, CCol, CRow } from '@coreui/react'
+import { CChartBar, CChartDoughnut, CChartLine, CChartPie, CChartPolarArea, CChartRadar } from '@coreui/react-chartjs'
 import { DocsCallout } from 'src/components'
 
 const Charts = () => {
@@ -133,15 +125,7 @@ const Charts = () => {
           <CCardBody>
             <CChartRadar
               data={{
-                labels: [
-                  'Eating',
-                  'Drinking',
-                  'Sleeping',
-                  'Designing',
-                  'Coding',
-                  'Cycling',
-                  'Running',
-                ],
+                labels: ['Eating', 'Drinking', 'Sleeping', 'Designing', 'Coding', 'Cycling', 'Running'],
                 datasets: [
                   {
                     label: 'My First dataset',
