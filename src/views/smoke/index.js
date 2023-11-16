@@ -20,8 +20,8 @@ import { useEffect, useState } from "react"
 import isObjectEmpty from "src/utils/helper/checkObjIsEmpty"
 import ToTitleCase from "src/utils/helper/toTitleCase"
 import ipb from "../../assets/images/Logo IPB.png"
-import ubi from "../../assets/images/Logo Udara Bersih Indonesia.jpeg"
 import sea from "../../assets/images/Logo-RFMRC-SEA-Terbaru.png"
+import ubi from "../../assets/images/Logo_Udara_Bersih_Indonesia.png"
 import SmokeApi from "../../models/api/smoke"
 import Chart from "./chart"
 import Level from "./level"
@@ -36,10 +36,11 @@ const Smoke = (props) => {
   const getData = () => {
     const endDate = dayjs(new Date()).format("YYYY-MM-DDThh:mm:ss")
     const startDate = dayjs("2022-09-26").subtract(14, "day").format("YYYY-MM-DDThh:mm:ss")
+    console.log(user.user.village_code)
     SmokeApi.getDataSmoke({
       startDate: startDate,
       endDate: endDate,
-      villageCode: isObjectEmpty(region) || !region.length ? undefined : region?.village.code,
+      villageCode: user.user.village_code,
       sortBy: "id",
       sortOrder: "desc",
     })

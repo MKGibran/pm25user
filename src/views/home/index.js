@@ -1,7 +1,7 @@
 import { CCard, CCardBody, CCol, CContainer, CImage, CRow } from "@coreui/react"
 import ipb from "../../assets/images/Logo IPB.png"
-import ubi from "../../assets/images/Logo Udara Bersih Indonesia.jpeg"
 import sea from "../../assets/images/Logo-RFMRC-SEA-Terbaru.png"
+import ubi from "../../assets/images/Logo_Udara_Bersih_Indonesia.png"
 
 const Home = (props) => {
   return (

@@ -23,8 +23,8 @@ import dayjs from "dayjs"
 import isObjectEmpty from "src/utils/helper/checkObjIsEmpty"
 import ToTitleCase from "src/utils/helper/toTitleCase"
 import ipb from "../../assets/images/Logo IPB.png"
-import ubi from "../../assets/images/Logo Udara Bersih Indonesia.jpeg"
 import sea from "../../assets/images/Logo-RFMRC-SEA-Terbaru.png"
+import ubi from "../../assets/images/Logo_Udara_Bersih_Indonesia.png"
 import HotspotApi from "../../models/api/hotspot"
 
 const Hotspot = (props) => {
@@ -42,7 +42,7 @@ const Hotspot = (props) => {
     HotspotApi.getDataHotspot({
       startDate: startDate,
       endDate: endDate,
-      villageCode: region ? undefined : region?.village.code,
+      villageCode: user.user.village_code,
       sortBy: "id",
       sortOrder: "desc",
     })

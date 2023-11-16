@@ -12,7 +12,7 @@ import { AppSidebarNav } from './AppSidebarNav'
 
 import SimpleBar from 'simplebar-react'
 import 'simplebar/dist/simplebar.min.css'
-import logo from '../assets/images/klhk_logo.png'
+import logo from "../assets/images/Logo_Udara_Bersih_Indonesia.png"
 
 // sidebar nav config
 import navigation from '../_nav'

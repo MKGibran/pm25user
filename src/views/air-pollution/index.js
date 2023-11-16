@@ -26,8 +26,8 @@ import { Controller, useForm } from "react-hook-form"
 import isObjectEmpty from "src/utils/helper/checkObjIsEmpty"
 import ToTitleCase from "src/utils/helper/toTitleCase"
 import ipb from "../../assets/images/Logo IPB.png"
-import ubi from "../../assets/images/Logo Udara Bersih Indonesia.jpeg"
 import sea from "../../assets/images/Logo-RFMRC-SEA-Terbaru.png"
+import ubi from "../../assets/images/Logo_Udara_Bersih_Indonesia.png"
 import ParticulateMatterApi from "../../models/api/particulate-matter"
 import regionApi from "../../models/api/region"
 import WFormSelect from "../widgets/WFormSelect"
@@ -48,11 +48,11 @@ const AirPollution = (props) => {
     const startDate =
       dayjs("2022-09-26").subtract(14, "day").format("YYYY-MM-DDThh:mm:ss") ||
       dayjs(formData.startDate).format("YYYY-MM-DDThh:mm:ss")
-    const villageCode = formData?.village_code || region?.village?.code
+    const villageCode = formData?.village_code || user.user.village_code
     ParticulateMatterApi.getDataPM({
       startDate: startDate,
       endDate: endDate,
-      villageCode: villageCode ?? undefined,
+      villageCode: villageCode,
       sortBy: "id",
       sortOrder: "desc",
     })

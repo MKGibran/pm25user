@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { CCard, CCardBody, CCol, CContainer, CRow } from "@coreui/react"
 import { useEffect, useState } from "react"
 import PmValueIndicator from "src/views/widgets/WPmValueIndicator"
@@ -47,7 +46,7 @@ const Level = (props) => {
                 <PmValueIndicator value={information.value} severity={smokeSeverity} />
               </CRow>
               <CRow>
-                <h6>This level is equivalent to {status} </h6>
+                <h6>This level is equivalent to {status} </h6>
               </CRow>
             </CCol>
           </CRow>
