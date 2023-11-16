@@ -11,28 +11,23 @@ const Level = (props) => {
   const [pmSeverity, setPmSeverity] = useState([])
   const fetchInformationData = () => {
     InformationApi.getDataInformation(user.village_code).then((response) => {
-      if (response.particulate_matter != null) {
-        setInformation(response.particulate_matter)
-        setStatus(information.particulate_matter.status.status)
-        if (information.particulate_matter.value > 300) {
-          information.pmSeverity = { value: "very-dangerous" }
-          setPmSeverity(information.pmSeverity)
-        } else if (information.particulate_matter.value > 200) {
-          information.pmSeverity = { value: "dangerous" }
-          setPmSeverity(information.pmSeverity)
-        } else if (information.particulate_matter.value > 100) {
-          information.pmSeverity = { value: "severe" }
-          setPmSeverity(information.pmSeverity)
-        } else if (information.particulate_matter.value > 50) {
-          information.pmSeverity = { value: "abnormal" }
-          setPmSeverity(information.pmSeverity)
-        } else if (information.particulate_matter.value > 0) {
-          information.pmSeverity = { value: "normal" }
-          setPmSeverity(information.pmSeverity)
+      if (response.data.particulate_matter !== null) {
+        setInformation(response.data.particulate_matter)
+        setStatus(response.data.particulate_matter.status.status)
+        if (response.data.particulate_matter.value <= 10) {
+          setPmSeverity("normal")
+        } else if (response.data.particulate_matter.value <= 25) {
+          setPmSeverity("abnormal")
+        } else if (response.data.particulate_matter.value <= 50) {
+          setPmSeverity("severe")
+        } else if (response.data.particulate_matter.value <= 75) {
+          setPmSeverity("dangerous")
+        } else if (response.data.particulate_matter.value > 75) {
+          setPmSeverity("very-dangerous")
         }
       } else {
-        setInformation(0)
-        setPmSeverity({ value: "normal" })
+        setInformation({ value: "-" })
+        setPmSeverity("normal")
         setStatus(0)
       }
     })
@@ -46,14 +41,12 @@ const Level = (props) => {
         <h5 className={"m-3"}>Current Level</h5>
         <CCardBody>
           <CRow>
-            <CCol>
-              <CRow style={{ align: "start" }}>
-                <PmValueIndicator value={information.value} severity={pmSeverity.value} className={"m-0"} />
+            <CCol style={{ textAlign: "center" }}>
+              <CRow className={"mb-4"}>
+                <PmValueIndicator value={information.value} severity={pmSeverity} />
               </CRow>
               <CRow>
-                <h6>
-                  Level {information.value} is equivalent to {status} 
-                </h6>
+                <h6>This level is equivalent to {status} </h6>
               </CRow>
             </CCol>
           </CRow>

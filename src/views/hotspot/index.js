@@ -11,6 +11,8 @@ import {
   CTable,
   CTableBody,
   CTableDataCell,
+  CTableHead,
+  CTableRow,
 } from "@coreui/react"
 import { useEffect, useState } from "react"
 import Chart from "./chart"
@@ -56,8 +58,6 @@ const Hotspot = (props) => {
           valuesMedium.push(data.medium_confidence_hotspot.value)
           valuesHigh.push(data.high_confidence_hotspot.value)
         })
-        console.log("Test")
-        console.log(valuesLow)
         setDate(date)
         setValueLow(valuesLow)
         setValueMedium(valuesMedium)
@@ -68,7 +68,6 @@ const Hotspot = (props) => {
   }
 
   useEffect(() => {
-    console.log(user, region)
     getData()
   }, [])
 
@@ -93,7 +92,7 @@ const Hotspot = (props) => {
         </CCol>
       </CRow>
 
-      <CContainer style={{ marginBottom: "1%", fontSize: "10pt" }} className={`text-secondary mb-0`}>
+      <CContainer style={{ marginBottom: "1%", fontSize: "10pt" }} className={"text-secondary mb-0"}>
         <CRow>
           <CCol>
             {!isObjectEmpty(region) ? (
@@ -108,22 +107,25 @@ const Hotspot = (props) => {
         </CRow>
       </CContainer>
 
-      {isObjectEmpty(user) ? <></> : <Level user={user} />}
+      <CRow>
+        <CCol>
+          <CCard style={{ marginBottom: "2%" }} className={"border-light"}>
+            <CContainer>
+              <h5 className={"m-3"}>Overview</h5>
+              <CCardBody style={{ textAlign: "center" }}>
+                <CRow className={"mb-5"}>
+                  <Chart dates={date} valuesLow={valueLow} valuesMedium={valueMedium} valuesHigh={valueHigh} />
+                </CRow>
+              </CCardBody>
+            </CContainer>
+          </CCard>
+        </CCol>
+        <CCol>{isObjectEmpty(user) ? <></> : <Level user={user} />}</CCol>
+      </CRow>
 
-      <CCard style={{ marginBottom: "2%" }} className={`border-light`}>
+      <CCard style={{ marginBottom: "2%" }} className={"border-light"}>
         <CContainer>
-          <h5 className={`m-3`}>Overview</h5>
-          <CCardBody style={{ textAlign: "center" }}>
-            <CRow className={`mb-5`}>
-              <Chart dates={date} valuesLow={valueLow} valuesMedium={valueMedium} valuesHigh={valueHigh} />
-            </CRow>
-          </CCardBody>
-        </CContainer>
-      </CCard>
-
-      <CCard style={{ marginBottom: "2%" }} className={`border-light`}>
-        <CContainer>
-          <div className={`m-3`}>
+          <div className={"m-3"}>
             <h5>List Data</h5>
             <p className="text-secondary mb-0" style={{ fontSize: "10pt" }}>
               For last 14 days

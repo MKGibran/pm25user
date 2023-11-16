@@ -9,7 +9,6 @@ import { AppHeaderDropdown } from './header/index'
 const AppHeader = (props) => {
   const dispatch = useDispatch()
   const sidebarShow = useSelector((state) => state.sidebarShow)
-  console.log(useSelector((state) => state.sidebarShow))
   return (
     <CHeader
       position="sticky"

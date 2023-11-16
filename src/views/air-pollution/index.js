@@ -124,18 +124,21 @@ const AirPollution = (props) => {
         </CRow>
       </CContainer>
 
-      {isObjectEmpty(user.user) ? <></> : <Level user={user} />}
-
-      <CCard style={{ marginBottom: "2%" }} className={"border-light"}>
-        <CContainer>
-          <h5 className={"m-3"}>Overview</h5>
-          <CCardBody style={{ textAlign: "center" }}>
-            <CRow className={"mb-5"}>
-              <Chart dates={date} values={value} />
-            </CRow>
-          </CCardBody>
-        </CContainer>
-      </CCard>
+      <CRow>
+        <CCol>
+          <CCard style={{ marginBottom: "2%" }} className={"border-light"}>
+            <CContainer>
+              <h5 className={"m-3"}>Overview</h5>
+              <CCardBody style={{ textAlign: "center" }}>
+                <CRow className={"mb-5"}>
+                  <Chart dates={date} values={value} />
+                </CRow>
+              </CCardBody>
+            </CContainer>
+          </CCard>
+        </CCol>
+        <CCol>{isObjectEmpty(user.user) ? <></> : <Level user={user} />}</CCol>
+      </CRow>
 
       <CCard style={{ marginBottom: "2%" }} className={"border-light"}>
         <CContainer>
@@ -321,20 +324,20 @@ const AirPollution = (props) => {
                 <CTableBody style={{ textAlign: "left" }}>
                   {data.length ? (
                     data.map((item, index) => {
-                      if (item.value < 25) {
+                      if (item.value < 10) {
                         item.status = "good"
                         item.statusColor = "primary"
-                      } else if (item.value >= 25 && item.value <= 50) {
+                      } else if (item.value >= 10 && item.value <= 25) {
                         item.status = "fair"
                         item.statusColor = "success"
-                      } else if (item.value >= 50 && item.value <= 100) {
-                        item.status = "poor"
+                      } else if (item.value >= 25 && item.value <= 50) {
+                        item.status = "moderate"
                         item.statusColor = "warning"
-                      } else if (item.value >= 100 && item.value <= 300) {
-                        item.status = "very poor"
+                      } else if (item.value >= 50 && item.value <= 75) {
+                        item.status = "poor"
                         item.statusColor = "danger"
                       } else {
-                        item.status = "extremely poor"
+                        item.status = "very poor"
                         item.statusColor = "dark"
                       }
                       if (fetching !== false) {

@@ -24,7 +24,6 @@ const DefaultLayout = () => {
   }
   useEffect(() => {
     getVillageData()
-    console.log(toastState)
   }, [toastState])
 
   return (

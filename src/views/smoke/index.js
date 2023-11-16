@@ -34,9 +34,6 @@ const Smoke = (props) => {
   const [value, setValue] = useState([])
 
   const getData = () => {
-    console.log("Test")
-    console.log(region)
-    console.log("Test")
     const endDate = dayjs(new Date()).format("YYYY-MM-DDThh:mm:ss")
     const startDate = dayjs("2022-09-26").subtract(14, "day").format("YYYY-MM-DDThh:mm:ss")
     SmokeApi.getDataSmoke({
@@ -99,18 +96,21 @@ const Smoke = (props) => {
         </CRow>
       </CContainer>
 
-      {isObjectEmpty(user.user) ? <></> : <Level user={user} />}
-
-      <CCard style={{ marginBottom: "2%" }} className={"border-light"}>
-        <CContainer>
-          <h5 className={"m-3"}>Overview</h5>
-          <CCardBody style={{ textAlign: "center" }}>
-            <CRow className={"mb-5"}>
-              <Chart dates={date} values={value} />
-            </CRow>
-          </CCardBody>
-        </CContainer>
-      </CCard>
+      <CRow>
+        <CCol>
+          <CCard style={{ marginBottom: "2%" }} className={"border-light"}>
+            <CContainer>
+              <h5 className={"m-3"}>Overview</h5>
+              <CCardBody style={{ textAlign: "center" }}>
+                <CRow className={"mb-5"}>
+                  <Chart dates={date} values={value} />
+                </CRow>
+              </CCardBody>
+            </CContainer>
+          </CCard>
+        </CCol>
+        <CCol>{isObjectEmpty(user.user) ? <></> : <Level user={user} />}</CCol>
+      </CRow>
 
       <CCard style={{ marginBottom: "2%" }} className={"border-light"}>
         <CContainer>
@@ -156,20 +156,20 @@ const Smoke = (props) => {
               <CTableBody style={{ textAlign: "left" }}>
                 {data.length ? (
                   data.map((item, index) => {
-                    if (item.value < 25) {
+                    if (item.value < 4400) {
                       item.status = "good"
                       item.statusColor = "primary"
-                    } else if (item.value >= 25 && item.value <= 50) {
+                    } else if (item.value >= 4400 && item.value <= 9400) {
                       item.status = "fair"
                       item.statusColor = "success"
-                    } else if (item.value >= 50 && item.value <= 100) {
-                      item.status = "poor"
+                    } else if (item.value >= 9400 && item.value <= 12400) {
+                      item.status = "moderate"
                       item.statusColor = "warning"
-                    } else if (item.value >= 100 && item.value <= 300) {
-                      item.status = "very poor"
+                    } else if (item.value >= 12400 && item.value <= 15400) {
+                      item.status = "poor"
                       item.statusColor = "danger"
                     } else {
-                      item.status = "extremely poor"
+                      item.status = "very poor"
                       item.statusColor = "dark"
                     }
                     return (
